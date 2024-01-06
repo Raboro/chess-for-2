@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint_format:
-    name: Lint and Format
+  organizeImports_lint_format:
+    name: Organize Imports, Lint and Format
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,6 +21,9 @@ jobs:
 
       - name: Install dependencies
         run: bun install
+
+      - name: Organize imports
+        run: bun run organizeImports
 
       - name: Fix eslint issues
         run: bun run lint:fix
