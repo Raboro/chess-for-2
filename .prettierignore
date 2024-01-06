@@ -1,0 +1,8 @@
+node_modules/
+assets/
+README.md 
+LICENSE
+app.json 
+.gitignore
+package.json
+package-lock.json
