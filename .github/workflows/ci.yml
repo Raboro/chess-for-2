@@ -56,8 +56,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Fetch changed ts/tsx/js/ci.yml files
+        id: changedFiles
+        uses: Ana06/get-changed-files@v2.2.0
+        with:
+          filter: |
+            *.ts
+            *.tsx
+            *.js
+            ci.yml
+
+      - name: Check sonar trigger
+        run: |
+          if [ -n "${{ steps.changedFiles.outputs.all }}" ]; then
+            echo "TRIGGER_SONAR=true" >> "$GITHUB_ENV"
+          else
+            echo "TRIGGER_SONAR=false" >> "$GITHUB_ENV"
+          fi
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
+        if: env.TRIGGER_SONAR == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
