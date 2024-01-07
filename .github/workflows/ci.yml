@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  organizeImports_lint_format:
-    name: Organize Imports, Lint and Format
+  organizeImports_lint_format_test:
+    name: Organize Imports, Lint, Format and Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -46,10 +46,18 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
+      - name: Setup Node.js to run tests
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run tests with Jest
+        run: npm test
+
   sonar:
     name: SonarCloud analysis
     runs-on: ubuntu-latest
-    needs: organizeImports_lint_format
+    needs: organizeImports_lint_format_test
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -74,6 +82,26 @@ jobs:
             echo "TRIGGER_SONAR=false" >> "$GITHUB_ENV"
           fi
 
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+        if: env.TRIGGER_SONAR == 'true'
+        with:
+          bun-version: latest
+
+      - name: Setup Node.js to run tests
+        uses: actions/setup-node@v3
+        if: env.TRIGGER_SONAR == 'true'
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        if: env.TRIGGER_SONAR == 'true'
+        run: bun install
+
+      - name: Generate Test Coverage Report
+        if: env.TRIGGER_SONAR == 'true'
+        run: npm run test:coverage
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         if: env.TRIGGER_SONAR == 'true'
@@ -84,3 +112,4 @@ jobs:
           args: >
             -Dsonar.organization=raboro
             -Dsonar.projectKey=Raboro_chess-for-2
+            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
