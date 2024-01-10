@@ -1,15 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import PressableButton from '../../components/primitives/PressableButton/PressableButton';
+import { styles } from './HomeScreenStyle';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView>
-      <Button
-        title="Start"
-        onPress={() => navigation.navigate('Main' as never)}
-      />
+    <SafeAreaView style={styles.container}>
+      <PressableButton text='Start' onPress={() => navigation.navigate('Main' as never)} />
     </SafeAreaView>
   );
 };
