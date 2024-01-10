@@ -8,7 +8,10 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <PressableButton text='Start' onPress={() => navigation.navigate('Main' as never)} />
+      <PressableButton
+        text="Start"
+        onPress={() => navigation.navigate('Main' as never)}
+      />
     </SafeAreaView>
   );
 };
