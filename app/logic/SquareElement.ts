@@ -5,4 +5,4 @@ export default interface SquareElement {
     position: Position,
     squareElementType: Readonly<SquareElementType>,
     isPiece(): boolean,
-}
+};
