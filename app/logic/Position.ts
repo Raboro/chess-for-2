@@ -10,7 +10,7 @@ export default class Position {
         this.y = y;
     }
 
-    notSameLine(y: number): boolean {
-        return this.y != y;
+    notSameLine(p: Position): boolean {
+        return this.x != p.x;
     }
 }

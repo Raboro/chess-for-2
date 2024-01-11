@@ -17,7 +17,7 @@ export default class Pawn implements SquareElement, Moveable {
     }
 
     isMoveableTo(position: Position): boolean {
-        if (this.position.notSameLine(position.y)) {
+        if (this.position.notSameLine(position)) {
             return false;
         }
         return (this.squareElementType == 'black') ? this.position.y < position.y : this.position.y > position.y;
