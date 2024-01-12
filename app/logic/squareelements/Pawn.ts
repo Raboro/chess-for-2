@@ -8,6 +8,10 @@ export default class Pawn implements SquareElement, Moveable {
   squareElementType: Readonly<SquareElementType>;
 
   constructor(position: Position, squareElementType: SquareElementType) {
+    if (squareElementType == undefined) {
+      throw new TypeError('Pawn should be black or white');
+    }
+
     this.position = position;
     this.squareElementType = squareElementType;
   }
