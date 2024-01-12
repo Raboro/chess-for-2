@@ -12,7 +12,10 @@
     "format": "prettier --write \"**/*.+(js|ts|tsx)\"",
     "organizeImports": "organize-imports-cli tsconfig[.*].json",
     "test": "jest",
-    "test:coverage": "jest --coverage --collectCoverageFrom='./**'"
+    "test:verbose": "jest --verbose",
+    "test:coverage": "jest --coverage --collectCoverageFrom='./**'",
+    "test:coverage:verbose": "jest --coverage --verbose --collectCoverageFrom='./**'"
+
   },
   "dependencies": {
     "@react-navigation/stack": "^6.3.20",
