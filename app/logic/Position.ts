@@ -13,4 +13,8 @@ export default class Position {
   notSameLine(p: Position): boolean {
     return this.x != p.x;
   }
+
+  same(p: Position): boolean {
+    return this.x == p.x && this.y == p.y;
+  }
 }
