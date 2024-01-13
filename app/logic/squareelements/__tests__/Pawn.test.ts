@@ -50,18 +50,20 @@ describe('Pawn', () => {
   );
 
   test.each([
-    ['Black', 0, 5, 2],
-    ['White', 2, 7, -2],
+    ['Black', 2],
+    ['White', -2],
   ])(
     '%s should not be moveable to two positions away at the beginning',
-    (color: string, min: number, max: number, added: number) => {
-      const x = randomIntFromInterval(0, 7);
-      const y = randomIntFromInterval(min, max);
-      const pawn: Pawn = new Pawn(
-        new Position(x, y),
-        color == 'White' ? 'white' : 'black',
-      );
-      expect(pawn.isMoveableTo(new Position(x, y + added))).toBeFalsy();
+    (color: string, added: number) => {
+      for (let i: number = 0; i < 10; i++) {
+        const x = randomIntFromInterval(0, 7);
+        const y = randomIntFromInterval(2, 5);
+        const pawn: Pawn = new Pawn(
+          new Position(x, y),
+          color == 'White' ? 'white' : 'black',
+        );
+        expect(pawn.isMoveableTo(new Position(x, y + added))).toBeFalsy();
+      }
     },
   );
 
