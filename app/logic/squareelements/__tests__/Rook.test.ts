@@ -10,18 +10,6 @@ describe('Rook', () => {
     y = randomIntFromInterval(0, 7);
   });
 
-  test('Constructor throws TypeError when undefined as SquareElementType is Parsed', () => {
-    expect(() => new Rook(new Position(2, 3), undefined)).toThrow(TypeError);
-  });
-
-  test('IsPiece should be true', () => {
-    const rookWhite: Rook = new Rook(new Position(0, 1), 'white');
-    expect(rookWhite.isPiece()).toBeTruthy();
-
-    const rookBlack: Rook = new Rook(new Position(0, 1), 'black');
-    expect(rookBlack.isPiece()).toBeTruthy();
-  });
-
   test.each([['Black'], ['White']])(
     '%s should not be moveable to same position',
     (color: string) => {

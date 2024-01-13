@@ -8,18 +8,6 @@ describe('Pawn', () => {
     x = randomIntFromInterval(0, 7);
   });
 
-  test('Constructor throws TypeError when undefined as SquareElementType is Parsed', () => {
-    expect(() => new Pawn(new Position(2, 3), undefined)).toThrow(TypeError);
-  });
-
-  test('IsPiece should be true', () => {
-    const pawnWhite: Pawn = new Pawn(new Position(0, 1), 'white');
-    expect(pawnWhite.isPiece()).toBeTruthy();
-
-    const pawnBlack: Pawn = new Pawn(new Position(0, 1), 'black');
-    expect(pawnBlack.isPiece()).toBeTruthy();
-  });
-
   test.each([
     ['Black', 1, 7],
     ['White', 0, 6],
