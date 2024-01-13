@@ -71,7 +71,7 @@ describe('Pawn', () => {
     ['Black', 0, 6, 1],
     ['White', 1, 7, -1],
   ])(
-    '%s Pawn is Moveable',
+    '%s Pawn should be moveable to',
     (color: string, min: number, max: number, added: number) => {
       for (let i: number = 0; i < 10; i++) {
         const x = randomIntFromInterval(0, 7);
@@ -89,7 +89,7 @@ describe('Pawn', () => {
     ['Black', 0, 6, 1],
     ['White', 1, 7, -1],
   ])(
-    '%s Pawn is Moveable',
+    '%s Pawn should not be moveable to',
     (color: string, min: number, max: number, added: number) => {
       for (let i = 0; i < 10; i++) {
         const x = randomIntFromInterval(0, 7);
