@@ -99,12 +99,9 @@ describe('Pawn', () => {
           color == 'White' ? 'white' : 'black',
         );
 
-        let newX;
-        do {
-          newX = randomIntFromInterval(0, 7);
-        } while (newX === x);
-
-        expect(pawn.isMoveableTo(new Position(newX, y + added))).toBeFalsy();
+        expect(
+          pawn.isMoveableTo(new Position(getPositionNotEq(x), y + added)),
+        ).toBeFalsy();
       }
     },
   );
@@ -144,12 +141,7 @@ describe('Pawn', () => {
           color == 'White' ? 'white' : 'black',
         );
 
-        let newX;
-        do {
-          newX = randomIntFromInterval(0, 7);
-        } while (newX === x);
-
-        pawn.moveTo(new Position(newX, y + added));
+        pawn.moveTo(new Position(getPositionNotEq(x), y + added));
         expect(pawn.position).toEqual(currentPosition);
       }
     },
@@ -158,4 +150,12 @@ describe('Pawn', () => {
 
 const randomIntFromInterval = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min); //NOSONAR because random is okay here
+};
+
+const getPositionNotEq = (element: number): number => {
+  let newPosElement;
+  do {
+    newPosElement = randomIntFromInterval(0, 7);
+  } while (newPosElement === element);
+  return newPosElement;
 };
