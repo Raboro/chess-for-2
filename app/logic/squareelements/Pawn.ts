@@ -21,12 +21,14 @@ export default class Pawn implements SquareElement, Moveable {
   }
 
   isMoveableTo(position: Position): boolean {
-    if (this.position.notSameLine(position)) {
+    if (this.position.notSameLine(position) || this.position.same(position)) {
       return false;
     }
-    return this.squareElementType == 'black'
-      ? this.position.y < position.y
-      : this.position.y > position.y;
+
+    if (this.squareElementType == 'black') {
+      return (this.position.y == 1) ? (this.position.y + 2) >= position.y : (this.position.y + 1) == position.y;
+    } 
+    return (this.position.y == 6) ? (this.position.y - 2) <= position.y : (this.position.y - 1) == position.y;
   }
 
   moveTo(position: Position): void {
