@@ -1,8 +1,13 @@
-import { describe, expect, test } from '@jest/globals';
+import { beforeEach, describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
 import Pawn from '../Pawn';
 
 describe('Pawn', () => {
+  let x: number;
+  beforeEach(() => {
+    x = randomIntFromInterval(0, 7);
+  });
+
   test('Constructor throws TypeError when undefined as SquareElementType is Parsed', () => {
     expect(() => new Pawn(new Position(2, 3), undefined)).toThrow(TypeError);
   });
@@ -22,7 +27,6 @@ describe('Pawn', () => {
     '%s should not be moveable to same position',
     (color: string, min: number, max: number) => {
       for (let i: number = 0; i < 10; i++) {
-        const x = randomIntFromInterval(0, 7);
         const y = randomIntFromInterval(min, max);
         const position: Position = new Position(x, y);
         const pawn: Pawn = new Pawn(
@@ -40,7 +44,6 @@ describe('Pawn', () => {
   ])(
     '%s should be moveable to two positions away at the beginning',
     (color: string, y: number, newY: number) => {
-      const x = randomIntFromInterval(0, 7);
       const pawn: Pawn = new Pawn(
         new Position(x, y),
         color == 'White' ? 'white' : 'black',
@@ -56,7 +59,6 @@ describe('Pawn', () => {
     '%s should not be moveable to two positions away at the beginning',
     (color: string, added: number) => {
       for (let i: number = 0; i < 10; i++) {
-        const x = randomIntFromInterval(0, 7);
         const y = randomIntFromInterval(2, 5);
         const pawn: Pawn = new Pawn(
           new Position(x, y),
@@ -74,7 +76,6 @@ describe('Pawn', () => {
     '%s Pawn should be moveable to',
     (color: string, min: number, max: number, added: number) => {
       for (let i: number = 0; i < 10; i++) {
-        const x = randomIntFromInterval(0, 7);
         const y = randomIntFromInterval(min, max);
         const pawn: Pawn = new Pawn(
           new Position(x, y),
@@ -92,7 +93,6 @@ describe('Pawn', () => {
     '%s Pawn should not be moveable to',
     (color: string, min: number, max: number, added: number) => {
       for (let i = 0; i < 10; i++) {
-        const x = randomIntFromInterval(0, 7);
         const y = randomIntFromInterval(min, max);
         const pawn: Pawn = new Pawn(
           new Position(x, y),
@@ -113,7 +113,6 @@ describe('Pawn', () => {
     '%s Pawn moveTo valid',
     (color: string, min: number, max: number, added: number) => {
       for (let i: number = 0; i < 10; i++) {
-        const x = randomIntFromInterval(0, 7);
         const y = randomIntFromInterval(min, max);
         const pawn: Pawn = new Pawn(
           new Position(x, y),
@@ -133,7 +132,6 @@ describe('Pawn', () => {
     '%s Pawn moveTo invalid',
     (color: string, min: number, max: number, added: number) => {
       for (let i: number = 0; i < 10; i++) {
-        const x = randomIntFromInterval(0, 7);
         const y = randomIntFromInterval(min, max);
         const currentPosition = new Position(x, y);
         const pawn: Pawn = new Pawn(
