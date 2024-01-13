@@ -17,7 +17,7 @@ describe('Pawn', () => {
 
   test.each([
     ['Black', 1, 7],
-    ['White', 0, 6]
+    ['White', 0, 6],
   ])(
     '%s should not be moveable to same position',
     (color: string, min: number, max: number) => {
@@ -31,24 +31,29 @@ describe('Pawn', () => {
         );
         expect(pawn.isMoveableTo(position)).toBeFalsy();
       }
-  });
+    },
+  );
 
   test.each([
     ['Black', 1, 3],
-    ['White', 6, 4]
+    ['White', 6, 4],
   ])(
-    '%s should be moveable to two positions away at the beginning', 
+    '%s should be moveable to two positions away at the beginning',
     (color: string, y: number, newY: number) => {
       const x = randomIntFromInterval(0, 7);
-      const pawn: Pawn = new Pawn(new Position(x, y), color == 'White' ? 'white' : 'black');
+      const pawn: Pawn = new Pawn(
+        new Position(x, y),
+        color == 'White' ? 'white' : 'black',
+      );
       expect(pawn.isMoveableTo(new Position(x, newY))).toBeTruthy();
-  });
+    },
+  );
 
   test.each([
     ['Black', 0, 5, 2],
-    ['White', 2, 7, -2]
+    ['White', 2, 7, -2],
   ])(
-    '%s should not be moveable to two positions away at the beginning', 
+    '%s should not be moveable to two positions away at the beginning',
     (color: string, min: number, max: number, added: number) => {
       const x = randomIntFromInterval(0, 7);
       const y = randomIntFromInterval(min, max);
@@ -57,7 +62,8 @@ describe('Pawn', () => {
         color == 'White' ? 'white' : 'black',
       );
       expect(pawn.isMoveableTo(new Position(x, y + added))).toBeFalsy();
-  });
+    },
+  );
 
   test.each([
     ['Black', 0, 6, 1],

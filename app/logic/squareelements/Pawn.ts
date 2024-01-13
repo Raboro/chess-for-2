@@ -26,9 +26,13 @@ export default class Pawn implements SquareElement, Moveable {
     }
 
     if (this.squareElementType == 'black') {
-      return (this.position.y == 1) ? (this.position.y + 2) >= position.y : (this.position.y + 1) == position.y;
-    } 
-    return (this.position.y == 6) ? (this.position.y - 2) <= position.y : (this.position.y - 1) == position.y;
+      return this.position.y == 1
+        ? this.position.y + 2 >= position.y
+        : this.position.y + 1 == position.y;
+    }
+    return this.position.y == 6
+      ? this.position.y - 2 <= position.y
+      : this.position.y - 1 == position.y;
   }
 
   moveTo(position: Position): void {
