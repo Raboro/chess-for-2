@@ -1,23 +1,11 @@
 import Moveable from '../Moveable';
 import Position from '../Position';
-import SquareElement from '../SquareElement';
 import SquareElementType from '../SquareElementType';
+import Piece from './Piece';
 
-export default class Pawn implements SquareElement, Moveable {
-  position: Position;
-  squareElementType: Readonly<SquareElementType>;
-
+export default class Pawn extends Piece implements Moveable {
   constructor(position: Position, squareElementType: SquareElementType) {
-    if (squareElementType == undefined) {
-      throw new TypeError('Pawn should be black or white');
-    }
-
-    this.position = position;
-    this.squareElementType = squareElementType;
-  }
-
-  isPiece(): boolean {
-    return true;
+    super(position, squareElementType, 'Pawn');
   }
 
   isMoveableTo(position: Position): boolean {
