@@ -17,4 +17,24 @@ export default class Position {
   same(p: Position): boolean {
     return this.x == p.x && this.y == p.y;
   }
+
+  differenceOfOneX(p: Position): boolean {
+    return this.differenceOf(this.x, p.x, 1);
+  }
+
+  private differenceOf(n1: number, n2: number, difference: number): boolean {
+    return n1 == n2 + difference || n1 == n2 - difference;
+  }
+
+  differenceOfOneY(p: Position): boolean {
+    return this.differenceOf(this.y, p.y, 1);
+  }
+
+  differenceOfTwoX(p: Position): boolean {
+    return this.differenceOf(this.x, p.x, 2);
+  }
+
+  differenceOfTwoY(p: Position): boolean {
+    return this.differenceOf(this.y, p.y, 2);
+  }
 }
