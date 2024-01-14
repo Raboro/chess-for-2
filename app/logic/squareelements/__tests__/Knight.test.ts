@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
-import Knight from '../Knight';
 import Position from '../../Position';
+import Knight from '../Knight';
 
 describe('Knight', () => {
   test.each([['White'], ['Black']])(
