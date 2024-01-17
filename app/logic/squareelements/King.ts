@@ -1,4 +1,3 @@
-import aroundStrategy from '../move-strategies/AroundStrategy';
 import Moveable from '../Moveable';
 import Position from '../Position';
 import SquareElementType from '../SquareElementType';
@@ -10,8 +9,20 @@ export default class King extends Piece implements Moveable {
   }
 
   isMoveableTo(position: Position): boolean {
+    if (this.position.same(position)) {
+      return false;
+    }
+
     // need to implement Castling
-    return aroundStrategy(this.position, position);
+    const oneUpOrDown =
+      this.position.differenceOfOneX(position) && this.position.y == position.y;
+    const oneLeftOrRight =
+      this.position.differenceOfOneY(position) && this.position.x == position.x;
+    const oneDiagonal =
+      this.position.differenceOfOneX(position) &&
+      this.position.differenceOfOneY(position);
+
+    return oneUpOrDown || oneLeftOrRight || oneDiagonal;
   }
 
   moveTo(position: Position): void {
