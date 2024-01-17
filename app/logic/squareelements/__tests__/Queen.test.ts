@@ -34,6 +34,20 @@ describe('Queen', () => {
       expect(queen.position).toEqual(newPosition);
     },
   );
+
+  test.each([['White'], ['Black']])(
+    '%s Bishop move to invalid',
+    (color: string) => {
+      const position = new Position(3, 5);
+      const queen: Queen = new Queen(
+        position,
+        color === 'White' ? 'white' : 'black',
+      );
+      const newPosition = new Position(4, 3);
+      queen.moveTo(newPosition);
+      expect(queen.position).not.toEqual(newPosition);
+    },
+  );
 });
 
 const randomIntFromInterval = (min: number, max: number) => {
