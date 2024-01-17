@@ -1,6 +1,9 @@
 import Moveable from '../Moveable';
 import Position from '../Position';
 import SquareElementType from '../SquareElementType';
+import aroundStrategy from '../move-strategies/AroundStrategy';
+import diagonalStrategy from '../move-strategies/DiagonalStrategy';
+import straightStrategy from '../move-strategies/StraightStrategy';
 import Piece from './Piece';
 
 export default class Queen extends Piece implements Moveable {
@@ -9,10 +12,11 @@ export default class Queen extends Piece implements Moveable {
   }
 
   isMoveableTo(position: Position): boolean {
-    if (this.position.same(position)) {
-      return false;
-    }
-    return true; // need to implement the rest
+    return (
+      aroundStrategy(this.position, position) ||
+      diagonalStrategy(this.position, position) ||
+      straightStrategy(this.position, position)
+    );
   }
 
   moveTo(position: Position): void {
