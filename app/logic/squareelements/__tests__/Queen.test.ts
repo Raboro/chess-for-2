@@ -4,7 +4,7 @@ import Queen from '../Queen';
 
 describe('Queen', () => {
   test.each([['White'], ['Black']])(
-    '%s Bishop should not be moveable to same position',
+    '%s Queen should not be moveable to same position',
     (color: string) => {
       const position = new Position(
         randomIntFromInterval(0, 7),
@@ -19,7 +19,7 @@ describe('Queen', () => {
   );
 
   test.each([['White'], ['Black']])(
-    '%s Bishop move to valid',
+    '%s Queen move to valid',
     (color: string) => {
       const position = new Position(
         randomIntFromInterval(0, 6),
@@ -36,7 +36,7 @@ describe('Queen', () => {
   );
 
   test.each([['White'], ['Black']])(
-    '%s Bishop move to invalid',
+    '%s Queen move to invalid',
     (color: string) => {
       const position = new Position(3, 5);
       const queen: Queen = new Queen(
