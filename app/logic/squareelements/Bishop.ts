@@ -1,7 +1,7 @@
 import Moveable from '../Moveable';
 import Position from '../Position';
 import SquareElementType from '../SquareElementType';
-import diagonalStrategy from '../movestrategies/DiagonalStrategy';
+import diagonalStrategy from '../move-strategies/DiagonalStrategy';
 import Piece from './Piece';
 
 export default class Bishop extends Piece implements Moveable {

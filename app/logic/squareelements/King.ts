@@ -1,7 +1,7 @@
 import Moveable from '../Moveable';
 import Position from '../Position';
 import SquareElementType from '../SquareElementType';
-import aroundStrategy from '../movestrategies/AroundStrategy';
+import aroundStrategy from '../move-strategies/AroundStrategy';
 import Piece from './Piece';
 
 export default class King extends Piece implements Moveable {
