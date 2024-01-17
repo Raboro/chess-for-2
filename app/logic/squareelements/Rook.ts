@@ -1,7 +1,7 @@
+import straightStrategy from '../move-strategies/StraightStrategy';
 import Moveable from '../Moveable';
 import Position from '../Position';
 import SquareElementType from '../SquareElementType';
-import straightStrategy from '../move-strategies/StraightStrategy';
 import Piece from './Piece';
 
 export default class Rook extends Piece implements Moveable {
