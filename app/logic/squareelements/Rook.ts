@@ -1,6 +1,7 @@
 import Moveable from '../Moveable';
 import Position from '../Position';
 import SquareElementType from '../SquareElementType';
+import straightStrategy from '../movestrategies/StraightStrategy';
 import Piece from './Piece';
 
 export default class Rook extends Piece implements Moveable {
@@ -9,10 +10,7 @@ export default class Rook extends Piece implements Moveable {
   }
 
   isMoveableTo(position: Position): boolean {
-    if (this.position.same(position)) {
-      return false;
-    }
-    return this.position.x == position.x || this.position.y == position.y;
+    return straightStrategy(this.position, position);
   }
 
   moveTo(position: Position): void {
