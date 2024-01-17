@@ -79,6 +79,43 @@ describe('Queen', () => {
   );
 
   test.each([['White'], ['Black']])(
+    '%s Queen should not be moveable like Knight',
+    (color: string) => {
+      const queen: Queen = new Queen(
+        new Position(4, 4),
+        color == 'White' ? 'white' : 'black',
+      );
+
+      // jumps like Knight
+      expect(queen.isMoveableTo(new Position(2, 3))).toBeFalsy();
+      expect(queen.isMoveableTo(new Position(2, 5))).toBeFalsy();
+      expect(queen.isMoveableTo(new Position(2, 5))).toBeFalsy();
+      expect(queen.isMoveableTo(new Position(2, 5))).toBeFalsy();
+    },
+  );
+
+  test.each([['White'], ['Black']])(
+    '%s Queen should not be moveable to',
+    (color: string) => {
+      const queen: Queen = new Queen(
+        new Position(4, 4),
+        color == 'White' ? 'white' : 'black',
+      );
+
+      expect(queen.isMoveableTo(new Position(0, 7))).toBeFalsy();
+      expect(queen.isMoveableTo(new Position(7, 0))).toBeFalsy();
+
+      expect(queen.isMoveableTo(new Position(0, 3))).toBeFalsy();
+      expect(queen.isMoveableTo(new Position(0, 5))).toBeFalsy();
+      expect(queen.isMoveableTo(new Position(7, 3))).toBeFalsy();
+      expect(queen.isMoveableTo(new Position(7, 5))).toBeFalsy();
+
+      expect(queen.isMoveableTo(new Position(3, 7))).toBeFalsy();
+      expect(queen.isMoveableTo(new Position(5, 1))).toBeFalsy();
+    },
+  );
+
+  test.each([['White'], ['Black']])(
     '%s Queen move to valid',
     (color: string) => {
       const position = new Position(
