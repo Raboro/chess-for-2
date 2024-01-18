@@ -10,6 +10,7 @@ interface Props {
 const Square = (props: Readonly<Props>) => {
   return (
     <TouchableOpacity
+      testID="Square"
       style={{
         width: props.size,
         height: props.size,
