@@ -1,6 +1,6 @@
 import React from 'react';
-import SquareType from '../../constants/SquareType';
 import { TouchableOpacity } from 'react-native';
+import SquareType from '../../constants/SquareType';
 
 interface Props {
   size: number;
