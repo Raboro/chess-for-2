@@ -1,11 +1,10 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import SquareType from '../../constants/SquareType';
 import SquareColor from '../../constants/SquareColor';
 
 interface Props {
   size: number;
-  squareType: SquareType;
+  squareColor: SquareColor;
 }
 
 const Square = (props: Readonly<Props>) => {
@@ -15,8 +14,7 @@ const Square = (props: Readonly<Props>) => {
       style={{
         width: props.size,
         height: props.size,
-        backgroundColor:
-          props.squareType === 'black' ? SquareColor.BLACK : SquareColor.WHITE,
+        backgroundColor: props.squareColor,
       }}
     ></TouchableOpacity>
   );

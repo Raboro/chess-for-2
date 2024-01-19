@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 import Square from '../Square/Square';
+import SquareColor from '../../constants/SquareColor';
 
 interface Props {
   size: number;
@@ -17,7 +18,7 @@ const Board = (props: Readonly<Props>) => {
           <Square
             key={`square-${index}-${i}`}
             size={squareSize}
-            squareType={(index + i) % 2 === 0 ? 'white' : 'black'}
+            squareColor={(index + i) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK}
           />
         ))}
       </View>
