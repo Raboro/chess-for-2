@@ -13,6 +13,7 @@ interface PieceImagePaths {
   WHITE_PAWN: ImageSourcePropType;
   WHITE_QUEEN: ImageSourcePropType;
   WHITE_ROOK: ImageSourcePropType;
+  EMPTY_IMAGE_PATH: ImageSourcePropType;
 }
 
 export const PieceImagePaths: PieceImagePaths = {
@@ -28,4 +29,5 @@ export const PieceImagePaths: PieceImagePaths = {
   WHITE_PAWN: require('../assets/White_Pawn.png'),
   WHITE_QUEEN: require('../assets/White_Queen.png'),
   WHITE_ROOK: require('../assets/White_Rook.png'),
+  EMPTY_IMAGE_PATH: require('../assets/Empty.png'),
 };
