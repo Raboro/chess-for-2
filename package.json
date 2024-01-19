@@ -15,7 +15,6 @@
     "test:verbose": "jest --verbose",
     "test:coverage": "jest --coverage --collectCoverageFrom='./**'",
     "test:coverage:verbose": "jest --coverage --verbose --collectCoverageFrom='./**'"
-
   },
   "dependencies": {
     "@react-navigation/stack": "^6.3.20",
