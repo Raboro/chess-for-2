@@ -1,6 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
 import Queen from '../Queen';
+import { PieceImagePaths } from '../../PieceImagePaths';
 
 describe('Queen', () => {
   test.each([['White'], ['Black']])(
@@ -145,6 +146,14 @@ describe('Queen', () => {
       expect(queen.position).not.toEqual(newPosition);
     },
   );
+
+  test('Queen should be displayed correctly', () => {
+    const blackQueen: Queen = new Queen(new Position(1, 0), 'black');
+    const whiteQueen: Queen = new Queen(new Position(1, 0), 'white');
+
+    expect(blackQueen.display()).toEqual(PieceImagePaths.BLACK_QUEEN);
+    expect(whiteQueen.display()).toEqual(PieceImagePaths.WHITE_QUEEN);
+  });
 });
 
 const randomIntFromInterval = (min: number, max: number) => {

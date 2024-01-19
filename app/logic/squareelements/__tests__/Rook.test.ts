@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
 import Rook from '../Rook';
+import { PieceImagePaths } from '../../PieceImagePaths';
 
 describe('Rook', () => {
   let x: number, y: number;
@@ -103,6 +104,14 @@ describe('Rook', () => {
       }
     },
   );
+
+  test('Rook should be displayed correctly', () => {
+    const blackRook: Rook = new Rook(new Position(1, 0), 'black');
+    const whiteRook: Rook = new Rook(new Position(1, 0), 'white');
+
+    expect(blackRook.display()).toEqual(PieceImagePaths.BLACK_ROOK);
+    expect(whiteRook.display()).toEqual(PieceImagePaths.WHITE_ROOK);
+  });
 });
 
 const randomIntFromInterval = (min: number, max: number) => {

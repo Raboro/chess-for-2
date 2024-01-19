@@ -1,6 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
 import Bishop from '../Bishop';
+import { PieceImagePaths } from '../../PieceImagePaths';
 
 describe('Bishop', () => {
   test.each([['White'], ['Black']])(
@@ -79,6 +80,14 @@ describe('Bishop', () => {
     const newPosition: Position = new Position(1, 1);
     bishop.moveTo(newPosition);
     expect(bishop.position).not.toEqual(newPosition);
+  });
+
+  test('Bishop should be displayed correctly', () => {
+    const blackBishop: Bishop = new Bishop(new Position(1, 0), 'black');
+    const whiteBishop: Bishop = new Bishop(new Position(1, 0), 'white');
+
+    expect(blackBishop.display()).toEqual(PieceImagePaths.BLACK_BISHOP);
+    expect(whiteBishop.display()).toEqual(PieceImagePaths.WHITE_BISHOP);
   });
 });
 

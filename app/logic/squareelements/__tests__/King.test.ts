@@ -1,6 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
 import King from '../King';
+import { PieceImagePaths } from '../../PieceImagePaths';
 
 describe('King', () => {
   test.each([['White'], ['Black']])(
@@ -69,5 +70,13 @@ describe('King', () => {
     const newPos: Position = new Position(2, 4);
     king.moveTo(newPos);
     expect(king.position).not.toEqual(newPos);
+  });
+
+  test('King should be displayed correctly', () => {
+    const blackKing: King = new King(new Position(1, 0), 'black');
+    const whiteKing: King = new King(new Position(1, 0), 'white');
+
+    expect(blackKing.display()).toEqual(PieceImagePaths.BLACK_KING);
+    expect(whiteKing.display()).toEqual(PieceImagePaths.WHITE_KING);
   });
 });

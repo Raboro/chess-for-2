@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
 import Pawn from '../Pawn';
+import { PieceImagePaths } from '../../PieceImagePaths';
 
 describe('Pawn', () => {
   let x: number;
@@ -132,6 +133,14 @@ describe('Pawn', () => {
       }
     },
   );
+
+  test('Pawn should be displayed correctly', () => {
+    const blackPawn: Pawn = new Pawn(new Position(1, 0), 'black');
+    const whitePawn: Pawn = new Pawn(new Position(1, 0), 'white');
+
+    expect(blackPawn.display()).toEqual(PieceImagePaths.BLACK_PAWN);
+    expect(whitePawn.display()).toEqual(PieceImagePaths.WHITE_PAWN);
+  });
 });
 
 const randomIntFromInterval = (min: number, max: number) => {
