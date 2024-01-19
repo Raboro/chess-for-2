@@ -1,6 +1,8 @@
 import { View } from 'react-native';
 import SquareColor from '../../constants/SquareColor';
 import Square from '../Square/Square';
+import Empty from '../../logic/squareelements/Empty';
+import Position from '../../logic/Position';
 
 interface Props {
   size: number;
@@ -21,6 +23,7 @@ const Board = (props: Readonly<Props>) => {
             squareColor={
               (index + i) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK
             }
+            squareElement={new Empty(new Position(index, i))}
           />
         ))}
       </View>
