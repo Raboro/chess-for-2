@@ -1,8 +1,8 @@
 import { ImageSourcePropType } from 'react-native';
 import Position from '../Position';
 import SquareElement from '../SquareElement';
-import SquareElementType from '../SquareElementType';
 import { SquareElementImagePaths } from '../SquareElementImagePaths';
+import SquareElementType from '../SquareElementType';
 
 export default class Empty implements SquareElement {
   position: Position;

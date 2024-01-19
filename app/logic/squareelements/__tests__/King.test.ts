@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
-import { SquareElementImagePaths } from '../../SquareElementImagePaths';
 import Position from '../../Position';
+import { SquareElementImagePaths } from '../../SquareElementImagePaths';
 import King from '../King';
 
 describe('King', () => {

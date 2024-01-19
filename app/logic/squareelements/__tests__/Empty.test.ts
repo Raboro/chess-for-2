@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
-import Empty from '../Empty';
 import { SquareElementImagePaths } from '../../SquareElementImagePaths';
+import Empty from '../Empty';
 
 describe('Empty', () => {
   let e: Empty;

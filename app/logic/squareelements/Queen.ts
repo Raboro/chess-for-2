@@ -3,8 +3,8 @@ import Displayable from '../Displayable';
 import diagonalStrategy from '../move-strategies/DiagonalStrategy';
 import straightStrategy from '../move-strategies/StraightStrategy';
 import Moveable from '../Moveable';
-import { SquareElementImagePaths } from '../SquareElementImagePaths';
 import Position from '../Position';
+import { SquareElementImagePaths } from '../SquareElementImagePaths';
 import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
 

@@ -15,7 +15,6 @@ interface Props {
 }
 
 const Square = (props: Readonly<Props>) => {
-
   const displayPiece = (): ImageSourcePropType => {
     return props.squareElement.display();
   };
