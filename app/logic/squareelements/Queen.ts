@@ -1,11 +1,14 @@
+import { ImageSourcePropType } from 'react-native';
+import Displayable from '../Displayable';
 import diagonalStrategy from '../move-strategies/DiagonalStrategy';
 import straightStrategy from '../move-strategies/StraightStrategy';
 import Moveable from '../Moveable';
 import Position from '../Position';
-import SquareElementType from '../SquareElementType';
+import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
+import { PieceImagePaths } from '../PieceImagePaths';
 
-export default class Queen extends Piece implements Moveable {
+export default class Queen extends Piece implements Moveable, Displayable {
   constructor(position: Position, squareElementType: SquareElementType) {
     super(position, squareElementType, 'Queen');
   }
@@ -21,5 +24,11 @@ export default class Queen extends Piece implements Moveable {
     if (this.isMoveableTo(position)) {
       this.position = position;
     }
+  }
+
+  display(): ImageSourcePropType {
+    return isWhite(this.squareElementType)
+      ? PieceImagePaths.WHITE_QUEEN
+      : PieceImagePaths.BLACK_QUEEN;
   }
 }

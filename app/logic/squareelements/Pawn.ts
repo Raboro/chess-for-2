@@ -1,9 +1,12 @@
+import { ImageSourcePropType } from 'react-native';
+import Displayable from '../Displayable';
 import Moveable from '../Moveable';
 import Position from '../Position';
-import SquareElementType from '../SquareElementType';
+import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
+import { PieceImagePaths } from '../PieceImagePaths';
 
-export default class Pawn extends Piece implements Moveable {
+export default class Pawn extends Piece implements Moveable, Displayable {
   constructor(position: Position, squareElementType: SquareElementType) {
     super(position, squareElementType, 'Pawn');
   }
@@ -27,5 +30,11 @@ export default class Pawn extends Piece implements Moveable {
     if (this.isMoveableTo(position)) {
       this.position = position;
     }
+  }
+
+  display(): ImageSourcePropType {
+    return isWhite(this.squareElementType)
+      ? PieceImagePaths.WHITE_PAWN
+      : PieceImagePaths.BLACK_PAWN;
   }
 }
