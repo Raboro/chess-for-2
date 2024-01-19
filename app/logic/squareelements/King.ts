@@ -1,7 +1,7 @@
 import { ImageSourcePropType } from 'react-native';
 import Displayable from '../Displayable';
 import Moveable from '../Moveable';
-import { PieceImagePaths } from '../PieceImagePaths';
+import { SquareElementImagePaths } from '../SquareElementImagePaths';
 import Position from '../Position';
 import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
@@ -36,7 +36,7 @@ export default class King extends Piece implements Moveable, Displayable {
 
   display(): ImageSourcePropType {
     return isWhite(this.squareElementType)
-      ? PieceImagePaths.WHITE_KING
-      : PieceImagePaths.BLACK_KING;
+      ? SquareElementImagePaths.WHITE_KING
+      : SquareElementImagePaths.BLACK_KING;
   }
 }

@@ -3,7 +3,7 @@ import Displayable from '../Displayable';
 import diagonalStrategy from '../move-strategies/DiagonalStrategy';
 import straightStrategy from '../move-strategies/StraightStrategy';
 import Moveable from '../Moveable';
-import { PieceImagePaths } from '../PieceImagePaths';
+import { SquareElementImagePaths } from '../SquareElementImagePaths';
 import Position from '../Position';
 import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
@@ -28,7 +28,7 @@ export default class Queen extends Piece implements Moveable, Displayable {
 
   display(): ImageSourcePropType {
     return isWhite(this.squareElementType)
-      ? PieceImagePaths.WHITE_QUEEN
-      : PieceImagePaths.BLACK_QUEEN;
+      ? SquareElementImagePaths.WHITE_QUEEN
+      : SquareElementImagePaths.BLACK_QUEEN;
   }
 }

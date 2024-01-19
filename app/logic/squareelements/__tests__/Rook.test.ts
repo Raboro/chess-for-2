@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
-import { PieceImagePaths } from '../../PieceImagePaths';
+import { SquareElementImagePaths } from '../../SquareElementImagePaths';
 import Position from '../../Position';
 import Rook from '../Rook';
 
@@ -109,8 +109,8 @@ describe('Rook', () => {
     const blackRook: Rook = new Rook(new Position(1, 0), 'black');
     const whiteRook: Rook = new Rook(new Position(1, 0), 'white');
 
-    expect(blackRook.display()).toEqual(PieceImagePaths.BLACK_ROOK);
-    expect(whiteRook.display()).toEqual(PieceImagePaths.WHITE_ROOK);
+    expect(blackRook.display()).toEqual(SquareElementImagePaths.BLACK_ROOK);
+    expect(whiteRook.display()).toEqual(SquareElementImagePaths.WHITE_ROOK);
   });
 });
 

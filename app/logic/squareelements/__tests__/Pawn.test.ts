@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
-import { PieceImagePaths } from '../../PieceImagePaths';
+import { SquareElementImagePaths } from '../../SquareElementImagePaths';
 import Position from '../../Position';
 import Pawn from '../Pawn';
 
@@ -138,8 +138,8 @@ describe('Pawn', () => {
     const blackPawn: Pawn = new Pawn(new Position(1, 0), 'black');
     const whitePawn: Pawn = new Pawn(new Position(1, 0), 'white');
 
-    expect(blackPawn.display()).toEqual(PieceImagePaths.BLACK_PAWN);
-    expect(whitePawn.display()).toEqual(PieceImagePaths.WHITE_PAWN);
+    expect(blackPawn.display()).toEqual(SquareElementImagePaths.BLACK_PAWN);
+    expect(whitePawn.display()).toEqual(SquareElementImagePaths.WHITE_PAWN);
   });
 });
 

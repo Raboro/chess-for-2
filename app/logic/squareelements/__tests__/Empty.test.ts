@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
 import Empty from '../Empty';
-import { PieceImagePaths } from '../../PieceImagePaths';
+import { SquareElementImagePaths } from '../../SquareElementImagePaths';
 
 describe('Empty', () => {
   let e: Empty;
@@ -21,6 +21,6 @@ describe('Empty', () => {
   test('Empty should be displayed correctly', () => {
     const empty: Empty = new Empty(new Position(1, 0));
 
-    expect(empty.display()).toEqual(PieceImagePaths.EMPTY_IMAGE_PATH);
+    expect(empty.display()).toEqual(SquareElementImagePaths.EMPTY_IMAGE_PATH);
   });
 });

@@ -1,6 +1,6 @@
 import { ImageSourcePropType } from 'react-native';
 
-interface PieceImagePaths {
+interface SquareElementImagePaths {
   BLACK_BISHOP: ImageSourcePropType;
   BLACK_KING: ImageSourcePropType;
   BLACK_KNIGHT: ImageSourcePropType;
@@ -16,7 +16,7 @@ interface PieceImagePaths {
   EMPTY_IMAGE_PATH: ImageSourcePropType;
 }
 
-export const PieceImagePaths: PieceImagePaths = {
+export const SquareElementImagePaths: SquareElementImagePaths = {
   BLACK_BISHOP: require('../assets/Black_Bishop.png'),
   BLACK_KING: require('../assets/Black_King.png'),
   BLACK_KNIGHT: require('../assets/Black_Knight.png'),

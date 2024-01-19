@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { PieceImagePaths } from '../../PieceImagePaths';
+import { SquareElementImagePaths } from '../../SquareElementImagePaths';
 import Position from '../../Position';
 import Bishop from '../Bishop';
 
@@ -86,8 +86,8 @@ describe('Bishop', () => {
     const blackBishop: Bishop = new Bishop(new Position(1, 0), 'black');
     const whiteBishop: Bishop = new Bishop(new Position(1, 0), 'white');
 
-    expect(blackBishop.display()).toEqual(PieceImagePaths.BLACK_BISHOP);
-    expect(whiteBishop.display()).toEqual(PieceImagePaths.WHITE_BISHOP);
+    expect(blackBishop.display()).toEqual(SquareElementImagePaths.BLACK_BISHOP);
+    expect(whiteBishop.display()).toEqual(SquareElementImagePaths.WHITE_BISHOP);
   });
 });
 
