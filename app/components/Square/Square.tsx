@@ -4,7 +4,7 @@ import SquareColor from '../../constants/SquareColor';
 import SquareElement from '../../logic/SquareElement';
 import Displayable from '../../logic/Displayable';
 
-const EMPTY_IMAGE_PATH: ImageSourcePropType = require('../../assets/Empty.png');
+const EMPTY_IMAGE_PATH: ImageSourcePropType = require('../../assets/Empty.png'); // eslint-disable-line
 
 interface Props {
   size: number;
@@ -14,7 +14,7 @@ interface Props {
 
 const Square = (props: Readonly<Props>) => {
 
-  const isDisplayable = (obj: any): obj is Displayable => {
+  const isDisplayable = <T extends object>(obj: T): obj is T & Displayable => {
     return 'display' in obj;
   }
 
