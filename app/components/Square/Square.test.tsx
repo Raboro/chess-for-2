@@ -1,15 +1,19 @@
 import { describe, expect, test } from '@jest/globals';
 import { render } from '@testing-library/react-native';
 import SquareColor from '../../constants/SquareColor';
-import Square from './Square';
-import Empty from '../../logic/squareelements/Empty';
 import Position from '../../logic/Position';
+import Empty from '../../logic/squareelements/Empty';
 import Queen from '../../logic/squareelements/Queen';
+import Square from './Square';
 
 describe('Square UI', () => {
   test('Square should have correct size', () => {
     const { getByTestId } = render(
-      <Square size={100} squareColor={SquareColor.WHITE} squareElement={new Queen(new Position(1, 2), 'black')} />,
+      <Square
+        size={100}
+        squareColor={SquareColor.WHITE}
+        squareElement={new Queen(new Position(1, 2), 'black')}
+      />,
     );
     const square = getByTestId('Square');
     expect(square.props.style.width).toBe(100);
@@ -18,10 +22,18 @@ describe('Square UI', () => {
 
   test('Square should have correct backgroundColor based of SquareType', () => {
     const rendWhite = render(
-      <Square size={100} squareColor={SquareColor.WHITE} squareElement={new Empty(new Position(1, 2))} />,
+      <Square
+        size={100}
+        squareColor={SquareColor.WHITE}
+        squareElement={new Empty(new Position(1, 2))}
+      />,
     );
     const rendBlack = render(
-      <Square size={100} squareColor={SquareColor.BLACK} squareElement={new Empty(new Position(1, 2))} />,
+      <Square
+        size={100}
+        squareColor={SquareColor.BLACK}
+        squareElement={new Empty(new Position(1, 2))}
+      />,
     );
 
     const squareWhite = rendWhite.getByTestId('Square');

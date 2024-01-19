@@ -1,10 +1,10 @@
 import { ImageSourcePropType } from 'react-native';
 import Displayable from '../Displayable';
 import Moveable from '../Moveable';
+import { PieceImagePaths } from '../PieceImagePaths';
 import Position from '../Position';
 import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
-import { PieceImagePaths } from '../PieceImagePaths';
 
 export default class Pawn extends Piece implements Moveable, Displayable {
   constructor(position: Position, squareElementType: SquareElementType) {

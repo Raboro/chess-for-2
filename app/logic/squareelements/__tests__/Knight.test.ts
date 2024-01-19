@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
+import { PieceImagePaths } from '../../PieceImagePaths';
 import Position from '../../Position';
 import Knight from '../Knight';
-import { PieceImagePaths } from '../../PieceImagePaths';
 
 describe('Knight', () => {
   test.each([['White'], ['Black']])(

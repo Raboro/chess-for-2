@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import SquareColor from '../../constants/SquareColor';
-import Square from '../Square/Square';
-import Empty from '../../logic/squareelements/Empty';
 import Position from '../../logic/Position';
+import Empty from '../../logic/squareelements/Empty';
+import Square from '../Square/Square';
 
 interface Props {
   size: number;

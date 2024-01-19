@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
+import { PieceImagePaths } from '../../PieceImagePaths';
 import Position from '../../Position';
 import Rook from '../Rook';
-import { PieceImagePaths } from '../../PieceImagePaths';
 
 describe('Rook', () => {
   let x: number, y: number;

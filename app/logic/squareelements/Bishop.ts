@@ -2,10 +2,10 @@ import { ImageSourcePropType } from 'react-native';
 import Displayable from '../Displayable';
 import diagonalStrategy from '../move-strategies/DiagonalStrategy';
 import Moveable from '../Moveable';
+import { PieceImagePaths } from '../PieceImagePaths';
 import Position from '../Position';
 import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
-import { PieceImagePaths } from '../PieceImagePaths';
 
 export default class Bishop extends Piece implements Moveable, Displayable {
   constructor(position: Position, squareElementType: SquareElementType) {

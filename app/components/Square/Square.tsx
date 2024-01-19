@@ -1,8 +1,13 @@
 import React from 'react';
-import { TouchableOpacity, View, Image, ImageSourcePropType } from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import SquareColor from '../../constants/SquareColor';
-import SquareElement from '../../logic/SquareElement';
 import Displayable from '../../logic/Displayable';
+import SquareElement from '../../logic/SquareElement';
 
 const EMPTY_IMAGE_PATH: ImageSourcePropType = require('../../assets/Empty.png'); // eslint-disable-line
 
@@ -13,10 +18,9 @@ interface Props {
 }
 
 const Square = (props: Readonly<Props>) => {
-
   const isDisplayable = <T extends object>(obj: T): obj is T & Displayable => {
     return 'display' in obj;
-  }
+  };
 
   const displayPiece = (): ImageSourcePropType => {
     if (isDisplayable(props.squareElement)) {
@@ -24,7 +28,7 @@ const Square = (props: Readonly<Props>) => {
       return d.display();
     }
     return EMPTY_IMAGE_PATH; // fallback, but should never be executed, because of the isPiece check before
-  }
+  };
 
   return (
     <TouchableOpacity

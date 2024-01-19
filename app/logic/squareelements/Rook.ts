@@ -2,10 +2,10 @@ import { ImageSourcePropType } from 'react-native';
 import Displayable from '../Displayable';
 import straightStrategy from '../move-strategies/StraightStrategy';
 import Moveable from '../Moveable';
+import { PieceImagePaths } from '../PieceImagePaths';
 import Position from '../Position';
 import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
-import { PieceImagePaths } from '../PieceImagePaths';
 
 export default class Rook extends Piece implements Moveable, Displayable {
   constructor(position: Position, squareElementType: SquareElementType) {
