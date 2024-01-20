@@ -1,9 +1,9 @@
+import { useState } from 'react';
 import { View } from 'react-native';
 import SquareColor from '../../constants/SquareColor';
+import { Board as BoardLogic } from '../../logic/Board';
 import Position from '../../logic/Position';
 import Square from '../Square/Square';
-import { useState } from 'react';
-import { Board as BoardLogic } from '../../logic/Board';
 
 interface Props {
   size: number;

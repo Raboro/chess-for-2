@@ -38,5 +38,5 @@ describe('Position', () => {
     const p1: Position = new Position(0, 2);
     expect(p1.same(new Position(0, 2))).toBeTruthy();
     expect(p1.same(new Position(1, 2))).toBeFalsy();
-  })
+  });
 });

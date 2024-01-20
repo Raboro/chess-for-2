@@ -3,7 +3,7 @@ import { Board } from '../Board';
 import Position from '../Position';
 
 describe('Board', () => {
-  let board: Board;  
+  let board: Board;
   beforeEach(() => {
     board = new Board();
   });
