@@ -12,7 +12,7 @@ interface Props {
 const LINE_SIZE = 8;
 
 const Board = (props: Readonly<Props>) => {
-  const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic());
+  const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic()); // eslint-disable-line
   const squareSize: number = props.size / LINE_SIZE;
 
   const renderRow = (index: number) => {
