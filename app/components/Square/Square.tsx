@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import SquareColor from '../../constants/SquareColor';
 import SquareElement from '../../logic/SquareElement';
+import { styles } from './SquareStyle';
 
 interface Props {
   size: number;
@@ -29,7 +30,7 @@ const Square = (props: Readonly<Props>) => {
       }}
     >
       {props.squareElement.isPiece() && (
-        <View style={{ flex: 1, justifyContent: 'center', marginLeft: '7%', marginBottom: '5%' }}>
+        <View style={styles.image}>
           <Image source={displayPiece()} />
         </View>
       )}
