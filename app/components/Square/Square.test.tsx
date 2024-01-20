@@ -13,6 +13,7 @@ describe('Square UI', () => {
         size={100}
         squareColor={SquareColor.WHITE}
         squareElement={new Queen(new Position(1, 2), 'black')}
+        isMoveableTo={true}
       />,
     );
     const square = getByTestId('Square');
@@ -26,6 +27,7 @@ describe('Square UI', () => {
         size={100}
         squareColor={SquareColor.WHITE}
         squareElement={new Empty(new Position(1, 2))}
+        isMoveableTo={true}
       />,
     );
     const rendBlack = render(
@@ -33,6 +35,7 @@ describe('Square UI', () => {
         size={100}
         squareColor={SquareColor.BLACK}
         squareElement={new Empty(new Position(1, 2))}
+        isMoveableTo={true}
       />,
     );
 
