@@ -26,6 +26,7 @@ const Board = (props: Readonly<Props>) => {
               (index + i) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK
             }
             squareElement={boardLogic.getAtPosition(new Position(i, index))}
+            isMoveableTo={false}
           />
         ))}
       </View>

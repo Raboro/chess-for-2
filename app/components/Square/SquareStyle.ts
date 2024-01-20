@@ -7,4 +7,15 @@ export const styles = StyleSheet.create({
     paddingLeft: '7%',
     paddingBottom: '5%',
   },
+
+  isMoveableTo: {
+    borderColor: '#423A3B',
+    borderWidth: 2,
+    paddingLeft: '3%',
+    borderRadius: 25,
+  },
+
+  moveableToPiece: {
+    borderColor: 'black',
+  },
 });

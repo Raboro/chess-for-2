@@ -13,6 +13,7 @@ interface Props {
   size: number;
   squareColor: SquareColor;
   squareElement: SquareElement;
+  isMoveableTo: boolean;
 }
 
 const Square = (props: Readonly<Props>) => {
@@ -29,11 +30,15 @@ const Square = (props: Readonly<Props>) => {
         backgroundColor: props.squareColor,
       }}
     >
-      {props.squareElement.isPiece() && (
-        <View style={styles.image}>
-          <Image source={displayPiece()} />
-        </View>
-      )}
+      <View
+        style={[
+          styles.image,
+          props.isMoveableTo ? styles.isMoveableTo : {},
+          props.squareElement.isPiece() ? styles.moveableToPiece : {},
+        ]}
+      >
+        <Image source={displayPiece()} />
+      </View>
     </TouchableOpacity>
   );
 };
