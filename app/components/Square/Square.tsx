@@ -29,7 +29,7 @@ const Square = (props: Readonly<Props>) => {
       }}
     >
       {props.squareElement.isPiece() && (
-        <View style={{ flex: 1, justifyContent: 'center', marginLeft: '5%' }}>
+        <View style={{ flex: 1, justifyContent: 'center', marginLeft: '7%', marginBottom: '5%' }}>
           <Image source={displayPiece()} />
         </View>
       )}
