@@ -1,8 +1,9 @@
 import { View } from 'react-native';
 import SquareColor from '../../constants/SquareColor';
 import Position from '../../logic/Position';
-import Empty from '../../logic/squareelements/Empty';
 import Square from '../Square/Square';
+import { useState } from 'react';
+import { Board as BoardLogic } from '../../logic/Board';
 
 interface Props {
   size: number;
@@ -11,6 +12,7 @@ interface Props {
 const LINE_SIZE = 8;
 
 const Board = (props: Readonly<Props>) => {
+  const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic());
   const squareSize: number = props.size / LINE_SIZE;
 
   const renderRow = (index: number) => {
@@ -23,7 +25,7 @@ const Board = (props: Readonly<Props>) => {
             squareColor={
               (index + i) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK
             }
-            squareElement={new Empty(new Position(index, i))}
+            squareElement={boardLogic.getAtPosition(new Position(i, index))}
           />
         ))}
       </View>
