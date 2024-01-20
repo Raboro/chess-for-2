@@ -33,4 +33,10 @@ describe('Position', () => {
     expect(p.notSameLine(new Position(0, 7))).not.toBeTruthy();
     expect(p.notSameLine(new Position(0, 1))).not.toBeTruthy();
   });
+
+  test('Positions should be the same and not same', () => {
+    const p1: Position = new Position(0, 2);
+    expect(p1.same(new Position(0, 2))).toBeTruthy();
+    expect(p1.same(new Position(1, 2))).toBeFalsy();
+  })
 });
