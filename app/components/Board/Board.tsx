@@ -15,17 +15,17 @@ const Board = (props: Readonly<Props>) => {
   const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic()); // eslint-disable-line
   const squareSize: number = props.size / LINE_SIZE;
 
-  const renderRow = (index: number) => {
+  const renderRow = (row: number) => {
     return (
-      <View key={`row-${index}`} style={{ flexDirection: 'row' }}>
-        {Array.from({ length: LINE_SIZE }, (_, i) => (
+      <View key={`row-${row}`} style={{ flexDirection: 'row' }}>
+        {Array.from({ length: LINE_SIZE }, (_, column) => (
           <Square
-            key={`square-${index}-${i}`}
+            key={`square-${row}-${column}`}
             size={squareSize}
             squareColor={
-              (index + i) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK
+              (row + column) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK
             }
-            squareElement={boardLogic.getAtPosition(new Position(i, index))}
+            squareElement={boardLogic.getAtPosition(new Position(column, row))}
             isMoveableTo={false}
           />
         ))}
