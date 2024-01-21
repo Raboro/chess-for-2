@@ -17,14 +17,16 @@ export default class Pawn extends Piece implements Moveable, Displayable {
     }
 
     if (this.squareElementType == 'black') {
-      if (this.position.y >= position.y) { // not behind pawn
+      if (this.position.y >= position.y) {
+        // not behind pawn
         return false;
       }
       return this.position.y == 1
         ? this.position.y + 2 >= position.y
         : this.position.y + 1 == position.y;
     }
-    if (this.position.y <= position.y) { // not behind pawn
+    if (this.position.y <= position.y) {
+      // not behind pawn
       return false;
     }
     return this.position.y == 6
