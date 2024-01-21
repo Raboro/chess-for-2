@@ -1,6 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
 import Piece from '../Piece';
+import { SquareElementImagePaths } from '../../SquareElementImagePaths';
 
 describe('Piece', () => {
   test('Constructor throws TypeError when undefined as SquareElementType is Parsed', () => {
@@ -15,5 +16,10 @@ describe('Piece', () => {
 
     const pieceBlack: Piece = new Piece(new Position(0, 1), 'black', 'Piece');
     expect(pieceBlack.isPiece()).toBeTruthy();
+  });
+
+  test('Piece should be correctly displayed', () => {
+    const piece: Piece = new Piece(new Position(1, 2), 'white', 'Piece');
+    expect(piece.display()).toBe(SquareElementImagePaths.EMPTY_IMAGE_PATH);
   });
 });
