@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
 import Position from '../../logic/Position';
-import Square from '../Square/Square';
 import SquareElement from '../../logic/SquareElement';
+import Square from '../Square/Square';
 
 interface Props {
   size: number;
@@ -20,7 +20,7 @@ const Board = (props: Readonly<Props>) => {
   const selectSquare = (squareElement: SquareElement) => {
     boardLogic.selectSquare(squareElement);
     setSelectTriggered(!selectTriggered);
-  }
+  };
 
   const renderRow = (row: number) => {
     return (

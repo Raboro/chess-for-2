@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  Pressable,
-  View,
-} from 'react-native';
+import { Image, ImageSourcePropType, Pressable, View } from 'react-native';
 import SquareColor from '../../constants/SquareColor';
 import SquareElement from '../../logic/SquareElement';
 import { styles } from './SquareStyle';
@@ -33,7 +28,7 @@ const Square = (props: Readonly<Props>) => {
       onPress={() => props.selectSquare(props.squareElement)}
     >
       <View
-        testID='SquareImage'
+        testID="SquareImage"
         style={[
           styles.image,
           props.isMoveableTo ? styles.isMoveableTo : {},

@@ -1,5 +1,5 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import { render, fireEvent } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import SquareColor from '../../constants/SquareColor';
 import Position from '../../logic/Position';
 import Empty from '../../logic/squareelements/Empty';

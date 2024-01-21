@@ -18,7 +18,8 @@ describe('Board UI', () => {
 
     fireEvent(firstSquare, 'press');
 
-    expect(rend.getAllByTestId('SquareImage')[1].props.style[1]).not.toEqual({});
-
+    expect(rend.getAllByTestId('SquareImage')[1].props.style[1]).not.toEqual(
+      {},
+    );
   });
 });

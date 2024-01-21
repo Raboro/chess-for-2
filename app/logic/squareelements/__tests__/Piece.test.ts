@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
-import Piece from '../Piece';
 import { SquareElementImagePaths } from '../../SquareElementImagePaths';
+import Piece from '../Piece';
 
 describe('Piece', () => {
   test('Constructor throws TypeError when undefined as SquareElementType is Parsed', () => {
