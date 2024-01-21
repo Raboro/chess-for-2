@@ -33,6 +33,7 @@ const Square = (props: Readonly<Props>) => {
       onPress={() => props.selectSquare(props.squareElement)}
     >
       <View
+        testID='SquareImage'
         style={[
           styles.image,
           props.isMoveableTo ? styles.isMoveableTo : {},
