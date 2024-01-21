@@ -141,6 +141,20 @@ describe('Pawn', () => {
     expect(blackPawn.display()).toEqual(SquareElementImagePaths.BLACK_PAWN);
     expect(whitePawn.display()).toEqual(SquareElementImagePaths.WHITE_PAWN);
   });
+
+  test.each([
+    ['Black', 1, 0],
+    ['White', 6, 7],
+  ])(
+    '%s Pawn should not be moveable behind',
+    (color: string, y: number, newY: number) => {
+      const pawn: Pawn = new Pawn(
+        new Position(1, y),
+        color == 'White' ? 'white' : 'black',
+      );
+      expect(pawn.isMoveableTo(new Position(1, newY))).toBeFalsy();
+    },
+  );
 });
 
 const randomIntFromInterval = (min: number, max: number) => {
