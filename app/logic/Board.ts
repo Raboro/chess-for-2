@@ -52,11 +52,15 @@ export class Board {
   }
 
   selectSquare(squareElement: SquareElement): boolean {
-    if (!squareElement.isPiece() || this.currentPiece === (squareElement as any as Moveable)) {
+    // eslint rules can be disabled because every SquareElement implements Moveable
+    if (
+      !squareElement.isPiece() ||
+      this.currentPiece === (squareElement as any as Moveable) // eslint-disable-line
+    ) {
       this.currentPiece = undefined;
       return false;
     }
-    this.currentPiece = squareElement as any as Moveable;
+    this.currentPiece = squareElement as any as Moveable; // eslint-disable-line
     return true;
   }
 
