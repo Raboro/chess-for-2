@@ -1,5 +1,5 @@
-import { describe, expect, test } from '@jest/globals';
-import { render } from '@testing-library/react-native';
+import { describe, expect, jest, test } from '@jest/globals';
+import { render, fireEvent } from '@testing-library/react-native';
 import SquareColor from '../../constants/SquareColor';
 import Position from '../../logic/Position';
 import Empty from '../../logic/squareelements/Empty';
@@ -47,5 +47,20 @@ describe('Square UI', () => {
 
     expect(squareWhite.props.style.backgroundColor).toBe(SquareColor.WHITE);
     expect(squareBlack.props.style.backgroundColor).toBe(SquareColor.BLACK);
+  });
+
+  test('Square should call method when selected', () => {
+    const selectSquare = jest.fn();
+    const rend = render(
+      <Square
+        size={100}
+        squareColor={SquareColor.WHITE}
+        squareElement={new Empty(new Position(1, 2))}
+        isMoveableTo={true}
+        selectSquare={selectSquare}
+      />,
+    );
+    fireEvent(rend.getByTestId('Square'), 'press');
+    expect(selectSquare).toHaveBeenCalled();
   });
 });
