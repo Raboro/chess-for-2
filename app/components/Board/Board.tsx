@@ -4,6 +4,7 @@ import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
 import Position from '../../logic/Position';
 import Square from '../Square/Square';
+import SquareElement from '../../logic/SquareElement';
 
 interface Props {
   size: number;
@@ -13,7 +14,13 @@ const LINE_SIZE = 8;
 
 const Board = (props: Readonly<Props>) => {
   const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic()); // eslint-disable-line
+  const [selectTriggered, setSelectTriggered] = useState(false);
   const squareSize: number = props.size / LINE_SIZE;
+
+  const selectSquare = (squareElement: SquareElement) => {
+    boardLogic.selectSquare(squareElement);
+    setSelectTriggered(!selectTriggered);
+  }
 
   const renderRow = (row: number) => {
     return (
@@ -26,7 +33,8 @@ const Board = (props: Readonly<Props>) => {
               (row + column) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK
             }
             squareElement={boardLogic.getAtPosition(new Position(column, row))}
-            isMoveableTo={false}
+            isMoveableTo={boardLogic.isMoveableTo(new Position(column, row))}
+            selectSquare={selectSquare}
           />
         ))}
       </View>

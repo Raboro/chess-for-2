@@ -1,3 +1,4 @@
+import Moveable from './Moveable';
 import Position from './Position';
 import SquareElement from './SquareElement';
 import Bishop from './squareelements/Bishop';
@@ -11,6 +12,7 @@ import SquareElementType from './SquareElementType';
 
 export class Board {
   private pieces: SquareElement[] = [];
+  private currentPiece: Moveable | undefined;
 
   constructor() {
     this.initBoard();
@@ -47,5 +49,21 @@ export class Board {
       }
     }
     return new Empty(position);
+  }
+
+  selectSquare(squareElement: SquareElement): boolean {
+    if (!squareElement.isPiece() || this.currentPiece === (squareElement as any as Moveable)) {
+      this.currentPiece = undefined;
+      return false;
+    }
+    this.currentPiece = squareElement as any as Moveable;
+    return true;
+  }
+
+  isMoveableTo(position: Position): boolean {
+    if (!this.currentPiece) {
+      return false;
+    }
+    return this.currentPiece.isMoveableTo(position);
   }
 }

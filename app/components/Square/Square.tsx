@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Image,
   ImageSourcePropType,
-  TouchableOpacity,
+  Pressable,
   View,
 } from 'react-native';
 import SquareColor from '../../constants/SquareColor';
@@ -14,6 +14,7 @@ interface Props {
   squareColor: SquareColor;
   squareElement: SquareElement;
   isMoveableTo: boolean;
+  selectSquare: (squareElement: SquareElement) => void;
 }
 
 const Square = (props: Readonly<Props>) => {
@@ -22,13 +23,14 @@ const Square = (props: Readonly<Props>) => {
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       testID="Square"
       style={{
         width: props.size,
         height: props.size,
         backgroundColor: props.squareColor,
       }}
+      onPress={() => props.selectSquare(props.squareElement)}
     >
       <View
         style={[
@@ -39,7 +41,7 @@ const Square = (props: Readonly<Props>) => {
       >
         <Image source={displayPiece()} />
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
