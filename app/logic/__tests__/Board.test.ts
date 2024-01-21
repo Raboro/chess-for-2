@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
 import { Board } from '../Board';
 import Position from '../Position';
+import Pawn from '../squareelements/Pawn';
+import Empty from '../squareelements/Empty';
+import Queen from '../squareelements/Queen';
 
 describe('Board', () => {
   let board: Board;
@@ -24,4 +27,48 @@ describe('Board', () => {
     expect(empty.isPiece()).toBeFalsy();
     expect(empty.squareElementType).toBe(undefined);
   });
+
+  test('After init isMoveableTo should always be false', () => {
+    for (let column = 0; column < 8; column++) {
+      for (let row = 0; row < 8; row++) {
+        expect(board.isMoveableTo(new Position(column, row))).toBeFalsy();
+      }
+    }
+  })
+
+  test('Current Piece should be moveable to', () => {
+    board.selectSquare(new Pawn(new Position(1, 2), 'black'));
+    expect(board.isMoveableTo(new Position(1, 3))).toBeTruthy();
+  })
+
+  test('Current Piece should be moveable to and after empty is set not anymore', () => {
+    const position = new Position(1, 3);
+    
+    board.selectSquare(new Pawn(new Position(1, 2), 'black'));
+    expect(board.isMoveableTo(position)).toBeTruthy();
+
+    board.selectSquare(new Empty(new Position(2, 2)));
+    expect(board.isMoveableTo(position)).toBeFalsy();
+  })
+
+  test('Current Piece should be moveable and after same is selected not anymore', () => {
+    const pawn = new Pawn(new Position(1, 2), 'black'); 
+    const position = new Position(1, 3);
+    board.selectSquare(pawn);
+    expect(board.isMoveableTo(position)).toBeTruthy();
+    
+    board.selectSquare(pawn);
+    expect(board.isMoveableTo(position)).toBeFalsy();
+  })
+
+  test('Select Square after same element after other element after empty should be handled correctly', () => {
+    const pawn = new Pawn(new Position(1, 2), 'black'); 
+    expect(board.selectSquare(pawn)).toBeTruthy();
+
+    expect(board.selectSquare(pawn)).toBeFalsy();
+
+    expect(board.selectSquare(new Queen(new Position(1, 4), 'white'))).toBeTruthy();
+
+    expect(board.selectSquare(new Empty(new Position(2, 3 )))).toBeFalsy();
+  })
 });
