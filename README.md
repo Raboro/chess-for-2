@@ -13,5 +13,5 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Raboro_chess-for-2&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Raboro_chess-for-2)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Raboro_chess-for-2&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=Raboro_chess-for-2)
 
-## Figure Images
-All images of chess pieces used from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces
+## Images Of Chess Pieces
+All images of chess pieces used are from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces
