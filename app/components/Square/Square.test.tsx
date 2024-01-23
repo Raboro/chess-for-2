@@ -52,7 +52,7 @@ describe('Square UI', () => {
     expect(squareBlack.props.style.backgroundColor).toBe(SquareColor.BLACK);
   });
 
-  test('Square should call method when selected', () => {
+  test('Square should call selectSquare when selected', () => {
     const selectSquare = jest.fn();
     const rend = render(
       <Square
@@ -66,5 +66,21 @@ describe('Square UI', () => {
     );
     fireEvent(rend.getByTestId('Square'), 'press');
     expect(selectSquare).toHaveBeenCalled();
+  });
+
+  test('Square should call movePiece when selected', () => {
+    const movePiece = jest.fn();
+    const rend = render(
+      <Square
+        size={100}
+        squareColor={SquareColor.WHITE}
+        squareElement={new Empty(new Position(1, 2))}
+        isMoveableTo={true}
+        selectSquare={() => {}}
+        movePiece={movePiece}
+      />,
+    );
+    fireEvent(rend.getByTestId('Square'), 'press');
+    expect(movePiece).toHaveBeenCalled();
   });
 });
