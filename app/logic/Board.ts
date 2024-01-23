@@ -72,7 +72,11 @@ export class Board {
   }
 
   movePiece(squareElement: SquareElement): boolean {
-    if (!this.currentPiece || this.sameElementTypeAsCurrent(squareElement)) {
+    if (
+      !this.currentPiece ||
+      !this.isMoveableTo(squareElement.position) ||
+      this.sameElementTypeAsCurrent(squareElement)
+    ) {
       return false;
     }
 

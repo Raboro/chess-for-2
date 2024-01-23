@@ -73,4 +73,38 @@ describe('Board', () => {
 
     expect(board.selectSquare(new Empty(new Position(2, 3)))).toBeFalsy();
   });
+
+  test('After removeSelection, should not be moveableTo anymore', () => {
+    const pawn = new Pawn(new Position(1, 2), 'black');
+    expect(board.selectSquare(pawn)).toBeTruthy();
+
+    expect(board.isMoveableTo(new Position(1, 3))).toBeTruthy();
+
+    board.removeSelection();
+
+    expect(board.isMoveableTo(new Position(1, 3))).toBeFalsy();
+  });
+
+  test('MovePiece should not be possible to if no currentPiece', () => {
+    board.removeSelection();
+    expect(board.movePiece(new Pawn(new Position(1, 2), 'black'))).toBeFalsy();
+  });
+
+  test('MovePiece should not be possible to not moveable position', () => {
+    const queen = new Queen(new Position(1, 2), 'black');
+    expect(board.selectSquare(queen)).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 7)))).toBeFalsy();
+  });
+
+  test('MovePiece should not be possible to same elementType', () => {
+    const queen = new Queen(new Position(1, 2), 'black');
+    expect(board.selectSquare(queen)).toBeTruthy();
+    expect(board.movePiece(new Pawn(new Position(1, 3), 'black'))).toBeFalsy();
+  });
+
+  test('MovePiece should be possible to empty square', () => {
+    const queen = new Queen(new Position(1, 2), 'black');
+    expect(board.selectSquare(queen)).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(1, 3)))).toBeTruthy();
+  });
 });
