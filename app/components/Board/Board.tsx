@@ -8,23 +8,23 @@ import Square from '../Square/Square';
 
 interface Props {
   size: number;
+  boardLogic: BoardLogic;
 }
 
 const LINE_SIZE = 8;
 
 const Board = (props: Readonly<Props>) => {
-  const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic()); // eslint-disable-line
   const [selectTriggered, setSelectTriggered] = useState(false);
   const squareSize: number = props.size / LINE_SIZE;
 
   const selectSquare = (squareElement: SquareElement) => {
-    boardLogic.selectSquare(squareElement);
+    props.boardLogic.selectSquare(squareElement);
     setSelectTriggered(!selectTriggered);
   };
 
   const movePiece = (squareElement: SquareElement) => {
-    boardLogic.movePiece(squareElement);
-    boardLogic.removeSelection();
+    props.boardLogic.movePiece(squareElement);
+    props.boardLogic.removeSelection();
     setSelectTriggered(!selectTriggered);
   };
 
@@ -38,8 +38,8 @@ const Board = (props: Readonly<Props>) => {
             squareColor={
               (row + column) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK
             }
-            squareElement={boardLogic.getAtPosition(new Position(column, row))}
-            isMoveableTo={boardLogic.isMoveableTo(new Position(column, row))}
+            squareElement={props.boardLogic.getAtPosition(new Position(column, row))}
+            isMoveableTo={props.boardLogic.isMoveableTo(new Position(column, row))}
             selectSquare={selectSquare}
             movePiece={movePiece}
           />
