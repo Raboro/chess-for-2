@@ -38,8 +38,12 @@ const Board = (props: Readonly<Props>) => {
             squareColor={
               (row + column) % 2 === 0 ? SquareColor.WHITE : SquareColor.BLACK
             }
-            squareElement={props.boardLogic.getAtPosition(new Position(column, row))}
-            isMoveableTo={props.boardLogic.isMoveableTo(new Position(column, row))}
+            squareElement={props.boardLogic.getAtPosition(
+              new Position(column, row),
+            )}
+            isMoveableTo={props.boardLogic.isMoveableTo(
+              new Position(column, row),
+            )}
             selectSquare={selectSquare}
             movePiece={movePiece}
           />
