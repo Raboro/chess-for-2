@@ -26,7 +26,7 @@ const Board = (props: Readonly<Props>) => {
     boardLogic.movePiece(squareElement);
     boardLogic.removeSelection();
     setSelectTriggered(!selectTriggered);
-  }
+  };
 
   const renderRow = (row: number) => {
     return (

@@ -32,5 +32,5 @@ describe('Board UI', () => {
     const freeSquare = rend.getAllByTestId('SquareImage')[16];
 
     fireEvent(freeSquare, 'press');
-  })
+  });
 });

@@ -26,7 +26,11 @@ const Square = (props: Readonly<Props>) => {
         height: props.size,
         backgroundColor: props.squareColor,
       }}
-      onPress={() => props.isMoveableTo ? props.movePiece(props.squareElement) : props.selectSquare(props.squareElement)}
+      onPress={() =>
+        props.isMoveableTo
+          ? props.movePiece(props.squareElement)
+          : props.selectSquare(props.squareElement)
+      }
     >
       <View
         testID="SquareImage"
