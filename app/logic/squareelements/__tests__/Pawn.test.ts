@@ -155,6 +155,25 @@ describe('Pawn', () => {
       expect(pawn.isMoveableTo(new Position(1, newY))).toBeFalsy();
     },
   );
+
+  test.each([
+    ['Black', 0, 6, 1],
+    ['White', 1, 7, -1],
+  ])(
+    '%s Pawn should be moveable one diagonal up right/left',
+    (color: string, min: number, max: number, added: number) => {
+      for (let i: number = 0; i < 10; i++) {
+        const y = randomIntFromInterval(min, max);
+        const currentPosition = new Position(2, y);
+        const pawn: Pawn = new Pawn(
+          currentPosition,
+          color == 'White' ? 'white' : 'black',
+        );
+        expect(pawn.isMoveableTo(new Position(3, y + added))).toBeTruthy(); // diagonal right
+        expect(pawn.isMoveableTo(new Position(1, y + added))).toBeTruthy(); // diagonal left
+      }
+    },
+  );
 });
 
 const randomIntFromInterval = (min: number, max: number) => {
@@ -165,6 +184,10 @@ const getPositionNotEq = (element: number): number => {
   let newPosElement;
   do {
     newPosElement = randomIntFromInterval(0, 7);
-  } while (newPosElement === element);
+  } while (
+    newPosElement === element ||
+    newPosElement + 1 === element ||
+    newPosElement - 1 === element
+  );
   return newPosElement;
 };
