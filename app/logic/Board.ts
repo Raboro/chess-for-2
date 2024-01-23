@@ -85,7 +85,7 @@ export class Board {
   private sameElementTypeAsCurrent(squareElement: SquareElement): boolean {
     return (
       squareElement.squareElementType ===
-      (this.currentPiece as any as SquareElement).squareElementType
+      (this.currentPiece as any as SquareElement).squareElementType // eslint-disable-line
     );
   }
 
