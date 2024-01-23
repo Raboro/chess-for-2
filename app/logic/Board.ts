@@ -80,6 +80,10 @@ export class Board {
       return false;
     }
 
+    if (this.isCurrentlyPawn() && this.pawnNotMoveableTo(squareElement)) {
+      return false;
+    }
+
     const newPosition: Position = squareElement.position;
     this.pieces = this.pieces.filter((piece) => piece !== squareElement);
     this.currentPiece.moveTo(newPosition);
@@ -91,6 +95,21 @@ export class Board {
       squareElement.squareElementType ===
       (this.currentPiece as any as SquareElement).squareElementType // eslint-disable-line
     );
+  }
+
+  private isCurrentlyPawn(): boolean {
+    return (this.currentPiece as any as SquareElement) instanceof Pawn; // eslint-disable-line
+  }
+
+  private pawnNotMoveableTo(squareElement: SquareElement): boolean {
+    return squareElement.isPiece()
+      ? !this.pawnOneDifferenceOnXTo(squareElement)
+      : this.pawnOneDifferenceOnXTo(squareElement);
+  }
+
+  private pawnOneDifferenceOnXTo(squareElement: SquareElement): boolean {
+    return (this.currentPiece as any as SquareElement).position // eslint-disable-line
+      .differenceOfOneX(squareElement.position);
   }
 
   removeSelection(): void {
