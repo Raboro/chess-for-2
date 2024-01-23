@@ -107,4 +107,24 @@ describe('Board', () => {
     expect(board.selectSquare(queen)).toBeTruthy();
     expect(board.movePiece(new Empty(new Position(1, 3)))).toBeTruthy();
   });
+
+  test('Pawn can only move forward if nothing in the way', () => {
+    const pawn = new Pawn(new Position(1, 1), 'black');
+    expect(board.selectSquare(pawn)).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(1, 3)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(1, 4)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(1, 5)))).toBeTruthy();
+    expect(board.movePiece(new Pawn(new Position(1, 6), 'white'))).toBeFalsy();
+  });
+
+  test('Pawn can only move diagonal left/right if opponent in the way', () => {
+    const pawn = new Pawn(new Position(1, 1), 'black');
+    expect(board.selectSquare(pawn)).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(2, 2)))).toBeFalsy();
+    expect(board.movePiece(new Empty(new Position(1, 2)))).toBeTruthy();
+    expect(board.movePiece(new Queen(new Position(2, 3), 'black'))).toBeFalsy(); // on own color it´s not working
+    expect(
+      board.movePiece(new Queen(new Position(2, 3), 'white')),
+    ).toBeTruthy();
+  });
 });
