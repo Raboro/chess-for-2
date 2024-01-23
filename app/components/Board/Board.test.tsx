@@ -22,4 +22,15 @@ describe('Board UI', () => {
       {},
     );
   });
+
+  test('Square movePiece should work', () => {
+    const rend = render(<Board size={400} />);
+    const firstPawn = rend.getAllByTestId('SquareImage')[8];
+
+    fireEvent(firstPawn, 'press');
+
+    const freeSquare = rend.getAllByTestId('SquareImage')[16];
+
+    fireEvent(freeSquare, 'press');
+  })
 });
