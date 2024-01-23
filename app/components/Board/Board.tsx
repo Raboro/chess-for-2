@@ -22,6 +22,12 @@ const Board = (props: Readonly<Props>) => {
     setSelectTriggered(!selectTriggered);
   };
 
+  const movePiece = (squareElement: SquareElement) => {
+    boardLogic.movePiece(squareElement);
+    boardLogic.removeSelection();
+    setSelectTriggered(!selectTriggered);
+  }
+
   const renderRow = (row: number) => {
     return (
       <View key={`row-${row}`} style={{ flexDirection: 'row' }}>
@@ -35,6 +41,7 @@ const Board = (props: Readonly<Props>) => {
             squareElement={boardLogic.getAtPosition(new Position(column, row))}
             isMoveableTo={boardLogic.isMoveableTo(new Position(column, row))}
             selectSquare={selectSquare}
+            movePiece={movePiece}
           />
         ))}
       </View>

@@ -10,6 +10,7 @@ interface Props {
   squareElement: SquareElement;
   isMoveableTo: boolean;
   selectSquare: (squareElement: SquareElement) => void;
+  movePiece: (squareElement: SquareElement) => void;
 }
 
 const Square = (props: Readonly<Props>) => {
@@ -25,7 +26,7 @@ const Square = (props: Readonly<Props>) => {
         height: props.size,
         backgroundColor: props.squareColor,
       }}
-      onPress={() => props.selectSquare(props.squareElement)}
+      onPress={() => props.isMoveableTo ? props.movePiece(props.squareElement) : props.selectSquare(props.squareElement)}
     >
       <View
         testID="SquareImage"

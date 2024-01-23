@@ -15,6 +15,7 @@ describe('Square UI', () => {
         squareElement={new Queen(new Position(1, 2), 'black')}
         isMoveableTo={true}
         selectSquare={() => {}}
+        movePiece={() => {}}
       />,
     );
     const square = getByTestId('Square');
@@ -30,6 +31,7 @@ describe('Square UI', () => {
         squareElement={new Empty(new Position(1, 2))}
         isMoveableTo={true}
         selectSquare={() => {}}
+        movePiece={() => {}}
       />,
     );
     const rendBlack = render(
@@ -39,6 +41,7 @@ describe('Square UI', () => {
         squareElement={new Empty(new Position(1, 2))}
         isMoveableTo={true}
         selectSquare={() => {}}
+        movePiece={() => {}}
       />,
     );
 
@@ -56,8 +59,9 @@ describe('Square UI', () => {
         size={100}
         squareColor={SquareColor.WHITE}
         squareElement={new Empty(new Position(1, 2))}
-        isMoveableTo={true}
+        isMoveableTo={false}
         selectSquare={selectSquare}
+        movePiece={() => {}}
       />,
     );
     fireEvent(rend.getByTestId('Square'), 'press');

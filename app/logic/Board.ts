@@ -70,4 +70,26 @@ export class Board {
     }
     return this.currentPiece.isMoveableTo(position);
   }
+
+  movePiece(squareElement: SquareElement): boolean {
+    if (!this.currentPiece || this.sameElementTypeAsCurrent(squareElement)) {
+      return false;
+    }
+
+    const newPosition: Position = squareElement.position;
+    this.pieces = this.pieces.filter((piece) => piece !== squareElement);
+    this.currentPiece.moveTo(newPosition);
+    return true;
+  }
+
+  private sameElementTypeAsCurrent(squareElement: SquareElement): boolean {
+    return (
+      squareElement.squareElementType ===
+      (this.currentPiece as any as SquareElement).squareElementType
+    );
+  }
+
+  removeSelection(): void {
+    this.currentPiece = undefined;
+  }
 }
