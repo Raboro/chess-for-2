@@ -11,7 +11,7 @@ describe('StraightPathConstructor', () => {
     const path: Path = pathConstructor.construct(position, position);
 
     let counter = 0;
-    for (let _ of path) {
+    for (const _ of path) {
       console.log(_);
       counter++;
     }
