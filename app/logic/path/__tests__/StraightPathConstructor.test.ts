@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
-import StraightPathConstructor from '../StraightPathConstructor';
 import Position from '../../Position';
 import Path from '../Path';
+import StraightPathConstructor from '../StraightPathConstructor';
 
 describe('StraightPathConstructor', () => {
   const pathConstructor = new StraightPathConstructor();

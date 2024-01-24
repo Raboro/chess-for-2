@@ -1,6 +1,6 @@
+import Position from '../Position';
 import Path from './Path';
 import PathConstructor from './PathConstructor';
-import Position from '../Position';
 
 export default class DiagonalPathConstructor implements PathConstructor {
   construct(current: Position, destination: Position): Path {
