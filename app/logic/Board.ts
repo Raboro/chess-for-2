@@ -78,16 +78,13 @@ export class Board {
     if (
       !this.currentPiece ||
       !this.isMoveableTo(squareElement.position) ||
-      this.sameElementTypeAsCurrent(squareElement)
+      this.sameElementTypeAsCurrent(squareElement) ||
+      this.isPieceInTheWay(squareElement)
     ) {
       return false;
     }
 
     if (this.isCurrentlyPawn() && this.pawnNotMoveableTo(squareElement)) {
-      return false;
-    }
-
-    if (this.isPieceInTheWay(squareElement)) {
       return false;
     }
 
@@ -102,21 +99,6 @@ export class Board {
       squareElement.squareElementType ===
       (this.currentPiece as any as SquareElement).squareElementType // eslint-disable-line
     );
-  }
-
-  private isCurrentlyPawn(): boolean {
-    return (this.currentPiece as any as SquareElement) instanceof Pawn; // eslint-disable-line
-  }
-
-  private pawnNotMoveableTo(squareElement: SquareElement): boolean {
-    return squareElement.isPiece()
-      ? !this.pawnOneDifferenceOnXTo(squareElement)
-      : this.pawnOneDifferenceOnXTo(squareElement);
-  }
-
-  private pawnOneDifferenceOnXTo(squareElement: SquareElement): boolean {
-    return (this.currentPiece as any as SquareElement).position // eslint-disable-line
-      .differenceOfOneX(squareElement.position);
   }
 
   private isPieceInTheWay(squareElement: SquareElement): boolean {
@@ -143,6 +125,21 @@ export class Board {
     const factory: PathConstructorFactory = new PathConstructorFactory();
     const pathConstructor: PathConstructor = factory.create(current);
     return pathConstructor.construct(current.position, destination.position);
+  }
+
+  private isCurrentlyPawn(): boolean {
+    return (this.currentPiece as any as SquareElement) instanceof Pawn; // eslint-disable-line
+  }
+
+  private pawnNotMoveableTo(squareElement: SquareElement): boolean {
+    return squareElement.isPiece()
+      ? !this.pawnOneDifferenceOnXTo(squareElement)
+      : this.pawnOneDifferenceOnXTo(squareElement);
+  }
+
+  private pawnOneDifferenceOnXTo(squareElement: SquareElement): boolean {
+    return (this.currentPiece as any as SquareElement).position // eslint-disable-line
+      .differenceOfOneX(squareElement.position);
   }
 
   removeSelection(): void {
