@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
 import { Board } from '../Board';
 import Position from '../Position';
+import SquareElement from '../SquareElement';
+import Bishop from '../squareelements/Bishop';
 import Empty from '../squareelements/Empty';
 import Pawn from '../squareelements/Pawn';
 import Queen from '../squareelements/Queen';
-import Bishop from '../squareelements/Bishop';
 import Rook from '../squareelements/Rook';
-import SquareElement from '../SquareElement';
 
 describe('Board', () => {
   let board: Board;

@@ -12,8 +12,8 @@ import SquareElementType from '../../SquareElementType';
 import DefaultPathConstructor from '../DefaultPathConstructor';
 import DiagonalPathConstructor from '../DiagonalPathConstructor';
 import PathConstructorFactory from '../PathConstructorFactory';
-import StraightPathConstructor from '../StraightPathConstructor';
 import StraightAndDiagonalPathConstructor from '../StraightAndDiagonalPathConstructor';
+import StraightPathConstructor from '../StraightPathConstructor';
 
 describe('PathConstructorFactory', () => {
   const position: Position = new Position(1, 1);
