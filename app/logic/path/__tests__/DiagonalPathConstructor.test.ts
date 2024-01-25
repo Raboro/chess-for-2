@@ -4,10 +4,11 @@ import DiagonalPathConstructor from '../DiagonalPathConstructor';
 import Path from '../Path';
 
 describe('DiagonalPathConstructor', () => {
-  const constructor: DiagonalPathConstructor = new DiagonalPathConstructor();
+  const pathConstructor: DiagonalPathConstructor =
+    new DiagonalPathConstructor();
   test('Move to same position should be empty path', () => {
     const position: Position = new Position(2, 3);
-    const path: Path = constructor.construct(position, position);
+    const path: Path = pathConstructor.construct(position, position);
 
     let counter = 0;
     for (const _ of path) {
@@ -50,7 +51,10 @@ describe('DiagonalPathConstructor', () => {
       destination: Position,
       result: Position[],
     ) => {
-      const path: Path = constructor.construct(new Position(4, 4), destination);
+      const path: Path = pathConstructor.construct(
+        new Position(4, 4),
+        destination,
+      );
 
       let index = 0;
       for (const pos of path) {
