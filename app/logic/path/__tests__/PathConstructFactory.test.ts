@@ -13,6 +13,7 @@ import DefaultPathConstructor from '../DefaultPathConstructor';
 import DiagonalPathConstructor from '../DiagonalPathConstructor';
 import PathConstructorFactory from '../PathConstructorFactory';
 import StraightPathConstructor from '../StraightPathConstructor';
+import StraightAndDiagonalPathConstructor from '../StraightAndDiagonalPathConstructor';
 
 describe('PathConstructorFactory', () => {
   const position: Position = new Position(1, 1);
@@ -25,7 +26,6 @@ describe('PathConstructorFactory', () => {
       new Pawn(position, squareElementType),
       new King(position, squareElementType),
       new Knight(position, squareElementType),
-      new Queen(position, squareElementType),
       new Empty(position),
     ];
 
@@ -46,5 +46,11 @@ describe('PathConstructorFactory', () => {
     expect(
       pathConstructorFactory.create(new Bishop(position, squareElementType)),
     ).toBeInstanceOf(DiagonalPathConstructor);
+  });
+
+  test('Queen should create StraightAndDiagonalPathConstructor', () => {
+    expect(
+      pathConstructorFactory.create(new Queen(position, squareElementType)),
+    ).toBeInstanceOf(StraightAndDiagonalPathConstructor);
   });
 });
