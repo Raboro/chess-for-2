@@ -1,5 +1,10 @@
 node_modules/
 assets/
+coverage/
+app/assets/
+.vscode/
+.expo/
+.idea/
 README.md 
 LICENSE
 app.json 
