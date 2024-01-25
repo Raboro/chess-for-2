@@ -13,6 +13,6 @@ export default class PathConstructorFactory {
     } else if (squareElement instanceof Bishop) {
       return new DiagonalPathConstructor();
     }
-    return new DefaultPathConstructor;
+    return new DefaultPathConstructor();
   }
 }

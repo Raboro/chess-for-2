@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
-import DiagonalPathConstructor from '../DiagonalPathConstructor';
 import Position from '../../Position';
+import DiagonalPathConstructor from '../DiagonalPathConstructor';
 import Path from '../Path';
 
 describe('DiagonalPathConstructor', () => {

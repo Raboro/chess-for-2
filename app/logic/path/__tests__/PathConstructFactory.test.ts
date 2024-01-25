@@ -9,10 +9,10 @@ import Pawn from '../../squareelements/Pawn';
 import Queen from '../../squareelements/Queen';
 import Rook from '../../squareelements/Rook';
 import SquareElementType from '../../SquareElementType';
+import DefaultPathConstructor from '../DefaultPathConstructor';
 import DiagonalPathConstructor from '../DiagonalPathConstructor';
 import PathConstructorFactory from '../PathConstructorFactory';
 import StraightPathConstructor from '../StraightPathConstructor';
-import DefaultPathConstructor from '../DefaultPathConstructor';
 
 describe('PathConstructorFactory', () => {
   const position: Position = new Position(1, 1);

@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
-import DefaultPathConstructor from '../DefaultPathConstructor';
 import Position from '../../Position';
+import DefaultPathConstructor from '../DefaultPathConstructor';
 
 describe('DefaultPathConstructor', () => {
   test('Should always be empty', () => {
