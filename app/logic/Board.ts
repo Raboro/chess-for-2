@@ -1,4 +1,7 @@
 import Moveable from './Moveable';
+import Path from './path/Path';
+import PathConstructor from './path/PathConstructor';
+import PathConstructorFactory from './path/PathConstructorFactory';
 import Position from './Position';
 import SquareElement from './SquareElement';
 import Bishop from './squareelements/Bishop';
@@ -84,6 +87,10 @@ export class Board {
       return false;
     }
 
+    if (this.isPieceInTheWay(squareElement)) {
+      return false;
+    }
+
     const newPosition: Position = squareElement.position;
     this.pieces = this.pieces.filter((piece) => piece !== squareElement);
     this.currentPiece.moveTo(newPosition);
@@ -110,6 +117,32 @@ export class Board {
   private pawnOneDifferenceOnXTo(squareElement: SquareElement): boolean {
     return (this.currentPiece as any as SquareElement).position // eslint-disable-line
       .differenceOfOneX(squareElement.position);
+  }
+
+  private isPieceInTheWay(squareElement: SquareElement): boolean {
+    const path: Path = this.constructPath(
+      this.currentPiece as any as SquareElement, // eslint-disable-line
+      squareElement,
+    );
+
+    for (const position of path) {
+      for (const piece of this.pieces) {
+        if (piece.position.same(position)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private constructPath(
+    current: SquareElement,
+    destination: SquareElement,
+  ): Path {
+    const factory: PathConstructorFactory = new PathConstructorFactory();
+    const pathConstructor: PathConstructor = factory.create(current);
+    return pathConstructor.construct(current.position, destination.position);
   }
 
   removeSelection(): void {
