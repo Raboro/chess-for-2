@@ -4,6 +4,9 @@ import Position from '../Position';
 import Empty from '../squareelements/Empty';
 import Pawn from '../squareelements/Pawn';
 import Queen from '../squareelements/Queen';
+import Bishop from '../squareelements/Bishop';
+import Rook from '../squareelements/Rook';
+import SquareElement from '../SquareElement';
 
 describe('Board', () => {
   let board: Board;
@@ -127,4 +130,17 @@ describe('Board', () => {
       board.movePiece(new Queen(new Position(2, 3), 'white')),
     ).toBeTruthy();
   });
+
+  test.each([
+    ['Queen', new Queen(new Position(3, 0), 'black'), new Position(3, 6)],
+    ['Queen', new Queen(new Position(3, 0), 'black'), new Position(7, 4)],
+    ['Bishop', new Bishop(new Position(2, 0), 'black'), new Position(5, 3)],
+    ['Rook', new Rook(new Position(0, 0), 'black'), new Position(0, 4)],
+  ])(
+    '%s is blocked by Piece in the way and cannot move over piece',
+    (pieceName: string, piece: SquareElement, destination: Position) => {
+      expect(board.selectSquare(piece)).toBeTruthy();
+      expect(board.movePiece(new Empty(destination))).toBeFalsy();
+    },
+  );
 });
