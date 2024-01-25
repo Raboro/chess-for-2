@@ -12,6 +12,7 @@ import SquareElementType from '../../SquareElementType';
 import DiagonalPathConstructor from '../DiagonalPathConstructor';
 import PathConstructorFactory from '../PathConstructorFactory';
 import StraightPathConstructor from '../StraightPathConstructor';
+import DefaultPathConstructor from '../DefaultPathConstructor';
 
 describe('PathConstructorFactory', () => {
   const position: Position = new Position(1, 1);
@@ -19,7 +20,7 @@ describe('PathConstructorFactory', () => {
   const pathConstructorFactory: PathConstructorFactory =
     new PathConstructorFactory();
 
-  test('No Rook or Bishop should be undefined', () => {
+  test('No Rook or Bishop should be DefaultPathConstructor', () => {
     const elements: SquareElement[] = [
       new Pawn(position, squareElementType),
       new King(position, squareElementType),
@@ -29,7 +30,9 @@ describe('PathConstructorFactory', () => {
     ];
 
     for (const element of elements) {
-      expect(pathConstructorFactory.create(element)).toEqual(undefined);
+      expect(pathConstructorFactory.create(element)).toBeInstanceOf(
+        DefaultPathConstructor,
+      );
     }
   });
 
