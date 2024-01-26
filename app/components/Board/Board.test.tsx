@@ -26,12 +26,68 @@ describe('Board UI', () => {
 
   test('Square movePiece should work', () => {
     const rend = render(<Board size={400} boardLogic={new BoardLogic()} />);
-    const firstPawn = rend.getAllByTestId('SquareImage')[8];
+    const firstPawn = rend.getAllByTestId('SquareImage')[55];
 
     fireEvent(firstPawn, 'press');
 
-    const freeSquare = rend.getAllByTestId('SquareImage')[16];
+    const freeSquare = rend.getAllByTestId('SquareImage')[47];
 
     fireEvent(freeSquare, 'press');
+  });
+
+  test('Move white and then black', () => {
+    const rend = render(<Board size={400} boardLogic={new BoardLogic()} />);
+    
+    // white pawn move
+    const whitePawn = rend.getAllByTestId('Square')[55];
+    expect(rend.getAllByTestId('SquareImage')[47].props.style[1]).toEqual({});
+    expect(whitePawn.props.style.borderColor).toBe(undefined);
+    fireEvent(whitePawn, 'press');
+    const moveableSquareForWhitePawn = rend.getAllByTestId('SquareImage')[47];
+    expect(moveableSquareForWhitePawn.props.style[1]).not.toEqual(
+      {},
+    );
+    fireEvent(moveableSquareForWhitePawn, 'press');
+
+    // black pawn move
+    const blackPawn = rend.getAllByTestId('Square')[8];
+    expect(blackPawn.props.style.borderColor).toBe(undefined);
+    fireEvent(blackPawn, 'press');
+    const moveableSquareForBlackPawn = rend.getAllByTestId('SquareImage')[16];
+    expect(moveableSquareForBlackPawn.props.style[1]).not.toEqual(
+      {},
+    );
+    fireEvent(moveableSquareForBlackPawn, 'press');
+  });
+
+  test('Black should not be moveable at the start', () => {
+    const rend = render(<Board size={400} boardLogic={new BoardLogic()} />);
+    const blackPawn = rend.getAllByTestId('Square')[8];
+    expect(rend.getAllByTestId('SquareImage')[16].props.style[1]).toEqual({});
+
+    expect(blackPawn.props.style.borderColor).toBe(undefined);
+
+    fireEvent(blackPawn, 'press');
+    const moveableSquareForBlackPawn = rend.getAllByTestId('SquareImage')[16];
+    expect(moveableSquareForBlackPawn.props.style[1]).toEqual(
+      {},
+    );
+    fireEvent(moveableSquareForBlackPawn, 'press');
+  });
+
+  test('White pawn should not be moveable left at the start', () => {
+    const rend = render(<Board size={400} boardLogic={new BoardLogic()} />);
+    const firstPawn = rend.getAllByTestId('SquareImage')[55];
+
+    fireEvent(firstPawn, 'press');
+    const freeSquare = rend.getAllByTestId('SquareImage')[47];
+    expect(freeSquare.props.style[1]).not.toEqual(
+      {},
+    );
+    const notMoveableFreeSquare = rend.getAllByTestId('SquareImage')[46];
+    expect(notMoveableFreeSquare.props.style[1]).not.toEqual(
+      {},
+    );
+    fireEvent(notMoveableFreeSquare, 'press');
   });
 });
