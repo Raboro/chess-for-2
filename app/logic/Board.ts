@@ -16,6 +16,7 @@ import SquareElementType from './SquareElementType';
 export class Board {
   private pieces: SquareElement[] = [];
   private currentPiece: Moveable | undefined;
+  private currentSquareElement: SquareElement | undefined;
 
   constructor() {
     this.initBoard();
@@ -55,15 +56,16 @@ export class Board {
   }
 
   selectSquare(squareElement: SquareElement): boolean {
-    // eslint rules can be disabled because every SquareElement implements Moveable
     if (
       !squareElement.isPiece() ||
-      this.currentPiece === (squareElement as any as Moveable) // eslint-disable-line
+      this.currentSquareElement === squareElement
     ) {
       this.currentPiece = undefined;
+      this.currentSquareElement = undefined;
       return false;
     }
     this.currentPiece = squareElement as any as Moveable; // eslint-disable-line
+    this.currentSquareElement = squareElement;
     return true;
   }
 
@@ -97,13 +99,13 @@ export class Board {
   private sameElementTypeAsCurrent(squareElement: SquareElement): boolean {
     return (
       squareElement.squareElementType ===
-      (this.currentPiece as any as SquareElement).squareElementType // eslint-disable-line
+      this.currentSquareElement?.squareElementType
     );
   }
 
   private isPieceInTheWay(squareElement: SquareElement): boolean {
     const path: Path = this.constructPath(
-      this.currentPiece as any as SquareElement, // eslint-disable-line
+      this.currentSquareElement as SquareElement,
       squareElement,
     );
 
@@ -128,7 +130,7 @@ export class Board {
   }
 
   private isCurrentlyPawn(): boolean {
-    return (this.currentPiece as any as SquareElement) instanceof Pawn; // eslint-disable-line
+    return this.currentSquareElement instanceof Pawn;
   }
 
   private pawnNotMoveableTo(squareElement: SquareElement): boolean {
@@ -138,8 +140,9 @@ export class Board {
   }
 
   private pawnOneDifferenceOnXTo(squareElement: SquareElement): boolean {
-    return (this.currentPiece as any as SquareElement).position // eslint-disable-line
-      .differenceOfOneX(squareElement.position);
+    return (
+      this.currentSquareElement as SquareElement
+    ).position.differenceOfOneX(squareElement.position);
   }
 
   removeSelection(): void {
