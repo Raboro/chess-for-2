@@ -4,8 +4,8 @@ import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
 import Position from '../../logic/Position';
 import SquareElement from '../../logic/SquareElement';
-import Square from '../Square/Square';
 import SquareElementType from '../../logic/SquareElementType';
+import Square from '../Square/Square';
 
 interface Props {
   size: number;
@@ -28,7 +28,7 @@ const Board = (props: Readonly<Props>) => {
     const moved: boolean = props.boardLogic.movePiece(squareElement);
 
     if (moved) {
-      setCurrentType(() => currentType === 'white' ? 'black' : 'white');
+      setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
     }
 
     props.boardLogic.removeSelection();

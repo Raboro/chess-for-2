@@ -37,16 +37,14 @@ describe('Board UI', () => {
 
   test('Move white and then black', () => {
     const rend = render(<Board size={400} boardLogic={new BoardLogic()} />);
-    
+
     // white pawn move
     const whitePawn = rend.getAllByTestId('Square')[55];
     expect(rend.getAllByTestId('SquareImage')[47].props.style[1]).toEqual({});
     expect(whitePawn.props.style.borderColor).toBe(undefined);
     fireEvent(whitePawn, 'press');
     const moveableSquareForWhitePawn = rend.getAllByTestId('SquareImage')[47];
-    expect(moveableSquareForWhitePawn.props.style[1]).not.toEqual(
-      {},
-    );
+    expect(moveableSquareForWhitePawn.props.style[1]).not.toEqual({});
     fireEvent(moveableSquareForWhitePawn, 'press');
 
     // black pawn move
@@ -54,9 +52,7 @@ describe('Board UI', () => {
     expect(blackPawn.props.style.borderColor).toBe(undefined);
     fireEvent(blackPawn, 'press');
     const moveableSquareForBlackPawn = rend.getAllByTestId('SquareImage')[16];
-    expect(moveableSquareForBlackPawn.props.style[1]).not.toEqual(
-      {},
-    );
+    expect(moveableSquareForBlackPawn.props.style[1]).not.toEqual({});
     fireEvent(moveableSquareForBlackPawn, 'press');
   });
 
@@ -69,9 +65,7 @@ describe('Board UI', () => {
 
     fireEvent(blackPawn, 'press');
     const moveableSquareForBlackPawn = rend.getAllByTestId('SquareImage')[16];
-    expect(moveableSquareForBlackPawn.props.style[1]).toEqual(
-      {},
-    );
+    expect(moveableSquareForBlackPawn.props.style[1]).toEqual({});
     fireEvent(moveableSquareForBlackPawn, 'press');
   });
 
@@ -81,13 +75,9 @@ describe('Board UI', () => {
 
     fireEvent(firstPawn, 'press');
     const freeSquare = rend.getAllByTestId('SquareImage')[47];
-    expect(freeSquare.props.style[1]).not.toEqual(
-      {},
-    );
+    expect(freeSquare.props.style[1]).not.toEqual({});
     const notMoveableFreeSquare = rend.getAllByTestId('SquareImage')[46];
-    expect(notMoveableFreeSquare.props.style[1]).not.toEqual(
-      {},
-    );
+    expect(notMoveableFreeSquare.props.style[1]).not.toEqual({});
     fireEvent(notMoveableFreeSquare, 'press');
   });
 });
