@@ -12,14 +12,14 @@ describe('Board UI', () => {
 
   test('Square press should select it and rerender Board', () => {
     const rend = render(<Board size={400} boardLogic={new BoardLogic()} />);
-    const firstSquare = rend.getAllByTestId('Square')[0];
-    expect(rend.getAllByTestId('SquareImage')[1].props.style[1]).toEqual({});
+    const lastSquare = rend.getAllByTestId('Square')[63];
+    expect(rend.getAllByTestId('SquareImage')[62].props.style[1]).toEqual({});
 
-    expect(firstSquare.props.style.borderColor).toBe(undefined);
+    expect(lastSquare.props.style.borderColor).toBe(undefined);
 
-    fireEvent(firstSquare, 'press');
+    fireEvent(lastSquare, 'press');
 
-    expect(rend.getAllByTestId('SquareImage')[1].props.style[1]).not.toEqual(
+    expect(rend.getAllByTestId('SquareImage')[62].props.style[1]).not.toEqual(
       {},
     );
   });

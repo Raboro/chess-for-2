@@ -55,10 +55,14 @@ export class Board {
     return new Empty(position);
   }
 
-  selectSquare(squareElement: SquareElement): boolean {
+  selectSquare(
+    squareElement: SquareElement,
+    currentType: SquareElementType,
+  ): boolean {
     if (
       !squareElement.isPiece() ||
-      this.currentSquareElement === squareElement
+      this.currentSquareElement === squareElement ||
+      squareElement.squareElementType !== currentType
     ) {
       this.currentPiece = undefined;
       this.currentSquareElement = undefined;
