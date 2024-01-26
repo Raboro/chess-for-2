@@ -145,4 +145,10 @@ describe('Board', () => {
       expect(board.movePiece(new Empty(destination))).toBeFalsy();
     },
   );
+
+  test('MovePiece should not be possible if other SquareElementType is selected', () => {
+    const pawn: Pawn = new Pawn(new Position(0, 1), 'black');
+    expect(board.selectSquare(pawn, 'white')).toBeFalsy();
+    expect(board.selectSquare(pawn, 'black')).toBeTruthy();
+  });
 });
