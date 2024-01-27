@@ -4,7 +4,16 @@ on:
   pull_request:
     branches:
       - '*'
-    types: [opened, reopened, synchronize, edited, ready_for_review, unassigned]
+    types:
+      [
+        opened,
+        reopened,
+        synchronize,
+        edited,
+        ready_for_review,
+        unassigned,
+        assigned,
+      ]
 
 jobs:
   test:
