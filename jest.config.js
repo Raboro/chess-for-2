@@ -8,5 +8,6 @@ module.exports = {
     '/babel.config.js',
     '/jest.config.js',
     '/coverage/',
+    '.expo/'
   ],
 };
