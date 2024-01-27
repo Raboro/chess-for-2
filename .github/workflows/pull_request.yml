@@ -1,0 +1,30 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Setup Node.js to run tests
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run tests with Jest
+        run: npm test
