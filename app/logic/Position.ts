@@ -1,10 +1,19 @@
+import { SIZE } from '../constants/Size';
+
 export default class Position {
   readonly x: number;
   readonly y: number;
 
   constructor(x: number, y: number) {
-    if (x < 0 || x > 7 || y < 0 || y > 7) {
-      throw new RangeError('x or y get to valid input range [0,7]');
+    if (
+      x < SIZE.POSITION_MIN ||
+      x > SIZE.POSITION_MAX ||
+      y < SIZE.POSITION_MIN ||
+      y > SIZE.POSITION_MAX
+    ) {
+      throw new RangeError(
+        `x or y get to valid input range [${SIZE.POSITION_MIN},${SIZE.POSITION_MAX}]`,
+      );
     }
     this.x = x;
     this.y = y;

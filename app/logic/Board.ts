@@ -1,3 +1,4 @@
+import { SIZE } from '../constants/Size';
 import Moveable from './Moveable';
 import Path from './path/Path';
 import PathConstructor from './path/PathConstructor';
@@ -23,8 +24,8 @@ export class Board {
   }
 
   private initBoard(): void {
-    this.initPiecesOf(0, 'black', 1);
-    this.initPiecesOf(7, 'white', 6);
+    this.initPiecesOf(SIZE.POSITION_MIN, 'black', SIZE.POSITION_MIN + 1);
+    this.initPiecesOf(SIZE.POSITION_MAX, 'white', SIZE.POSITION_MAX - 1);
   }
 
   private initPiecesOf(
@@ -41,7 +42,7 @@ export class Board {
     this.pieces.push(new Knight(new Position(6, y), squareElementType));
     this.pieces.push(new Rook(new Position(7, y), squareElementType));
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < SIZE.LINE_SIZE; i++) {
       this.pieces.push(new Pawn(new Position(i, pawnY), squareElementType));
     }
   }

@@ -1,3 +1,4 @@
+import { SIZE } from './../../constants/Size';
 import { ImageSourcePropType } from 'react-native';
 import Displayable from '../Displayable';
 import Moveable from '../Moveable';
@@ -53,7 +54,7 @@ export default class Pawn extends Piece implements Moveable, Displayable {
       return false;
     }
 
-    return this.position.y == 6
+    return this.position.y == SIZE.POSITION_MAX - 1
       ? this.position.y - 2 <= position.y
       : this.position.y - 1 == position.y;
   }
@@ -71,7 +72,10 @@ export default class Pawn extends Piece implements Moveable, Displayable {
   }
 
   isPromotable(): boolean {
-    const y = this.squareElementType === 'black' ? 7 : 0;
+    const y =
+      this.squareElementType === 'black'
+        ? SIZE.POSITION_MAX
+        : SIZE.POSITION_MIN;
     return this.position.y === y;
   }
 }
