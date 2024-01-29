@@ -11,7 +11,7 @@ import SquareElementType from '../../logic/SquareElementType';
 
 const MainScreen = () => {
   const size = Dimensions.get('screen').width;
-  const [promotion, setPromotion] = useState<SquareElementType>();
+  const [promotion, setPromotion] = useState<SquareElementType>(); // eslint-disable-line
 
   return (
     <SafeAreaView style={styles.container}>
