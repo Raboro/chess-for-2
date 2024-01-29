@@ -1,23 +1,22 @@
 import React from 'react';
 import { View } from 'react-native';
-import Square from '../Square/Square';
-import SquareElement from '../../logic/SquareElement';
+import { SIZE } from '../../constants/Size';
 import SquareColor from '../../constants/SquareColor';
-import Queen from '../../logic/squareelements/Queen';
 import Position from '../../logic/Position';
-import SquareElementType from '../../logic/SquareElementType';
-import Rook from '../../logic/squareelements/Rook';
+import SquareElement from '../../logic/SquareElement';
 import Bishop from '../../logic/squareelements/Bishop';
 import Knight from '../../logic/squareelements/Knight';
+import Queen from '../../logic/squareelements/Queen';
+import Rook from '../../logic/squareelements/Rook';
+import SquareElementType from '../../logic/SquareElementType';
+import Square from '../Square/Square';
 import { styles } from './PromotionStyle';
-import { SIZE } from '../../constants/Size';
 
 interface Props {
   squareColor: SquareColor;
   squareElementType: SquareElementType;
   size: number;
 }
-
 
 const Promotion = (props: Props) => {
   const squareSize: number = props.size / SIZE.LINE_SIZE;
@@ -29,7 +28,12 @@ const Promotion = (props: Props) => {
   ];
 
   return (
-    <View style={[styles.container, { width: (4 * squareSize) + 4, margin: squareSize * 2 }]}>
+    <View
+      style={[
+        styles.container,
+        { width: 4 * squareSize + 4, margin: squareSize * 2 },
+      ]}
+    >
       {squareElements.map((element, _) => (
         <Square
           key={`Element-${element.position.x}`}

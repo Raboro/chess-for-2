@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { View } from 'react-native';
+import { SIZE } from '../../constants/Size';
 import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
 import Position from '../../logic/Position';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
 import Square from '../Square/Square';
-import { SIZE } from '../../constants/Size';
 
 interface Props {
   size: number;
