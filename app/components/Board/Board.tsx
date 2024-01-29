@@ -6,18 +6,17 @@ import Position from '../../logic/Position';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
 import Square from '../Square/Square';
+import { SIZE } from '../../constants/Size';
 
 interface Props {
   size: number;
   boardLogic: BoardLogic;
 }
 
-const LINE_SIZE = 8;
-
 const Board = (props: Readonly<Props>) => {
   const [selectTriggered, setSelectTriggered] = useState(false);
   const [currentType, setCurrentType] = useState<SquareElementType>('white');
-  const squareSize: number = props.size / LINE_SIZE;
+  const squareSize: number = props.size / SIZE.LINE_SIZE;
 
   const selectSquare = (squareElement: SquareElement) => {
     props.boardLogic.selectSquare(squareElement, currentType);
@@ -38,7 +37,7 @@ const Board = (props: Readonly<Props>) => {
   const renderRow = (row: number) => {
     return (
       <View key={`row-${row}`} style={{ flexDirection: 'row' }}>
-        {Array.from({ length: LINE_SIZE }, (_, column) => (
+        {Array.from({ length: SIZE.LINE_SIZE }, (_, column) => (
           <Square
             key={`square-${row}-${column}`}
             size={squareSize}
@@ -61,7 +60,7 @@ const Board = (props: Readonly<Props>) => {
 
   return (
     <View style={{ width: props.size, height: props.size }}>
-      {[...Array(LINE_SIZE)].map((_, i) => renderRow(i))}
+      {[...Array(SIZE.LINE_SIZE)].map((_, i) => renderRow(i))}
     </View>
   );
 };

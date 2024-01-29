@@ -10,6 +10,7 @@ import Rook from '../../logic/squareelements/Rook';
 import Bishop from '../../logic/squareelements/Bishop';
 import Knight from '../../logic/squareelements/Knight';
 import { styles } from './PromotionStyle';
+import { SIZE } from '../../constants/Size';
 
 interface Props {
   squareColor: SquareColor;
@@ -17,10 +18,9 @@ interface Props {
   size: number;
 }
 
-const LINE_SIZE = 8;
 
 const Promotion = (props: Props) => {
-  const squareSize: number = props.size / LINE_SIZE;
+  const squareSize: number = props.size / SIZE.LINE_SIZE;
   const squareElements: SquareElement[] = [
     new Queen(new Position(0, 0), props.squareElementType),
     new Rook(new Position(1, 0), props.squareElementType),
