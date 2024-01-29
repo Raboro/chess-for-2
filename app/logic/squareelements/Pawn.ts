@@ -72,10 +72,9 @@ export default class Pawn extends Piece implements Moveable, Displayable {
   }
 
   isPromotable(): boolean {
-    const y =
-      this.squareElementType === 'black'
-        ? SIZE.POSITION_MAX
-        : SIZE.POSITION_MIN;
-    return this.position.y === y;
+    if (isWhite(this.squareElementType)) {
+      return this.position.y === SIZE.POSITION_MIN;
+    }
+    return this.position.y === SIZE.POSITION_MAX;
   }
 }
