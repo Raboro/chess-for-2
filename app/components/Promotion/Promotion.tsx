@@ -9,6 +9,7 @@ import SquareElementType from '../../logic/SquareElementType';
 import Rook from '../../logic/squareelements/Rook';
 import Bishop from '../../logic/squareelements/Bishop';
 import Knight from '../../logic/squareelements/Knight';
+import { styles } from './PromotionStyle';
 
 interface Props {
   squareColor: SquareColor;
@@ -28,7 +29,7 @@ const Promotion = (props: Props) => {
   ];
 
   return (
-    <View style={{ borderWidth: 2, width: (4 * squareSize) + 4, margin: squareSize * 2, flexDirection: 'row' }}>
+    <View style={[styles.container, { width: (4 * squareSize) + 4, margin: squareSize * 2 }]}>
       {squareElements.map((element, _) => (
         <Square
           key={`Element-${element.position.x}`}
