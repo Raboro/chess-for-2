@@ -10,16 +10,17 @@ import { useState } from 'react';
 import SquareElementType from '../../logic/SquareElementType';
 
 const MainScreen = () => {
+  const size = Dimensions.get('screen').width;
   const [promotion, setPromotion] = useState<SquareElementType>();
 
   return (
     <SafeAreaView style={styles.container}>
-      {promotion === 'black' && <Promotion size={Dimensions.get('screen').width} squareColor={SquareColor.BLACK} squareElementType='black'/>}
+      {promotion === 'black' && <Promotion size={size} squareColor={SquareColor.BLACK} squareElementType='black'/>}
       <Board
-        size={Dimensions.get('screen').width}
+        size={size}
         boardLogic={new BoardLogic()}
       />
-      {promotion === 'white' && <Promotion size={Dimensions.get('screen').width} squareColor={SquareColor.WHITE} squareElementType='white'/>}
+      {promotion === 'white' && <Promotion size={size} squareColor={SquareColor.WHITE} squareElementType='white'/>}
     </SafeAreaView>
   );
 };
