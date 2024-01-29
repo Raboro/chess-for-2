@@ -174,6 +174,34 @@ describe('Pawn', () => {
       }
     },
   );
+
+  test.each([
+    ['Black', 0, 6],
+    ['White', 1, 7],
+  ])(
+    '%s Pawn should not be promotable',
+    (color: string, min: number, max: number) => {
+      for (let i: number = 0; i < 10; i++) {
+        const y = randomIntFromInterval(min, max);
+        const pawn: Pawn = new Pawn(
+          new Position(randomIntFromInterval(0, 7), y),
+          color == 'White' ? 'white' : 'black',
+        );
+        expect(pawn.isPromotable()).toBeFalsy();
+      }
+    },
+  );
+
+  test.each([
+    ['Black', 7],
+    ['White', 0],
+  ])('%s Pawn should be promotable', (color: string, y: number) => {
+    const pawn: Pawn = new Pawn(
+      new Position(randomIntFromInterval(0, 7), y),
+      color == 'White' ? 'white' : 'black',
+    );
+    expect(pawn.isPromotable()).toBeTruthy();
+  });
 });
 
 const randomIntFromInterval = (min: number, max: number) => {

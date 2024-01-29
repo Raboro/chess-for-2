@@ -69,4 +69,9 @@ export default class Pawn extends Piece implements Moveable, Displayable {
       ? SquareElementImagePaths.WHITE_PAWN
       : SquareElementImagePaths.BLACK_PAWN;
   }
+
+  isPromotable(): boolean {
+    const y = this.squareElementType === 'black' ? 7 : 0;
+    return this.position.y === y;
+  }
 }
