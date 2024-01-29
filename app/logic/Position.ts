@@ -5,18 +5,22 @@ export default class Position {
   readonly y: number;
 
   constructor(x: number, y: number) {
-    if (
-      x < SIZE.POSITION_MIN ||
-      x > SIZE.POSITION_MAX ||
-      y < SIZE.POSITION_MIN ||
-      y > SIZE.POSITION_MAX
-    ) {
+    if (this.isInvalidInput(x, y)) {
       throw new RangeError(
         `x or y get to valid input range [${SIZE.POSITION_MIN},${SIZE.POSITION_MAX}]`,
       );
     }
     this.x = x;
     this.y = y;
+  }
+
+  private isInvalidInput(x: number, y: number): boolean {
+    return (
+      x < SIZE.POSITION_MIN ||
+      x > SIZE.POSITION_MAX ||
+      y < SIZE.POSITION_MIN ||
+      y > SIZE.POSITION_MAX
+    );
   }
 
   notSameLine(p: Position): boolean {
