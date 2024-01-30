@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { SIZE } from '../../constants/Size';
 import SquareColor from '../../constants/SquareColor';
 import Position from '../../logic/Position';
+import PromotionFactory from '../../logic/promotion/PromotionFactory';
 import PromotionType from '../../logic/promotion/PromotionType';
 import SquareElement from '../../logic/SquareElement';
 import Bishop from '../../logic/squareelements/Bishop';
@@ -12,7 +13,6 @@ import Rook from '../../logic/squareelements/Rook';
 import SquareElementType, { isWhite } from '../../logic/SquareElementType';
 import Square from '../Square/Square';
 import { styles } from './PromotionStyle';
-import PromotionFactory from '../../logic/promotion/PromotionFactory';
 
 interface Props {
   squareColor: SquareColor;
