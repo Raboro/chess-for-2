@@ -150,6 +150,13 @@ export class Board {
     ).position.differenceOfOneX(squareElement.position);
   }
 
+  isPromotable(): boolean {
+    if (this.isCurrentlyPawn()) {
+      return (this.currentSquareElement as Pawn).isPromotable();
+    }
+    return false;
+  }
+
   removeSelection(): void {
     this.currentPiece = undefined;
   }

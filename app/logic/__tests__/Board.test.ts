@@ -7,6 +7,8 @@ import Empty from '../squareelements/Empty';
 import Pawn from '../squareelements/Pawn';
 import Queen from '../squareelements/Queen';
 import Rook from '../squareelements/Rook';
+import SquareElementType from '../SquareElementType';
+import King from '../squareelements/King';
 
 describe('Board', () => {
   let board: Board;
@@ -151,4 +153,42 @@ describe('Board', () => {
     expect(board.selectSquare(pawn, 'white')).toBeFalsy();
     expect(board.selectSquare(pawn, 'black')).toBeTruthy();
   });
+
+  test.each([
+    ['Black', 1],
+    ['White', 6],
+  ])(
+    '%s Pawn should not be promotable at first',
+    (color: string, y: number) => {
+      const type: SquareElementType = color === 'White' ? 'white' : 'black';
+      const pawn: Pawn = new Pawn(new Position(0, y), type);
+      expect(board.selectSquare(pawn, type)).toBeTruthy();
+      expect(board.isPromotable()).toBeFalsy();
+    },
+  );
+
+  test('Should not promotable if currentSquareElement not Pawn', () => {
+    const king: King = new King(new Position(4, 0), 'black');
+    expect(board.selectSquare(king, 'black')).toBeTruthy();
+    expect(board.isPromotable()).toBeFalsy();
+  });
+
+  test.each([
+    ['Black', 1, [2, 3, 4, 5, 6, 7]],
+    ['White', 6, [5, 4, 3, 2, 1, 0]],
+  ])(
+    '%s Pawn should promotable after moving to the other side border',
+    (color: string, y: number, ys: number[]) => {
+      const type: SquareElementType = color === 'White' ? 'white' : 'black';
+      const pawn = new Pawn(new Position(1, y), type);
+      expect(board.selectSquare(pawn, type)).toBeTruthy();
+      expect(board.movePiece(new Empty(new Position(1, ys[0])))).toBeTruthy();
+      expect(board.movePiece(new Empty(new Position(1, ys[1])))).toBeTruthy();
+      expect(board.movePiece(new Empty(new Position(1, ys[2])))).toBeTruthy();
+      expect(board.movePiece(new Empty(new Position(1, ys[3])))).toBeTruthy();
+      expect(board.movePiece(new Empty(new Position(1, ys[4])))).toBeTruthy();
+      expect(board.movePiece(new Empty(new Position(1, ys[5])))).toBeTruthy();
+      expect(board.isPromotable()).toBeTruthy();
+    },
+  );
 });
