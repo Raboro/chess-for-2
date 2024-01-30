@@ -4,16 +4,16 @@ import { SIZE } from '../../constants/Size';
 import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
 import Position from '../../logic/Position';
+import PromotionType from '../../logic/PromotionType';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
 import Square from '../Square/Square';
-import PromotionType from '../../logic/PromotionType';
 
 interface Props {
   size: number;
   boardLogic: BoardLogic;
   setPromotion: React.Dispatch<React.SetStateAction<SquareElementType>>;
-  promotionType: PromotionType | undefined
+  promotionType: PromotionType | undefined;
 }
 
 const Board = (props: Props) => {

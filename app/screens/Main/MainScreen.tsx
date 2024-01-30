@@ -6,20 +6,22 @@ import { useState } from 'react';
 import Promotion from '../../components/Promotion/Promotion';
 import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
+import PromotionType from '../../logic/PromotionType';
 import SquareElementType from '../../logic/SquareElementType';
 import { styles } from './MainScreenStyle';
-import PromotionType from '../../logic/PromotionType';
 
 const MainScreen = () => {
   const size = Dimensions.get('screen').width;
   const [promotion, setPromotion] = useState<SquareElementType>();
   const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic()); // eslint-disable-line
-  const [promotionType, setPromotionType] = useState<PromotionType | undefined>(undefined)
+  const [promotionType, setPromotionType] = useState<PromotionType | undefined>(
+    undefined,
+  );
 
   const usePromotion = (type: PromotionType) => {
     setPromotion(undefined);
     setPromotionType(type);
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,7 +33,12 @@ const MainScreen = () => {
           setPromotion={usePromotion}
         />
       )}
-      <Board size={size} boardLogic={boardLogic} setPromotion={setPromotion} promotionType={promotionType}/>
+      <Board
+        size={size}
+        boardLogic={boardLogic}
+        setPromotion={setPromotion}
+        promotionType={promotionType}
+      />
       {promotion === 'white' && (
         <Promotion
           size={size}

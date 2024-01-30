@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { SIZE } from '../../constants/Size';
 import SquareColor from '../../constants/SquareColor';
 import Position from '../../logic/Position';
+import PromotionType from '../../logic/PromotionType';
 import SquareElement from '../../logic/SquareElement';
 import Bishop from '../../logic/squareelements/Bishop';
 import Knight from '../../logic/squareelements/Knight';
@@ -11,7 +12,6 @@ import Rook from '../../logic/squareelements/Rook';
 import SquareElementType, { isWhite } from '../../logic/SquareElementType';
 import Square from '../Square/Square';
 import { styles } from './PromotionStyle';
-import PromotionType from '../../logic/PromotionType';
 
 interface Props {
   squareColor: SquareColor;
@@ -41,15 +41,17 @@ const Promotion = (props: Props) => {
       promotionType = PromotionType.KNIGHT;
     }
     props.setPromotion(promotionType);
-  }
+  };
 
   return (
     <View
-    testID='Promotion'
+      testID="Promotion"
       style={[
         styles.container,
-        { width: 4 * squareSize + 4, margin: squareSize * 2},
-        isWhite(props.squareElementType) ? { paddingBottom: squareSize * 12 } : { paddingTop: squareSize * 12 } 
+        { width: 4 * squareSize + 4, margin: squareSize * 2 },
+        isWhite(props.squareElementType)
+          ? { paddingBottom: squareSize * 12 }
+          : { paddingTop: squareSize * 12 },
       ]}
     >
       {squareElements.map((element, index) => (

@@ -5,13 +5,27 @@ import Board from './Board';
 
 describe('Board UI', () => {
   test('Board renders enough Squares', () => {
-    const rend = render(<Board size={400} boardLogic={new BoardLogic()} setPromotion={() => {}} promotionType={undefined}/>);
+    const rend = render(
+      <Board
+        size={400}
+        boardLogic={new BoardLogic()}
+        setPromotion={() => {}}
+        promotionType={undefined}
+      />,
+    );
     const squares = rend.getAllByTestId('Square');
     expect(squares.length).toBe(64);
   });
 
   test('Square press should select it and rerender Board', () => {
-    const rend = render(<Board size={400} boardLogic={new BoardLogic()} setPromotion={() => {}} promotionType={undefined}/>);
+    const rend = render(
+      <Board
+        size={400}
+        boardLogic={new BoardLogic()}
+        setPromotion={() => {}}
+        promotionType={undefined}
+      />,
+    );
     const lastSquare = rend.getAllByTestId('Square')[63];
     expect(rend.getAllByTestId('SquareImage')[62].props.style[1]).toEqual({});
 
@@ -25,7 +39,14 @@ describe('Board UI', () => {
   });
 
   test('Square movePiece should work', () => {
-    const rend = render(<Board size={400} boardLogic={new BoardLogic()} setPromotion={() => {}} promotionType={undefined}/>);
+    const rend = render(
+      <Board
+        size={400}
+        boardLogic={new BoardLogic()}
+        setPromotion={() => {}}
+        promotionType={undefined}
+      />,
+    );
     const firstPawn = rend.getAllByTestId('SquareImage')[55];
 
     fireEvent(firstPawn, 'press');
@@ -36,7 +57,14 @@ describe('Board UI', () => {
   });
 
   test('Move white and then black', () => {
-    const rend = render(<Board size={400} boardLogic={new BoardLogic()} setPromotion={() => {}} promotionType={undefined}/>);
+    const rend = render(
+      <Board
+        size={400}
+        boardLogic={new BoardLogic()}
+        setPromotion={() => {}}
+        promotionType={undefined}
+      />,
+    );
 
     // white pawn move
     const whitePawn = rend.getAllByTestId('Square')[55];
@@ -57,7 +85,14 @@ describe('Board UI', () => {
   });
 
   test('Black should not be moveable at the start', () => {
-    const rend = render(<Board size={400} boardLogic={new BoardLogic()} setPromotion={() => {}} promotionType={undefined}/>);
+    const rend = render(
+      <Board
+        size={400}
+        boardLogic={new BoardLogic()}
+        setPromotion={() => {}}
+        promotionType={undefined}
+      />,
+    );
     const blackPawn = rend.getAllByTestId('Square')[8];
     expect(rend.getAllByTestId('SquareImage')[16].props.style[1]).toEqual({});
 
@@ -70,7 +105,14 @@ describe('Board UI', () => {
   });
 
   test('White pawn should not be moveable left at the start', () => {
-    const rend = render(<Board size={400} boardLogic={new BoardLogic()} setPromotion={() => {}} promotionType={undefined}/>);
+    const rend = render(
+      <Board
+        size={400}
+        boardLogic={new BoardLogic()}
+        setPromotion={() => {}}
+        promotionType={undefined}
+      />,
+    );
     const firstPawn = rend.getAllByTestId('SquareImage')[55];
 
     fireEvent(firstPawn, 'press');
