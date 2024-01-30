@@ -4,6 +4,7 @@ import Path from './path/Path';
 import PathConstructor from './path/PathConstructor';
 import PathConstructorFactory from './path/PathConstructorFactory';
 import Position from './Position';
+import PromotionFactory from './PromotionFactory';
 import PromotionType from './PromotionType';
 import SquareElement from './SquareElement';
 import Bishop from './squareelements/Bishop';
@@ -169,18 +170,8 @@ export class Board {
       (piece) => piece !== this.currentSquareElement,
     );
 
-    let piece;
-
-    if (promotionType === PromotionType.QUEEN) {
-      piece = new Queen(position, elementType);
-    } else if (promotionType === PromotionType.ROOK) {
-      piece = new Rook(position, elementType);
-    } else if (promotionType === PromotionType.BISHOP) {
-      piece = new Bishop(position, elementType);
-    } else {
-      piece = new Knight(position, elementType);
-    }
-
-    this.pieces.push(piece);
+    this.pieces.push(
+      PromotionFactory.createPieceByType(promotionType, position, elementType),
+    );
   }
 }
