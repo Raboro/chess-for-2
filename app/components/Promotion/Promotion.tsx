@@ -8,7 +8,7 @@ import Bishop from '../../logic/squareelements/Bishop';
 import Knight from '../../logic/squareelements/Knight';
 import Queen from '../../logic/squareelements/Queen';
 import Rook from '../../logic/squareelements/Rook';
-import SquareElementType from '../../logic/SquareElementType';
+import SquareElementType, { isWhite } from '../../logic/SquareElementType';
 import Square from '../Square/Square';
 import { styles } from './PromotionStyle';
 
@@ -31,7 +31,8 @@ const Promotion = (props: Props) => {
     <View
       style={[
         styles.container,
-        { width: 4 * squareSize + 4, margin: squareSize * 2 },
+        { width: 4 * squareSize + 4, margin: squareSize * 2},
+        isWhite(props.squareElementType) ? { paddingBottom: squareSize * 12 } : { paddingTop: squareSize * 12 } 
       ]}
     >
       {squareElements.map((element, _) => (
