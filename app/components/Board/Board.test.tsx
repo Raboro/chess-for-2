@@ -1,8 +1,8 @@
 import { describe, expect, jest, test } from '@jest/globals';
 import { fireEvent, render } from '@testing-library/react-native';
 import { Board as BoardLogic } from '../../logic/Board';
-import Board from './Board';
 import PromotionType from '../../logic/promotion/PromotionType';
+import Board from './Board';
 
 describe('Board UI', () => {
   test('Board renders enough Squares', () => {
@@ -135,22 +135,36 @@ describe('Board UI', () => {
       />,
     );
 
-    const whitePositions = [[55, 47], [47, 39], [39, 31], [31, 23], [23, 14]]
-    const blackPositions = [[8, 16], [16, 24], [24, 32], [32, 40], [9, 17]]
+    const whitePositions = [
+      [55, 47],
+      [47, 39],
+      [39, 31],
+      [31, 23],
+      [23, 14],
+    ];
+    const blackPositions = [
+      [8, 16],
+      [16, 24],
+      [24, 32],
+      [32, 40],
+      [9, 17],
+    ];
 
     let whitePawn;
     let whiteMoveSquare;
     let blackPawn;
     let blackMoveSquare;
-    for(let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       whitePawn = rend.getAllByTestId('SquareImage')[whitePositions[i][0]];
       fireEvent(whitePawn, 'press');
-      whiteMoveSquare = rend.getAllByTestId('SquareImage')[whitePositions[i][1]];
+      whiteMoveSquare =
+        rend.getAllByTestId('SquareImage')[whitePositions[i][1]];
       fireEvent(whiteMoveSquare, 'press');
-  
+
       blackPawn = rend.getAllByTestId('SquareImage')[blackPositions[i][0]];
       fireEvent(blackPawn, 'press');
-      blackMoveSquare = rend.getAllByTestId('SquareImage')[blackPositions[i][1]];
+      blackMoveSquare =
+        rend.getAllByTestId('SquareImage')[blackPositions[i][1]];
       fireEvent(blackMoveSquare, 'press');
     }
 
