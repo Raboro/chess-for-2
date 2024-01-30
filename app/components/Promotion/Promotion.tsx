@@ -29,6 +29,7 @@ const Promotion = (props: Props) => {
 
   return (
     <View
+    testID='Promotion'
       style={[
         styles.container,
         { width: 4 * squareSize + 4, margin: squareSize * 2},
