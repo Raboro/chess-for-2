@@ -1,7 +1,8 @@
-import { describe, expect, test } from '@jest/globals';
-import { render } from '@testing-library/react-native';
+import { describe, expect, jest, test } from '@jest/globals';
+import { fireEvent, render } from '@testing-library/react-native';
 import SquareColor from '../../constants/SquareColor';
 import Promotion from './Promotion';
+import PromotionType from '../../logic/promotion/PromotionType';
 
 describe('Promotion', () => {
   test('render without error', () => {
@@ -50,6 +51,30 @@ describe('Promotion', () => {
       const promotion = rend.getByTestId('Promotion');
       expect(promotion.props.style).toHaveLength(3);
       expect(promotion.props.style[2]).toEqual(style);
+    },
+  );
+
+  test.each([
+    [0, PromotionType.QUEEN],
+    [1, PromotionType.ROOK],
+    [2, PromotionType.BISHOP],
+    [3, PromotionType.KNIGHT],
+  ])(
+    'Click on Square %d should trigger promotion to %s',
+    (index: number, promotionType: PromotionType) => {
+      const mockSetPromotion = jest.fn();
+      const rend = render(
+        <Promotion
+          squareColor={SquareColor.BLACK}
+          squareElementType={'black'}
+          size={100}
+          setPromotion={mockSetPromotion}
+        />,
+      );
+
+      const firstSquare = rend.getAllByTestId('Square')[index];
+      fireEvent(firstSquare, 'press');
+      expect(mockSetPromotion).toBeCalledWith(promotionType);
     },
   );
 });
