@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Promotion from '../../components/Promotion/Promotion';
 import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
-import PromotionType from '../../logic/PromotionType';
+import PromotionType from '../../logic/promotion/PromotionType';
 import SquareElementType from '../../logic/SquareElementType';
 import { styles } from './MainScreenStyle';
 

@@ -4,7 +4,7 @@ import { SIZE } from '../../constants/Size';
 import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
 import Position from '../../logic/Position';
-import PromotionType from '../../logic/PromotionType';
+import PromotionType from '../../logic/promotion/PromotionType';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
 import Square from '../Square/Square';

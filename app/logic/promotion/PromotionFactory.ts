@@ -1,11 +1,11 @@
-import Position from './Position';
+import Position from '../Position';
 import PromotionType from './PromotionType';
-import SquareElement from './SquareElement';
-import SquareElementType from './SquareElementType';
-import Bishop from './squareelements/Bishop';
-import Knight from './squareelements/Knight';
-import Queen from './squareelements/Queen';
-import Rook from './squareelements/Rook';
+import SquareElement from '../SquareElement';
+import SquareElementType from '../SquareElementType';
+import Bishop from '../squareelements/Bishop';
+import Knight from '../squareelements/Knight';
+import Queen from '../squareelements/Queen';
+import Rook from '../squareelements/Rook';
 
 export default class PromotionFactory {
   static createTypeByIndex(index: number): PromotionType {
