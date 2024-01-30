@@ -9,7 +9,7 @@ import StraightAndDiagonalPathConstructor from './StraightAndDiagonalPathConstru
 import StraightPathConstructor from './StraightPathConstructor';
 
 export default class PathConstructorFactory {
-  create(squareElement: SquareElement): PathConstructor {
+  static create(squareElement: SquareElement): PathConstructor {
     if (squareElement instanceof Rook) {
       return new StraightPathConstructor();
     } else if (squareElement instanceof Bishop) {

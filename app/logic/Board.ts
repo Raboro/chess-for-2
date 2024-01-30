@@ -131,8 +131,7 @@ export class Board {
     current: SquareElement,
     destination: SquareElement,
   ): Path {
-    const factory: PathConstructorFactory = new PathConstructorFactory();
-    const pathConstructor: PathConstructor = factory.create(current);
+    const pathConstructor = PathConstructorFactory.create(current);
     return pathConstructor.construct(current.position, destination.position);
   }
 

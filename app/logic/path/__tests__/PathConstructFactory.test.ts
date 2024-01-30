@@ -18,8 +18,6 @@ import StraightPathConstructor from '../StraightPathConstructor';
 describe('PathConstructorFactory', () => {
   const position: Position = new Position(1, 1);
   const squareElementType: SquareElementType = 'black';
-  const pathConstructorFactory: PathConstructorFactory =
-    new PathConstructorFactory();
 
   test('No Rook or Bishop should be DefaultPathConstructor', () => {
     const elements: SquareElement[] = [
@@ -30,7 +28,7 @@ describe('PathConstructorFactory', () => {
     ];
 
     for (const element of elements) {
-      expect(pathConstructorFactory.create(element)).toBeInstanceOf(
+      expect(PathConstructorFactory.create(element)).toBeInstanceOf(
         DefaultPathConstructor,
       );
     }
@@ -38,19 +36,19 @@ describe('PathConstructorFactory', () => {
 
   test('Rook should create StraightPathConstructor', () => {
     expect(
-      pathConstructorFactory.create(new Rook(position, squareElementType)),
+      PathConstructorFactory.create(new Rook(position, squareElementType)),
     ).toBeInstanceOf(StraightPathConstructor);
   });
 
   test('Bishop should create DiagonalPathConstructor', () => {
     expect(
-      pathConstructorFactory.create(new Bishop(position, squareElementType)),
+      PathConstructorFactory.create(new Bishop(position, squareElementType)),
     ).toBeInstanceOf(DiagonalPathConstructor);
   });
 
   test('Queen should create StraightAndDiagonalPathConstructor', () => {
     expect(
-      pathConstructorFactory.create(new Queen(position, squareElementType)),
+      PathConstructorFactory.create(new Queen(position, squareElementType)),
     ).toBeInstanceOf(StraightAndDiagonalPathConstructor);
   });
 });
