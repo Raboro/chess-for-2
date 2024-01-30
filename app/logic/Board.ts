@@ -161,15 +161,19 @@ export class Board {
     this.currentPiece = undefined;
   }
 
-  handlePromotion(promotionType: PromotionType) {
+  handlePromotion(promotionType: PromotionType): SquareElement {
     const position = this.currentSquareElement?.position ?? new Position(0, 0);
     const elementType = this.currentSquareElement?.squareElementType ?? 'white';
     this.pieces = this.pieces.filter(
       (piece) => piece !== this.currentSquareElement,
     );
 
-    this.pieces.push(
-      PromotionFactory.createPieceByType(promotionType, position, elementType),
+    const piece = PromotionFactory.createPieceByType(
+      promotionType,
+      position,
+      elementType,
     );
+    this.pieces.push(piece);
+    return piece;
   }
 }

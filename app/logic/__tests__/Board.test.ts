@@ -9,6 +9,7 @@ import Pawn from '../squareelements/Pawn';
 import Queen from '../squareelements/Queen';
 import Rook from '../squareelements/Rook';
 import SquareElementType from '../SquareElementType';
+import PromotionType from '../promotion/PromotionType';
 
 describe('Board', () => {
   let board: Board;
@@ -191,4 +192,19 @@ describe('Board', () => {
       expect(board.isPromotable()).toBeTruthy();
     },
   );
+
+  test('HandlePromotion should create default piece if no selection', () => {
+    expect(board.handlePromotion(PromotionType.QUEEN)).toEqual(
+      new Queen(new Position(0, 0), 'white'),
+    );
+  });
+
+  test('HandlePromotion should create correct Piece', () => {
+    expect(
+      board.selectSquare(new Pawn(new Position(1, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.handlePromotion(PromotionType.QUEEN)).toEqual(
+      new Queen(new Position(1, 1), 'black'),
+    );
+  });
 });
