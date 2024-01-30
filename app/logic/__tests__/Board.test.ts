@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test } from '@jest/globals';
 import { Board } from '../Board';
 import Position from '../Position';
+import PromotionType from '../promotion/PromotionType';
 import SquareElement from '../SquareElement';
 import Bishop from '../squareelements/Bishop';
 import Empty from '../squareelements/Empty';
@@ -9,7 +10,6 @@ import Pawn from '../squareelements/Pawn';
 import Queen from '../squareelements/Queen';
 import Rook from '../squareelements/Rook';
 import SquareElementType from '../SquareElementType';
-import PromotionType from '../promotion/PromotionType';
 
 describe('Board', () => {
   let board: Board;
