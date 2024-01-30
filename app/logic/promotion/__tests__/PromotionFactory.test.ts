@@ -1,12 +1,12 @@
 import { describe, expect, test } from '@jest/globals';
-import PromotionFactory from '../PromotionFactory';
-import PromotionType from '../PromotionType';
 import Position from '../../Position';
-import Queen from '../../squareelements/Queen';
-import Rook from '../../squareelements/Rook';
+import SquareElement from '../../SquareElement';
 import Bishop from '../../squareelements/Bishop';
 import Knight from '../../squareelements/Knight';
-import SquareElement from '../../SquareElement';
+import Queen from '../../squareelements/Queen';
+import Rook from '../../squareelements/Rook';
+import PromotionFactory from '../PromotionFactory';
+import PromotionType from '../PromotionType';
 
 describe('PromotionFactory', () => {
   test.each([
