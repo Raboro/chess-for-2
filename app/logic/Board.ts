@@ -4,6 +4,7 @@ import Path from './path/Path';
 import PathConstructor from './path/PathConstructor';
 import PathConstructorFactory from './path/PathConstructorFactory';
 import Position from './Position';
+import PromotionType from './PromotionType';
 import SquareElement from './SquareElement';
 import Bishop from './squareelements/Bishop';
 import Empty from './squareelements/Empty';
@@ -159,5 +160,27 @@ export class Board {
 
   removeSelection(): void {
     this.currentPiece = undefined;
+  }
+
+  handlePromotion(promotionType: PromotionType) {
+    const position = this.currentSquareElement?.position ?? new Position(0, 0);
+    const elementType = this.currentSquareElement?.squareElementType ?? 'white';
+    this.pieces = this.pieces.filter(
+      (piece) => piece !== this.currentSquareElement,
+    );
+
+    let piece;
+
+    if (promotionType === PromotionType.QUEEN) {
+      piece = new Queen(position, elementType);
+    } else if (promotionType === PromotionType.ROOK) {
+      piece = new Rook(position, elementType);
+    } else if (promotionType === PromotionType.BISHOP) {
+      piece = new Bishop(position, elementType);
+    } else {
+      piece = new Knight(position, elementType);
+    }
+
+    this.pieces.push(piece);
   }
 }
