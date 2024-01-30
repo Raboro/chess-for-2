@@ -12,6 +12,7 @@ import Rook from '../../logic/squareelements/Rook';
 import SquareElementType, { isWhite } from '../../logic/SquareElementType';
 import Square from '../Square/Square';
 import { styles } from './PromotionStyle';
+import PromotionFactory from '../../logic/PromotionFactory';
 
 interface Props {
   squareColor: SquareColor;
@@ -30,17 +31,7 @@ const Promotion = (props: Props) => {
   ];
 
   const setPromotion = (index: number) => {
-    let promotionType;
-    if (index === 0) {
-      promotionType = PromotionType.QUEEN;
-    } else if (index === 1) {
-      promotionType = PromotionType.ROOK;
-    } else if (index === 2) {
-      promotionType = PromotionType.BISHOP;
-    } else {
-      promotionType = PromotionType.KNIGHT;
-    }
-    props.setPromotion(promotionType);
+    props.setPromotion(PromotionFactory.createTypeByIndex(index));
   };
 
   return (
