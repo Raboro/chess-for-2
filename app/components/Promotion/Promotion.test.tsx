@@ -1,8 +1,8 @@
 import { describe, expect, jest, test } from '@jest/globals';
 import { fireEvent, render } from '@testing-library/react-native';
 import SquareColor from '../../constants/SquareColor';
-import Promotion from './Promotion';
 import PromotionType from '../../logic/promotion/PromotionType';
+import Promotion from './Promotion';
 
 describe('Promotion', () => {
   test('render without error', () => {
