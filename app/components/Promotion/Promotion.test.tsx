@@ -10,6 +10,7 @@ describe('Promotion', () => {
         squareColor={SquareColor.BLACK}
         squareElementType="black"
         size={0}
+        setPromotion={() => {}}
       />,
     );
     expect(rend).not.toBe(null);
@@ -21,6 +22,7 @@ describe('Promotion', () => {
         squareColor={SquareColor.BLACK}
         squareElementType="black"
         size={100}
+        setPromotion={() => {}}
       />,
     );
 
@@ -41,6 +43,7 @@ describe('Promotion', () => {
           }
           squareElementType={color === 'Black' ? 'black' : 'white'}
           size={100}
+          setPromotion={() => {}}
         />,
       );
 

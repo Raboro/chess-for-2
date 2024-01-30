@@ -7,32 +7,49 @@ import Position from '../../logic/Position';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
 import Square from '../Square/Square';
+import PromotionType from '../../logic/PromotionType';
 
 interface Props {
   size: number;
   boardLogic: BoardLogic;
+  setPromotion: React.Dispatch<React.SetStateAction<SquareElementType>>;
+  promotionType: PromotionType | undefined
 }
 
-const Board = (props: Readonly<Props>) => {
+const Board = (props: Props) => {
   const [selectTriggered, setSelectTriggered] = useState(false);
   const [currentType, setCurrentType] = useState<SquareElementType>('white');
+  const [isPromotion, setIsPromotion] = useState(false);
   const squareSize: number = props.size / SIZE.LINE_SIZE;
 
   const selectSquare = (squareElement: SquareElement) => {
-    props.boardLogic.selectSquare(squareElement, currentType);
-    setSelectTriggered(!selectTriggered);
+    if (!isPromotion) {
+      props.boardLogic.selectSquare(squareElement, currentType);
+      setSelectTriggered(!selectTriggered);
+    }
   };
 
   const movePiece = (squareElement: SquareElement) => {
     const moved: boolean = props.boardLogic.movePiece(squareElement);
 
     if (moved) {
-      setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
+      if (props.boardLogic.isPromotable()) {
+        props.setPromotion(currentType);
+        setIsPromotion(true);
+      } else {
+        setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
+      }
     }
 
     props.boardLogic.removeSelection();
     setSelectTriggered(!selectTriggered);
   };
+
+  if (props.promotionType !== undefined && isPromotion) {
+    props.boardLogic.handlePromotion(props.promotionType);
+    setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
+    setIsPromotion(false);
+  }
 
   const renderRow = (row: number) => {
     return (
