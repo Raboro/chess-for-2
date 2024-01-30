@@ -1,7 +1,6 @@
 import { SIZE } from '../constants/Size';
 import Moveable from './Moveable';
 import Path from './path/Path';
-import PathConstructor from './path/PathConstructor';
 import PathConstructorFactory from './path/PathConstructorFactory';
 import Position from './Position';
 import PromotionFactory from './promotion/PromotionFactory';
