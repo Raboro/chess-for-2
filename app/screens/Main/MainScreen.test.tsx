@@ -20,7 +20,7 @@ describe('MainScreen', () => {
         <MainScreen />
       </NavigationContainer>,
     );
-    
+
     const whitePositions = [
       [55, 47],
       [47, 39],
@@ -59,6 +59,6 @@ describe('MainScreen', () => {
     whiteMoveSquare = rend.getAllByTestId('SquareImage')[5];
     fireEvent(whiteMoveSquare, 'press');
 
-    fireEvent(rend.getAllByTestId('Square')[67], 'press')
-  })
+    fireEvent(rend.getAllByTestId('Square')[67], 'press');
+  });
 });

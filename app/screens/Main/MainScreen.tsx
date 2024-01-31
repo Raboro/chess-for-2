@@ -21,7 +21,7 @@ const MainScreen = () => {
   const triggerPromotion = (type: SquareElementType) => {
     setPromotionType(undefined);
     setPromotion(type);
-  }
+  };
 
   const usePromotion = (type: PromotionType) => {
     setPromotion(undefined);
