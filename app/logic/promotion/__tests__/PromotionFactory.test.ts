@@ -10,19 +10,14 @@ import PromotionType from '../PromotionType';
 
 describe('PromotionFactory', () => {
   test.each([
-    [0, PromotionType.QUEEN, PromotionType.KNIGHT],
-    [1, PromotionType.ROOK, PromotionType.BISHOP],
-    [2, PromotionType.BISHOP, PromotionType.ROOK],
-    [3, PromotionType.KNIGHT, PromotionType.QUEEN],
+    [0, PromotionType.QUEEN],
+    [1, PromotionType.ROOK],
+    [2, PromotionType.BISHOP],
+    [3, PromotionType.KNIGHT],
   ])(
     'createTypeByIndex should create correct type for index %d',
-    (index: number, typeWhite: PromotionType, typeBlack: PromotionType) => {
-      expect(PromotionFactory.createTypeByIndex(index, 'white')).toEqual(
-        typeWhite,
-      );
-      expect(PromotionFactory.createTypeByIndex(index, 'black')).toEqual(
-        typeBlack,
-      );
+    (index: number, type: PromotionType) => {
+      expect(PromotionFactory.createTypeByIndex(index)).toEqual(type);
     },
   );
 

@@ -31,7 +31,7 @@ const Promotion = (props: Props) => {
   ];
 
   const setPromotion = (index: number) => {
-    props.setPromotion(PromotionFactory.createTypeByIndex(index, props.squareElementType));
+    props.setPromotion(PromotionFactory.createTypeByIndex(index));
   };
 
   return (

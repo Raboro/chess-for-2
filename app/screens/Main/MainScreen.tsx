@@ -18,6 +18,11 @@ const MainScreen = () => {
     undefined,
   );
 
+  const triggerPromotion = (type: SquareElementType) => {
+    setPromotionType(undefined);
+    setPromotion(type);
+  }
+
   const usePromotion = (type: PromotionType) => {
     setPromotion(undefined);
     setPromotionType(type);
@@ -36,7 +41,7 @@ const MainScreen = () => {
       <Board
         size={size}
         boardLogic={boardLogic}
-        setPromotion={setPromotion}
+        setPromotion={triggerPromotion}
         promotionType={promotionType}
       />
       {promotion === 'white' && (

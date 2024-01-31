@@ -12,7 +12,7 @@ import Square from '../Square/Square';
 interface Props {
   size: number;
   boardLogic: BoardLogic;
-  setPromotion: React.Dispatch<React.SetStateAction<SquareElementType>>;
+  setPromotion: (type: SquareElementType) => void;
   promotionType: PromotionType | undefined;
 }
 

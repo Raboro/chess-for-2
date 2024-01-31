@@ -8,18 +8,15 @@ import SquareElementType from '../SquareElementType';
 import PromotionType from './PromotionType';
 
 const toType = [
-  { white: PromotionType.QUEEN, black: PromotionType.KNIGHT },
-  { white: PromotionType.ROOK, black: PromotionType.BISHOP },
-  { white: PromotionType.BISHOP, black: PromotionType.ROOK },
-  { white: PromotionType.KNIGHT, black: PromotionType.QUEEN },
+  PromotionType.QUEEN,
+  PromotionType.ROOK,
+  PromotionType.BISHOP,
+  PromotionType.KNIGHT,
 ];
 
 export default class PromotionFactory {
-  static createTypeByIndex(
-    index: number,
-    type: SquareElementType,
-  ): PromotionType {
-    return type === 'white' ? toType[index].white : toType[index].black;
+  static createTypeByIndex(index: number): PromotionType {
+    return toType[index];
   }
 
   static createPieceByType(
