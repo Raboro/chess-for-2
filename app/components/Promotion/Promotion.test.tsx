@@ -66,7 +66,7 @@ describe('Promotion', () => {
       const rend = render(
         <Promotion
           squareColor={SquareColor.BLACK}
-          squareElementType={'black'}
+          squareElementType={'white'}
           size={100}
           setPromotion={mockSetPromotion}
         />,

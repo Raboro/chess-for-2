@@ -10,28 +10,42 @@ import PromotionType from '../PromotionType';
 
 describe('PromotionFactory', () => {
   test.each([
-    [0, PromotionType.QUEEN],
-    [1, PromotionType.ROOK],
-    [2, PromotionType.BISHOP],
-    [3, PromotionType.KNIGHT],
+    [0, PromotionType.QUEEN, PromotionType.KNIGHT],
+    [1, PromotionType.ROOK, PromotionType.BISHOP],
+    [2, PromotionType.BISHOP, PromotionType.ROOK],
+    [3, PromotionType.KNIGHT, PromotionType.QUEEN],
   ])(
     'createTypeByIndex should create correct type for index %d',
-    (index: number, type: PromotionType) => {
-      expect(PromotionFactory.createTypeByIndex(index)).toEqual(type);
+    (index: number, typeWhite: PromotionType, typeBlack: PromotionType) => {
+      expect(PromotionFactory.createTypeByIndex(index, 'white')).toEqual(
+        typeWhite,
+      );
+      expect(PromotionFactory.createTypeByIndex(index, 'black')).toEqual(
+        typeBlack,
+      );
     },
   );
 
   test.each([
-    [PromotionType.QUEEN, new Queen(new Position(1, 5), 'black')],
-    [PromotionType.ROOK, new Rook(new Position(1, 5), 'black')],
-    [PromotionType.BISHOP, new Bishop(new Position(1, 5), 'black')],
-    [PromotionType.KNIGHT, new Knight(new Position(1, 5), 'black')],
+    [PromotionType.QUEEN, new Queen(new Position(1, 5), 'black'), 'black'],
+    [PromotionType.ROOK, new Rook(new Position(1, 5), 'black'), 'black'],
+    [PromotionType.BISHOP, new Bishop(new Position(1, 5), 'black'), 'black'],
+    [PromotionType.KNIGHT, new Knight(new Position(1, 5), 'black'), 'black'],
+    [PromotionType.KNIGHT, new Knight(new Position(1, 5), 'white'), 'white'],
+    [PromotionType.BISHOP, new Bishop(new Position(1, 5), 'white'), 'white'],
+    [PromotionType.ROOK, new Rook(new Position(1, 5), 'white'), 'white'],
+    [PromotionType.QUEEN, new Queen(new Position(1, 5), 'white'), 'white'],
+    [PromotionType.QUEEN, new Queen(new Position(1, 5), 'white'), undefined],
   ])(
     'createPieceByType should create correct piece',
-    (type: PromotionType, piece: SquareElement) => {
+    (type: PromotionType, piece: SquareElement, color: string | undefined) => {
       const position = new Position(1, 5);
       expect(
-        PromotionFactory.createPieceByType(type, position, 'black'),
+        PromotionFactory.createPieceByType(
+          type,
+          position,
+          color === 'black' ? 'black' : 'white',
+        ),
       ).toEqual(piece);
     },
   );

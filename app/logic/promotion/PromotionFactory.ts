@@ -7,16 +7,19 @@ import Rook from '../squareelements/Rook';
 import SquareElementType from '../SquareElementType';
 import PromotionType from './PromotionType';
 
+const toType = [
+  { white: PromotionType.QUEEN, black: PromotionType.KNIGHT },
+  { white: PromotionType.ROOK, black: PromotionType.BISHOP },
+  { white: PromotionType.BISHOP, black: PromotionType.ROOK },
+  { white: PromotionType.KNIGHT, black: PromotionType.QUEEN },
+];
+
 export default class PromotionFactory {
-  static createTypeByIndex(index: number): PromotionType {
-    if (index === 0) {
-      return PromotionType.QUEEN;
-    } else if (index === 1) {
-      return PromotionType.ROOK;
-    } else if (index === 2) {
-      return PromotionType.BISHOP;
-    }
-    return PromotionType.KNIGHT;
+  static createTypeByIndex(
+    index: number,
+    type: SquareElementType,
+  ): PromotionType {
+    return type === 'white' ? toType[index].white : toType[index].black;
   }
 
   static createPieceByType(
