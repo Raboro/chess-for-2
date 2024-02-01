@@ -62,7 +62,7 @@ describe('Pawn', () => {
     ['Black', 0, 6, 1],
     ['White', 1, 7, -1],
   ])(
-    '%s Pawn should be moveable to',
+    '%s Pawn should be moveable to and should moveTo valid',
     (color: string, min: number, max: number, added: number) => {
       for (let i: number = 0; i < 10; i++) {
         const y = randomIntFromInterval(min, max);
@@ -70,7 +70,10 @@ describe('Pawn', () => {
           new Position(x, y),
           color == 'White' ? 'white' : 'black',
         );
-        expect(pawn.isMoveableTo(new Position(x, y + added))).toBeTruthy();
+        const newPosition = new Position(x, y + added);
+        expect(pawn.isMoveableTo(newPosition)).toBeTruthy();
+        pawn.moveTo(newPosition);
+        expect(pawn.position).toEqual(newPosition);
       }
     },
   );
@@ -91,25 +94,6 @@ describe('Pawn', () => {
         expect(
           pawn.isMoveableTo(new Position(getPositionNotEq(x), y + added)),
         ).toBeFalsy();
-      }
-    },
-  );
-
-  test.each([
-    ['Black', 0, 6, 1],
-    ['White', 1, 7, -1],
-  ])(
-    '%s Pawn moveTo valid',
-    (color: string, min: number, max: number, added: number) => {
-      for (let i: number = 0; i < 10; i++) {
-        const y = randomIntFromInterval(min, max);
-        const pawn: Pawn = new Pawn(
-          new Position(x, y),
-          color == 'White' ? 'white' : 'black',
-        );
-        const newPosition = new Position(x, y + added);
-        pawn.moveTo(newPosition);
-        expect(pawn.position).toEqual(newPosition);
       }
     },
   );
