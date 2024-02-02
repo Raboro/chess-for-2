@@ -14,96 +14,85 @@ describe('MainScreen', () => {
     expect(rend).not.toBe(null);
   });
 
-  test('Should trigger Promotion for white', () => {
-    const rend = render(
-      <NavigationContainer>
-        <MainScreen />
-      </NavigationContainer>,
-    );
+  test.each([
+    [
+      'white',
+      [
+        [55, 47],
+        [47, 39],
+        [39, 31],
+        [31, 23],
+        [23, 14],
+      ],
+      [
+        [8, 16],
+        [16, 24],
+        [24, 32],
+        [32, 40],
+        [9, 17],
+      ],
+      5,
+    ],
+    [
+      'black',
+      [
+        [55, 47],
+        [47, 39],
+        [39, 31],
+        [31, 23],
+        [54, 46],
+        [46, 38],
+      ],
+      [
+        [8, 16],
+        [16, 24],
+        [24, 32],
+        [32, 40],
+        [40, 49],
+        [49, 58],
+      ],
+      6,
+    ],
+  ])(
+    'Should trigger Promotion for %s',
+    (
+      color: string,
+      whitePositions: number[][],
+      blackPositions: number[][],
+      moves: number,
+    ) => {
+      const rend = render(
+        <NavigationContainer>
+          <MainScreen />
+        </NavigationContainer>,
+      );
 
-    const whitePositions = [
-      [55, 47],
-      [47, 39],
-      [39, 31],
-      [31, 23],
-      [23, 14],
-    ];
-    const blackPositions = [
-      [8, 16],
-      [16, 24],
-      [24, 32],
-      [32, 40],
-      [9, 17],
-    ];
+      let whitePawn;
+      let whiteMoveSquare;
+      let blackPawn;
+      let blackMoveSquare;
+      for (let i = 0; i < moves; i++) {
+        whitePawn = rend.getAllByTestId('SquareImage')[whitePositions[i][0]];
+        fireEvent(whitePawn, 'press');
+        whiteMoveSquare =
+          rend.getAllByTestId('SquareImage')[whitePositions[i][1]];
+        fireEvent(whiteMoveSquare, 'press');
 
-    let whitePawn;
-    let whiteMoveSquare;
-    let blackPawn;
-    let blackMoveSquare;
-    for (let i = 0; i < 5; i++) {
-      whitePawn = rend.getAllByTestId('SquareImage')[whitePositions[i][0]];
-      fireEvent(whitePawn, 'press');
-      whiteMoveSquare =
-        rend.getAllByTestId('SquareImage')[whitePositions[i][1]];
-      fireEvent(whiteMoveSquare, 'press');
+        blackPawn = rend.getAllByTestId('SquareImage')[blackPositions[i][0]];
+        fireEvent(blackPawn, 'press');
+        blackMoveSquare =
+          rend.getAllByTestId('SquareImage')[blackPositions[i][1]];
+        fireEvent(blackMoveSquare, 'press');
+      }
 
-      blackPawn = rend.getAllByTestId('SquareImage')[blackPositions[i][0]];
-      fireEvent(blackPawn, 'press');
-      blackMoveSquare =
-        rend.getAllByTestId('SquareImage')[blackPositions[i][1]];
-      fireEvent(blackMoveSquare, 'press');
-    }
+      if (color === 'white') {
+        whitePawn = rend.getAllByTestId('SquareImage')[14];
+        fireEvent(whitePawn, 'press');
+        whiteMoveSquare = rend.getAllByTestId('SquareImage')[5];
+        fireEvent(whiteMoveSquare, 'press');
+      }
 
-    whitePawn = rend.getAllByTestId('SquareImage')[14];
-    fireEvent(whitePawn, 'press');
-    whiteMoveSquare = rend.getAllByTestId('SquareImage')[5];
-    fireEvent(whiteMoveSquare, 'press');
-
-    fireEvent(rend.getAllByTestId('Square')[67], 'press');
-  });
-
-  test('Should trigger Promotion for black', () => {
-    const rend = render(
-      <NavigationContainer>
-        <MainScreen />
-      </NavigationContainer>,
-    );
-
-    const whitePositions = [
-      [55, 47],
-      [47, 39],
-      [39, 31],
-      [31, 23],
-      [54, 46],
-      [46, 38],
-    ];
-    const blackPositions = [
-      [8, 16],
-      [16, 24],
-      [24, 32],
-      [32, 40],
-      [40, 49],
-      [49, 58],
-    ];
-
-    let whitePawn;
-    let whiteMoveSquare;
-    let blackPawn;
-    let blackMoveSquare;
-    for (let i = 0; i < 6; i++) {
-      whitePawn = rend.getAllByTestId('SquareImage')[whitePositions[i][0]];
-      fireEvent(whitePawn, 'press');
-      whiteMoveSquare =
-        rend.getAllByTestId('SquareImage')[whitePositions[i][1]];
-      fireEvent(whiteMoveSquare, 'press');
-
-      blackPawn = rend.getAllByTestId('SquareImage')[blackPositions[i][0]];
-      fireEvent(blackPawn, 'press');
-      blackMoveSquare =
-        rend.getAllByTestId('SquareImage')[blackPositions[i][1]];
-      fireEvent(blackMoveSquare, 'press');
-    }
-
-    fireEvent(rend.getAllByTestId('Square')[67], 'press');
-  });
+      fireEvent(rend.getAllByTestId('Square')[67], 'press');
+    },
+  );
 });
