@@ -1,5 +1,6 @@
 import { SIZE } from '../constants/Size';
 import Moveable from './Moveable';
+import MoveablePiece from './MoveablePiece';
 import Path from './path/Path';
 import PathConstructorFactory from './path/PathConstructorFactory';
 import Position from './Position';
@@ -16,7 +17,7 @@ import Rook from './squareelements/Rook';
 import SquareElementType from './SquareElementType';
 
 export class Board {
-  private pieces: SquareElement[] = [];
+  private pieces: MoveablePiece[] = [];
   private currentPiece: Moveable | undefined;
   private currentSquareElement: SquareElement | undefined;
 

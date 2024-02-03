@@ -1,12 +1,12 @@
 import { describe, expect, test } from '@jest/globals';
 import Position from '../../Position';
-import SquareElement from '../../SquareElement';
 import Bishop from '../../squareelements/Bishop';
 import Knight from '../../squareelements/Knight';
 import Queen from '../../squareelements/Queen';
 import Rook from '../../squareelements/Rook';
 import PromotionFactory from '../PromotionFactory';
 import PromotionType from '../PromotionType';
+import MoveablePiece from '../../MoveablePiece';
 
 describe('PromotionFactory', () => {
   test.each([
@@ -33,7 +33,7 @@ describe('PromotionFactory', () => {
     [PromotionType.QUEEN, new Queen(new Position(1, 5), 'white'), undefined],
   ])(
     'createPieceByType should create correct piece',
-    (type: PromotionType, piece: SquareElement, color: string | undefined) => {
+    (type: PromotionType, piece: MoveablePiece, color: string | undefined) => {
       const position = new Position(1, 5);
       expect(
         PromotionFactory.createPieceByType(

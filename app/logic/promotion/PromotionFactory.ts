@@ -1,5 +1,5 @@
+import MoveablePiece from '../MoveablePiece';
 import Position from '../Position';
-import SquareElement from '../SquareElement';
 import Bishop from '../squareelements/Bishop';
 import Knight from '../squareelements/Knight';
 import Queen from '../squareelements/Queen';
@@ -23,7 +23,7 @@ export default class PromotionFactory {
     promotionType: PromotionType,
     position: Position,
     elementType: SquareElementType,
-  ): SquareElement {
+  ): MoveablePiece {
     if (promotionType === PromotionType.QUEEN) {
       return new Queen(position, elementType);
     } else if (promotionType === PromotionType.ROOK) {
