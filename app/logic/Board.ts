@@ -80,7 +80,74 @@ export class Board {
     if (!this.currentPiece) {
       return false;
     }
+
+    if (this.currentSquareElement instanceof King) {
+      if (!this.currentPiece.isMoveableTo(position)) {
+        return false;
+      }
+
+      return !this.pieces.some((piece) => {
+        return this.isPositionKingToMoveBlocked(piece, position);
+      });
+    }
+
     return this.currentPiece.isMoveableTo(position);
+  }
+
+  private isPositionKingToMoveBlocked(
+    piece: MoveablePiece,
+    position: Position,
+  ): boolean {
+    return (
+      this.isSameTypeBlocking(piece, position) ||
+      this.isOtherTypeBlocking(piece, position)
+    );
+  }
+
+  private isSameTypeBlocking(piece: MoveablePiece, position: Position) {
+    return (
+      piece.squareElementType ===
+        this.currentSquareElement?.squareElementType &&
+      piece.position.same(position)
+    );
+  }
+
+  private isOtherTypeBlocking(piece: MoveablePiece, position: Position) {
+    if (
+      piece.squareElementType === this.currentSquareElement?.squareElementType
+    ) {
+      return false;
+    }
+
+    if (piece instanceof Pawn) {
+      return (
+        piece.position.differenceOfOneX(position) &&
+        (piece.squareElementType === 'white'
+          ? piece.position.y - 1 === position.y
+          : piece.position.y + 1 === position.y)
+      );
+    }
+
+    if (
+      piece instanceof Queen ||
+      piece instanceof Rook ||
+      piece instanceof Bishop
+    ) {
+      return (
+        piece.isMoveableTo(position) &&
+        this.isPieceBlockingMoveablePosition(piece, position)
+      );
+    }
+
+    return piece.isMoveableTo(position);
+  }
+
+  private isPieceBlockingMoveablePosition(
+    piece: MoveablePiece,
+    position: Position,
+  ): boolean {
+    const path: Path = this.constructPath(piece, new Empty(position));
+    return !this.isPieceInTheWay(piece, path);
   }
 
   movePiece(squareElement: SquareElement): boolean {
@@ -110,11 +177,19 @@ export class Board {
     );
   }
 
-  private isPieceInTheWay(squareElement: SquareElement): boolean {
-    const path: Path = this.constructPath(
-      this.currentSquareElement as SquareElement,
-      squareElement,
-    );
+  private isPieceInTheWay(
+    squareElement: SquareElement,
+    pathAsParam?: Path,
+  ): boolean {
+    let path;
+    if (!pathAsParam) {
+      path = this.constructPath(
+        this.currentSquareElement as SquareElement,
+        squareElement,
+      );
+    } else {
+      path = pathAsParam;
+    }
 
     for (const position of path) {
       for (const piece of this.pieces) {
