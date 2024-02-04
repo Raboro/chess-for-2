@@ -207,4 +207,23 @@ describe('Board', () => {
       new Queen(new Position(1, 1), 'black'),
     );
   });
+
+  test.each([['White'], ['Black']])(
+    '%s King should not be moveable to any square at the start',
+    (color: string) => {
+      const pieceColor = color === 'White' ? 'white' : 'black';
+      expect(
+        board.selectSquare(
+          new King(new Position(4, 7), pieceColor),
+          pieceColor,
+        ),
+      ).toBeTruthy();
+
+      for (let row = 0; row < 8; row++) {
+        for (let column = 0; column < 8; column++) {
+          expect(board.isMoveableTo(new Position(row, column))).toBeFalsy();
+        }
+      }
+    },
+  );
 });
