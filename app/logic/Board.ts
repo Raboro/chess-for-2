@@ -189,15 +189,12 @@ export class Board {
     pathAsParam?: Path,
     piecesToIgnore?: MoveablePiece[],
   ): boolean {
-    let path;
-    if (!pathAsParam) {
-      path = this.constructPath(
+    const path =
+      pathAsParam ??
+      this.constructPath(
         this.currentSquareElement as SquareElement,
         squareElement,
       );
-    } else {
-      path = pathAsParam;
-    }
 
     for (const position of path) {
       for (const piece of this.pieces) {
