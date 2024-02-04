@@ -147,7 +147,7 @@ export class Board {
     position: Position,
   ): boolean {
     const path: Path = this.constructPath(piece, new Empty(position));
-    return !this.isPieceInTheWay(piece, path);
+    return !this.isPieceInTheWay(piece, path, [this.currentPiece as MoveablePiece]);
   }
 
   movePiece(squareElement: SquareElement): boolean {
@@ -180,6 +180,7 @@ export class Board {
   private isPieceInTheWay(
     squareElement: SquareElement,
     pathAsParam?: Path,
+    piecesToIgnore?: MoveablePiece[]
   ): boolean {
     let path;
     if (!pathAsParam) {
@@ -193,7 +194,7 @@ export class Board {
 
     for (const position of path) {
       for (const piece of this.pieces) {
-        if (piece.position.same(position)) {
+        if (!piecesToIgnore?.includes(piece) && piece.position.same(position)) {
           return true;
         }
       }
