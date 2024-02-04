@@ -14,7 +14,7 @@ import Knight from './squareelements/Knight';
 import Pawn from './squareelements/Pawn';
 import Queen from './squareelements/Queen';
 import Rook from './squareelements/Rook';
-import SquareElementType from './SquareElementType';
+import SquareElementType, { isWhite } from './SquareElementType';
 
 export class Board {
   private pieces: MoveablePiece[] = [];
@@ -124,11 +124,10 @@ export class Board {
     }
 
     if (piece instanceof Pawn) {
+      const offset = isWhite(piece.squareElementType) ? -1 : 1;
       return (
         piece.position.differenceOfOneX(position) &&
-        (piece.squareElementType === 'white'
-          ? piece.position.y - 1 === position.y
-          : piece.position.y + 1 === position.y)
+        piece.position.y + offset === position.y
       );
     }
 
