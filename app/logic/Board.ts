@@ -109,17 +109,17 @@ export class Board {
   }
 
   private isSameTypeBlocking(piece: MoveablePiece, position: Position) {
+    return this.sameTypeAsCurrent(piece) && piece.position.same(position);
+  }
+
+  private sameTypeAsCurrent(piece: MoveablePiece): boolean {
     return (
-      piece.squareElementType ===
-        this.currentSquareElement?.squareElementType &&
-      piece.position.same(position)
+      piece.squareElementType === this.currentSquareElement?.squareElementType
     );
   }
 
   private isOtherTypeBlocking(piece: MoveablePiece, position: Position) {
-    if (
-      piece.squareElementType === this.currentSquareElement?.squareElementType
-    ) {
+    if (this.sameTypeAsCurrent(piece)) {
       return false;
     }
 
@@ -151,7 +151,9 @@ export class Board {
     position: Position,
   ): boolean {
     const path: Path = this.constructPath(piece, new Empty(position));
-    return !this.isPieceInTheWay(piece, path, [this.currentPiece as MoveablePiece]);
+    return !this.isPieceInTheWay(piece, path, [
+      this.currentPiece as MoveablePiece,
+    ]);
   }
 
   movePiece(squareElement: SquareElement): boolean {
@@ -184,7 +186,7 @@ export class Board {
   private isPieceInTheWay(
     squareElement: SquareElement,
     pathAsParam?: Path,
-    piecesToIgnore?: MoveablePiece[]
+    piecesToIgnore?: MoveablePiece[],
   ): boolean {
     let path;
     if (!pathAsParam) {
