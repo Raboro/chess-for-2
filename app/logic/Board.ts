@@ -82,16 +82,20 @@ export class Board {
     }
 
     if (this.currentSquareElement instanceof King) {
-      if (!this.currentPiece.isMoveableTo(position)) {
-        return false;
-      }
-
-      return !this.pieces.some((piece) => {
-        return this.isPositionKingToMoveBlocked(piece, position);
-      });
+      return this.isKingMoveableTo(position);
     }
 
     return this.currentPiece.isMoveableTo(position);
+  }
+
+  private isKingMoveableTo(position: Position): boolean {
+    if (!this.currentPiece?.isMoveableTo(position)) {
+      return false;
+    }
+
+    return !this.pieces.some((piece) => {
+      return this.isPositionKingToMoveBlocked(piece, position);
+    });
   }
 
   private isPositionKingToMoveBlocked(
