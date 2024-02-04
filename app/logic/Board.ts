@@ -131,11 +131,7 @@ export class Board {
       );
     }
 
-    if (
-      piece instanceof Queen ||
-      piece instanceof Rook ||
-      piece instanceof Bishop
-    ) {
+    if (this.isQueenRookOrBishop(piece)) {
       return (
         piece.isMoveableTo(position) &&
         this.isPieceBlockingMoveablePosition(piece, position)
@@ -143,6 +139,12 @@ export class Board {
     }
 
     return piece.isMoveableTo(position);
+  }
+
+  private isQueenRookOrBishop(piece: MoveablePiece): boolean {
+    return (
+      piece instanceof Queen || piece instanceof Rook || piece instanceof Bishop
+    );
   }
 
   private isPieceBlockingMoveablePosition(
