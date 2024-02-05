@@ -172,9 +172,25 @@ export class Board {
     }
 
     const newPosition: Position = squareElement.position;
-    this.pieces = this.pieces.filter((piece) => piece !== squareElement);
+    this.pieces = this.pieces
+      .filter((piece) => piece !== squareElement)
+      .map((piece) => {
+        if (this.isPieceSameAsCurrent(piece)) {
+          piece.moveTo(newPosition);
+        }
+        return piece;
+      });
+
     this.currentPiece.moveTo(newPosition);
     return true;
+  }
+
+  private isPieceSameAsCurrent(piece: MoveablePiece) {
+    return (
+      piece.position.same(
+        this.currentSquareElement?.position ?? new Position(0, 0),
+      ) && this.sameElementTypeAsCurrent(piece)
+    );
   }
 
   private sameElementTypeAsCurrent(squareElement: SquareElement): boolean {
