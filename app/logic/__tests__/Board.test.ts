@@ -226,4 +226,76 @@ describe('Board', () => {
       }
     },
   );
+
+  test('King should be moveable to specific squares', () => {
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 4)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(5, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 4)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Queen(new Position(3, 0), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 4)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+
+    checkKingAndMoveToOnlyPossibleSquare(board);
+
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 3), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Pawn(new Position(5, 4), 'white'))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new King(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+
+    for (let row = 0; row < 8; row++) {
+      for (let column = 0; column < 8; column++) {
+        if ((row === 3 && column === 5) || (row === 5 && column === 5)) {
+          expect(board.isMoveableTo(new Position(row, column))).toBeTruthy();
+          continue;
+        }
+        expect(board.isMoveableTo(new Position(row, column))).toBeFalsy();
+      }
+    }
+    expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Queen(new Position(7, 4), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(6, 5)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new King(new Position(5, 5), 'white'), 'white'),
+    ).toBeTruthy();
+
+    checkKingAndMoveToOnlyPossibleSquare(board);
+  });
 });
+
+function checkKingAndMoveToOnlyPossibleSquare(board: Board) {
+  for (let row = 0; row < 8; row++) {
+    for (let column = 0; column < 8; column++) {
+      if (row === 4 && column === 6) {
+        expect(board.isMoveableTo(new Position(row, column))).toBeTruthy();
+        continue;
+      }
+      expect(board.isMoveableTo(new Position(row, column))).toBeFalsy();
+    }
+  }
+  expect(board.movePiece(new Empty(new Position(4, 6)))).toBeTruthy();
+}
