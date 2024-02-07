@@ -228,6 +228,7 @@ describe('Board', () => {
   );
 
   test('King should be moveable to specific squares', () => {
+    expect(board.isKingInCheck('black')).toBeFalsy();
     expect(
       board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
     ).toBeTruthy();
@@ -237,6 +238,8 @@ describe('Board', () => {
       board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
     ).toBeTruthy();
     expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+
+    expect(board.isKingInCheck('black')).toBeFalsy();
 
     expect(
       board.selectSquare(new Pawn(new Position(5, 6), 'white'), 'white'),
@@ -251,6 +254,8 @@ describe('Board', () => {
     expect(
       board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
     ).toBeTruthy();
+
+    expect(board.isKingInCheck('black')).toBeTruthy();
 
     checkKingAndMoveToOnlyPossibleSquare(board);
 
@@ -272,6 +277,8 @@ describe('Board', () => {
         expect(board.isMoveableTo(new Position(row, column))).toBeFalsy();
       }
     }
+    expect(board.isKingInCheck('black')).toBeFalsy();
+
     expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
 
     expect(
@@ -279,12 +286,23 @@ describe('Board', () => {
     ).toBeTruthy();
     expect(board.movePiece(new Empty(new Position(6, 5)))).toBeTruthy();
 
+    expect(board.isKingInCheck('black')).toBeTruthy();
+
     expect(
       board.selectSquare(new King(new Position(5, 5), 'white'), 'white'),
     ).toBeTruthy();
 
     checkKingAndMoveToOnlyPossibleSquare(board);
   });
+
+  test.each([['White'], ['Black']])(
+    '%s King should not be in check at the beginning of the game',
+    (color: string) => {
+      expect(
+        board.isKingInCheck(color === 'White' ? 'white' : 'black'),
+      ).toBeFalsy();
+    },
+  );
 });
 
 function checkKingAndMoveToOnlyPossibleSquare(board: Board) {
