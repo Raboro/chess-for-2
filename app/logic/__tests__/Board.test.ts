@@ -228,7 +228,7 @@ describe('Board', () => {
   );
 
   test('King should be moveable to specific squares', () => {
-    expect(board.isKingInCheck('black')).toBeFalsy();
+    expect(board.isKingInCheck('white')).toBeFalsy();
     expect(
       board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
     ).toBeTruthy();
@@ -239,7 +239,7 @@ describe('Board', () => {
     ).toBeTruthy();
     expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
 
-    expect(board.isKingInCheck('black')).toBeFalsy();
+    expect(board.isKingInCheck('white')).toBeFalsy();
 
     expect(
       board.selectSquare(new Pawn(new Position(5, 6), 'white'), 'white'),
@@ -255,7 +255,7 @@ describe('Board', () => {
       board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
     ).toBeTruthy();
 
-    expect(board.isKingInCheck('black')).toBeTruthy();
+    expect(board.isKingInCheck('white')).toBeTruthy();
 
     checkKingAndMoveToOnlyPossibleSquare(board);
 
@@ -277,7 +277,7 @@ describe('Board', () => {
         expect(board.isMoveableTo(new Position(row, column))).toBeFalsy();
       }
     }
-    expect(board.isKingInCheck('black')).toBeFalsy();
+    expect(board.isKingInCheck('white')).toBeFalsy();
 
     expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
 
@@ -286,7 +286,7 @@ describe('Board', () => {
     ).toBeTruthy();
     expect(board.movePiece(new Empty(new Position(6, 5)))).toBeTruthy();
 
-    expect(board.isKingInCheck('black')).toBeTruthy();
+    expect(board.isKingInCheck('white')).toBeTruthy();
 
     expect(
       board.selectSquare(new King(new Position(5, 5), 'white'), 'white'),
@@ -298,9 +298,12 @@ describe('Board', () => {
   test.each([['White'], ['Black']])(
     '%s King should not be in check at the beginning of the game',
     (color: string) => {
+      const type = color === 'White' ? 'white' : 'black';
       expect(
-        board.isKingInCheck(color === 'White' ? 'white' : 'black'),
-      ).toBeFalsy();
+        board.selectSquare(new King(new Position(4, 7), type), type),
+      ).toBeTruthy();
+
+      expect(board.isKingInCheck(type)).toBeFalsy();
     },
   );
 });

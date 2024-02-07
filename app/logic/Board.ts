@@ -275,7 +275,7 @@ export class Board {
   }
 
   isKingInCheck(currentType: SquareElementType): boolean {
-    const king = this.getKingOfOtherType(currentType);
+    const king = this.getKingOfType(currentType);
 
     if (!king) {
       return false;
@@ -292,27 +292,27 @@ export class Board {
     king: MoveablePiece,
   ): boolean {
     return (
-      piece.squareElementType === currentType &&
+      piece.squareElementType !== currentType &&
       piece.isMoveableTo(king.position) &&
       !this.isPieceInTheWay(king, this.constructPath(piece, king))
     );
   }
 
-  private getKingOfOtherType(
+  private getKingOfType(
     currentType: SquareElementType,
   ): MoveablePiece | undefined {
     for (const piece of this.pieces) {
-      if (this.isKingOfOtherType(piece, currentType)) {
+      if (this.isKingOfType(piece, currentType)) {
         return piece;
       }
     }
     return undefined; // should never be the case, because king of other type always exists
   }
 
-  private isKingOfOtherType(
+  private isKingOfType(
     piece: MoveablePiece,
     currentType: SquareElementType,
   ): boolean {
-    return piece instanceof King && piece.squareElementType !== currentType;
+    return piece instanceof King && piece.squareElementType === currentType;
   }
 }
