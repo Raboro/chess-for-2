@@ -309,10 +309,7 @@ export class Board {
     return undefined; // should never be the case, because king of other type always exists
   }
 
-  private isKingOfType(
-    piece: MoveablePiece,
-    currentType: SquareElementType,
-  ): boolean {
+  isKingOfType(piece: MoveablePiece, currentType: SquareElementType): boolean {
     return piece instanceof King && piece.squareElementType === currentType;
   }
 }
