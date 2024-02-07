@@ -3,12 +3,12 @@ import { View } from 'react-native';
 import { SIZE } from '../../constants/Size';
 import SquareColor from '../../constants/SquareColor';
 import { Board as BoardLogic } from '../../logic/Board';
+import MoveablePiece from '../../logic/MoveablePiece';
 import Position from '../../logic/Position';
 import PromotionType from '../../logic/promotion/PromotionType';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
 import Square from '../Square/Square';
-import MoveablePiece from '../../logic/MoveablePiece';
 
 interface Props {
   size: number;
@@ -40,7 +40,11 @@ const Board = (props: Props) => {
         setIsPromotion(true);
       } else {
         setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
-        setInCheck(props.boardLogic.isKingInCheck(currentType === 'white' ? 'black' : 'white'));
+        setInCheck(
+          props.boardLogic.isKingInCheck(
+            currentType === 'white' ? 'black' : 'white',
+          ),
+        );
       }
     }
 
@@ -70,9 +74,15 @@ const Board = (props: Props) => {
             isMoveableTo={props.boardLogic.isMoveableTo(
               new Position(column, row),
             )}
-            inCheck={inCheck && props.boardLogic.isKingOfType(props.boardLogic.getAtPosition(
-              new Position(column, row),
-            ) as MoveablePiece, currentType)}
+            inCheck={
+              inCheck &&
+              props.boardLogic.isKingOfType(
+                props.boardLogic.getAtPosition(
+                  new Position(column, row),
+                ) as MoveablePiece,
+                currentType,
+              )
+            }
             selectSquare={selectSquare}
             movePiece={movePiece}
           />
