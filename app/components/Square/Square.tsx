@@ -9,6 +9,7 @@ interface Props {
   squareColor: SquareColor;
   squareElement: SquareElement;
   isMoveableTo: boolean;
+  inCheck: boolean
   selectSquare: (squareElement: SquareElement) => void;
   movePiece: (squareElement: SquareElement) => void;
 }
@@ -21,11 +22,11 @@ const Square = (props: Readonly<Props>) => {
   return (
     <Pressable
       testID="Square"
-      style={{
+      style={[{
         width: props.size,
         height: props.size,
         backgroundColor: props.squareColor,
-      }}
+      }, props.inCheck ? styles.inCheck : {}]}
       onPress={() =>
         props.isMoveableTo
           ? props.movePiece(props.squareElement)

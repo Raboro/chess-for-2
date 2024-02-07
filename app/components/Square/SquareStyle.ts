@@ -18,4 +18,10 @@ export const styles = StyleSheet.create({
   moveableToPiece: {
     borderColor: 'black',
   },
+
+  inCheck: {
+    borderColor: 'red',
+    borderWidth: 2,
+    paddingRight: '5%',
+  },
 });

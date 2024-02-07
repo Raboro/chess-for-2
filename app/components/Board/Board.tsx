@@ -8,6 +8,7 @@ import PromotionType from '../../logic/promotion/PromotionType';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
 import Square from '../Square/Square';
+import MoveablePiece from '../../logic/MoveablePiece';
 
 interface Props {
   size: number;
@@ -20,6 +21,7 @@ const Board = (props: Props) => {
   const [selectTriggered, setSelectTriggered] = useState(false);
   const [currentType, setCurrentType] = useState<SquareElementType>('white');
   const [isPromotion, setIsPromotion] = useState(false);
+  const [inCheck, setInCheck] = useState(false);
   const squareSize: number = props.size / SIZE.LINE_SIZE;
 
   const selectSquare = (squareElement: SquareElement) => {
@@ -38,6 +40,7 @@ const Board = (props: Props) => {
         setIsPromotion(true);
       } else {
         setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
+        setInCheck(props.boardLogic.isKingInCheck(currentType === 'white' ? 'black' : 'white'));
       }
     }
 
@@ -67,6 +70,9 @@ const Board = (props: Props) => {
             isMoveableTo={props.boardLogic.isMoveableTo(
               new Position(column, row),
             )}
+            inCheck={inCheck && props.boardLogic.isKingOfType(props.boardLogic.getAtPosition(
+              new Position(column, row),
+            ) as MoveablePiece, currentType)}
             selectSquare={selectSquare}
             movePiece={movePiece}
           />
