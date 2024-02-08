@@ -27,14 +27,14 @@ describe('Board UI', () => {
         promotionType={undefined}
       />,
     );
-    const lastSquare = rend.getAllByTestId('Square')[63];
-    expect(rend.getAllByTestId('SquareImage')[62].props.style[1]).toEqual({});
+    const whiteRightKnight = rend.getAllByTestId('Square')[62];
+    expect(rend.getAllByTestId('SquareImage')[47].props.style[1]).toEqual({});
 
-    expect(lastSquare.props.style.borderColor).toBe(undefined);
+    expect(whiteRightKnight.props.style.borderColor).toBe(undefined);
 
-    fireEvent(lastSquare, 'press');
+    fireEvent(whiteRightKnight, 'press');
 
-    expect(rend.getAllByTestId('SquareImage')[62].props.style[1]).not.toEqual(
+    expect(rend.getAllByTestId('SquareImage')[47].props.style[1]).not.toEqual(
       {},
     );
   });
