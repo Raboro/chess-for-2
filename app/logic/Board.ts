@@ -85,7 +85,24 @@ export class Board {
       return this.isKingMoveableTo(position);
     }
 
-    return this.currentPiece.isMoveableTo(position);
+    const elementOnSquareToMove = this.getAtPosition(position);
+    const isSquareNotOfSameType =
+      elementOnSquareToMove instanceof Empty ||
+      !this.sameElementTypeAsCurrent(elementOnSquareToMove);
+
+    const noPieceShouldBlocking = !this.isPieceInTheWay(
+      this.currentSquareElement as SquareElement,
+      this.constructPath(
+        this.currentSquareElement as SquareElement,
+        new Empty(position),
+      ),
+    );
+
+    return (
+      this.currentPiece.isMoveableTo(position) &&
+      isSquareNotOfSameType &&
+      noPieceShouldBlocking
+    );
   }
 
   private isKingMoveableTo(position: Position): boolean {
