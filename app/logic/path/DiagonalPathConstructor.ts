@@ -4,9 +4,6 @@ import PathConstructor from './PathConstructor';
 
 export default class DiagonalPathConstructor implements PathConstructor {
   construct(current: Position, destination: Position): Path {
-    console.log(
-      `Position: ${current.x}-${current.y}, ${destination.x}-${destination.y}`,
-    );
     const path: Path = new Path();
 
     const moveX = current.x >= destination.x ? -1 : 1;
