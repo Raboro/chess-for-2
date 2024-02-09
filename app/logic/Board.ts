@@ -85,6 +85,13 @@ export class Board {
       return this.isKingMoveableTo(position);
     }
 
+    if (this.currentSquareElement instanceof Pawn) {
+      return (
+        this.currentPiece.isMoveableTo(position) &&
+        !this.pawnNotMoveableTo(this.getAtPosition(position))
+      );
+    }
+
     const elementOnSquareToMove = this.getAtPosition(position);
     const isSquareNotOfSameType =
       elementOnSquareToMove instanceof Empty ||
