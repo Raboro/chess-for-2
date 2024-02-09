@@ -18,6 +18,23 @@ describe('DiagonalPathConstructor', () => {
     expect(counter).toEqual(0);
   });
 
+  test('Move from 7:4 to 0:0 should throw error in position and catch', () => {
+    const path: Path = pathConstructor.construct(
+      new Position(7, 4),
+      new Position(0, 0),
+    );
+    const result = [
+      new Position(6, 3),
+      new Position(5, 2),
+      new Position(4, 1),
+      new Position(3, 0),
+    ];
+    let index = 0;
+    for (const pos of path) {
+      expect(pos).toEqual(result[index++]);
+    }
+  });
+
   test.each([
     [
       'up',
