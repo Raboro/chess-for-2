@@ -126,14 +126,39 @@ describe('Board', () => {
   });
 
   test('Pawn can only move diagonal left/right if opponent in the way', () => {
-    const pawn = new Pawn(new Position(1, 1), 'black');
+    let pawn = new Pawn(new Position(1, 1), 'black');
+    expect(board.selectSquare(pawn, 'black')).toBeTruthy();
+    pawn = new Pawn(new Position(1, 1), 'black');
     expect(board.selectSquare(pawn, 'black')).toBeTruthy();
     expect(board.movePiece(new Empty(new Position(2, 2)))).toBeFalsy();
     expect(board.movePiece(new Empty(new Position(1, 2)))).toBeTruthy();
-    expect(board.movePiece(new Queen(new Position(2, 3), 'black'))).toBeFalsy(); // on own color it´s not working
-    expect(
-      board.movePiece(new Queen(new Position(2, 3), 'white')),
-    ).toBeTruthy();
+
+    const bPawn = new Pawn(new Position(3, 1), 'black');
+    expect(board.selectSquare(bPawn, 'black')).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(3, 3)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(3, 4)))).toBeTruthy();
+
+    const bQueen = new Queen(new Position(3, 0), 'black');
+    expect(board.selectSquare(bQueen, 'black')).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(3, 2)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(2, 2)))).toBeTruthy();
+
+    pawn = new Pawn(new Position(1, 1), 'black');
+    expect(board.selectSquare(pawn, 'black')).toBeTruthy();
+    expect(board.movePiece(bQueen)).toBeFalsy(); // on own color it´s not working
+
+    const wPawn = new Pawn(new Position(4, 6), 'white');
+    expect(board.selectSquare(wPawn, 'white')).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 5)))).toBeTruthy();
+
+    const wQueen = new Queen(new Position(3, 7), 'white');
+    expect(board.selectSquare(wQueen, 'white')).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
+    expect(board.movePiece(bQueen)).toBeTruthy();
+
+    pawn = new Pawn(new Position(1, 1), 'black');
+    expect(board.selectSquare(pawn, 'black')).toBeTruthy();
+    expect(board.movePiece(wQueen)).toBeTruthy();
   });
 
   test.each([
@@ -187,8 +212,22 @@ describe('Board', () => {
       expect(board.movePiece(new Empty(new Position(1, ys[1])))).toBeTruthy();
       expect(board.movePiece(new Empty(new Position(1, ys[2])))).toBeTruthy();
       expect(board.movePiece(new Empty(new Position(1, ys[3])))).toBeTruthy();
-      expect(board.movePiece(new Empty(new Position(1, ys[4])))).toBeTruthy();
-      expect(board.movePiece(new Empty(new Position(1, ys[5])))).toBeTruthy();
+      expect(
+        board.movePiece(
+          new Pawn(
+            new Position(2, ys[4]),
+            color === 'White' ? 'black' : 'white',
+          ),
+        ),
+      ).toBeTruthy();
+      expect(
+        board.movePiece(
+          new Bishop(
+            new Position(3, ys[5]),
+            color === 'White' ? 'black' : 'white',
+          ),
+        ),
+      ).toBeTruthy();
       expect(board.isPromotable()).toBeTruthy();
     },
   );

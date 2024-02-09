@@ -120,7 +120,7 @@ describe('Board UI', () => {
     const freeSquare = rend.getAllByTestId('SquareImage')[47];
     expect(freeSquare.props.style[1]).not.toEqual({});
     const notMoveableFreeSquare = rend.getAllByTestId('SquareImage')[46];
-    expect(notMoveableFreeSquare.props.style[1]).not.toEqual({});
+    expect(notMoveableFreeSquare.props.style[1]).toEqual({});
     fireEvent(notMoveableFreeSquare, 'press');
   });
 
