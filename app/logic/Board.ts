@@ -20,9 +20,11 @@ export class Board {
   private pieces: MoveablePiece[] = [];
   private currentPiece: Moveable | undefined;
   private currentSquareElement: SquareElement | undefined;
+  private inCheck: boolean;
 
   constructor() {
     this.initBoard();
+    this.inCheck = false;
   }
 
   private initBoard(): void {
@@ -86,9 +88,21 @@ export class Board {
     }
 
     if (this.currentSquareElement instanceof Pawn) {
-      return (
+      const conditionsWithoutCheck =
         this.currentPiece.isMoveableTo(position) &&
-        !this.pawnNotMoveableTo(this.getAtPosition(position))
+        !this.pawnNotMoveableTo(this.getAtPosition(position));
+
+      if (!this.inCheck) {
+        return conditionsWithoutCheck;
+      }
+
+      return (
+        // need to consider the case if pawn can take check given piece
+        conditionsWithoutCheck &&
+        !this.isKingInCheck(
+          this.currentSquareElement?.squareElementType,
+          position,
+        )
       );
     }
 
@@ -105,10 +119,21 @@ export class Board {
       ),
     );
 
-    return (
+    const conditionsWithoutCheck =
       this.currentPiece.isMoveableTo(position) &&
       isSquareNotOfSameType &&
-      noPieceShouldBlocking
+      noPieceShouldBlocking;
+
+    if (!this.inCheck) {
+      return conditionsWithoutCheck;
+    }
+
+    return (
+      conditionsWithoutCheck &&
+      !this.isKingInCheck(
+        this.currentSquareElement?.squareElementType,
+        position,
+      )
     );
   }
 
@@ -228,6 +253,7 @@ export class Board {
     squareElement: SquareElement,
     pathAsParam?: Path,
     piecesToIgnore?: MoveablePiece[],
+    positionBlocked?: Position,
   ): boolean {
     const path =
       pathAsParam ??
@@ -237,6 +263,9 @@ export class Board {
       );
 
     for (const position of path) {
+      if (positionBlocked && position.same(positionBlocked)) {
+        return true;
+      }
       for (const piece of this.pieces) {
         if (!piecesToIgnore?.includes(piece) && piece.position.same(position)) {
           return true;
@@ -298,27 +327,44 @@ export class Board {
     return piece;
   }
 
-  isKingInCheck(currentType: SquareElementType): boolean {
+  isKingInCheck(
+    currentType: SquareElementType,
+    positionBlocked?: Position,
+  ): boolean {
     const king = this.getKingOfType(currentType);
 
     if (!king) {
       return false;
     }
 
-    return this.pieces.some((piece) =>
-      this.isPieceGivingCheck(piece, currentType, king),
-    );
+    if (positionBlocked) {
+      return this.pieces.some((piece) =>
+        this.isPieceGivingCheck(piece, currentType, king, positionBlocked),
+      );
+    }
+
+    this.inCheck = this.pieces.some((piece) => {
+      return this.isPieceGivingCheck(piece, currentType, king, positionBlocked);
+    });
+
+    return this.inCheck;
   }
 
   private isPieceGivingCheck(
     piece: MoveablePiece,
     currentType: string | undefined,
     king: MoveablePiece,
+    positionBlocked?: Position,
   ): boolean {
     return (
       piece.squareElementType !== currentType &&
       piece.isMoveableTo(king.position) &&
-      !this.isPieceInTheWay(king, this.constructPath(piece, king))
+      !this.isPieceInTheWay(
+        king,
+        this.constructPath(piece, king),
+        [],
+        positionBlocked,
+      )
     );
   }
 
