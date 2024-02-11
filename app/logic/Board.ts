@@ -225,10 +225,6 @@ export class Board {
       return false;
     }
 
-    if (this.isCurrentlyPawn() && this.pawnNotMoveableTo(squareElement)) {
-      return false;
-    }
-
     const newPosition: Position = squareElement.position;
     this.pieces = this.pieces
       .filter((piece) => piece !== squareElement)
