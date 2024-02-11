@@ -99,7 +99,6 @@ export class Board {
       }
 
       return (
-        // need to consider the case if pawn can take check given piece
         conditionsWithoutCheck &&
         (!this.isKingInCheck(
           this.currentSquareElement?.squareElementType,
