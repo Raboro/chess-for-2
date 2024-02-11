@@ -21,10 +21,12 @@ export class Board {
   private currentPiece: Moveable | undefined;
   private currentSquareElement: SquareElement | undefined;
   private inCheck: boolean;
+  private piecesGivinCheck: Set<MoveablePiece>;
 
   constructor() {
     this.initBoard();
     this.inCheck = false;
+    this.piecesGivinCheck = new Set();
   }
 
   private initBoard(): void {
@@ -99,10 +101,14 @@ export class Board {
       return (
         // need to consider the case if pawn can take check given piece
         conditionsWithoutCheck &&
-        !this.isKingInCheck(
+        (!this.isKingInCheck(
           this.currentSquareElement?.squareElementType,
           position,
-        )
+        ) ||
+          (this.piecesGivinCheck.size === 1 &&
+            (
+              this.piecesGivinCheck.values().next().value as MoveablePiece
+            ).position.same(position)))
       );
     }
 
@@ -130,10 +136,14 @@ export class Board {
 
     return (
       conditionsWithoutCheck &&
-      !this.isKingInCheck(
+      (!this.isKingInCheck(
         this.currentSquareElement?.squareElementType,
         position,
-      )
+      ) ||
+        (this.piecesGivinCheck.size === 1 &&
+          (
+            this.piecesGivinCheck.values().next().value as MoveablePiece
+          ).position.same(position)))
     );
   }
 
@@ -338,14 +348,24 @@ export class Board {
     }
 
     if (positionBlocked) {
-      return this.pieces.some((piece) =>
-        this.isPieceGivingCheck(piece, currentType, king, positionBlocked),
-      );
+      return this.pieces.some((piece) => {
+        if (
+          this.isPieceGivingCheck(piece, currentType, king, positionBlocked)
+        ) {
+          this.piecesGivinCheck.add(piece);
+          return true;
+        }
+        return false;
+      });
     }
 
     this.inCheck = this.pieces.some((piece) => {
       return this.isPieceGivingCheck(piece, currentType, king, positionBlocked);
     });
+
+    if (!this.inCheck) {
+      this.piecesGivinCheck.clear();
+    }
 
     return this.inCheck;
   }
