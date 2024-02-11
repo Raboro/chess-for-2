@@ -345,6 +345,57 @@ describe('Board', () => {
       expect(board.isKingInCheck(type)).toBeFalsy();
     },
   );
+
+  test('Pawn should prevent check by Queen on 7;4 - Queen and other pawn should not', () => {
+    // move pawns
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 4)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(5, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 4)))).toBeTruthy();
+
+    // move Queen
+    expect(
+      board.selectSquare(new Queen(new Position(3, 0), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 4)))).toBeTruthy();
+
+    // Pawn could only move front
+    expect(board.isKingInCheck('white')).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(6, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.isMoveableTo(new Position(6, 5))).toBeTruthy();
+
+    // Pawn could not move
+    expect(
+      board.selectSquare(new Pawn(new Position(6, 7), 'white'), 'white'),
+    ).toBeTruthy();
+
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        expect(board.isMoveableTo(new Position(i, j))).toBeFalsy();
+      }
+    }
+
+    // Queen could not move
+    expect(
+      board.selectSquare(new Queen(new Position(3, 7), 'white'), 'white'),
+    ).toBeTruthy();
+
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        expect(board.isMoveableTo(new Position(i, j))).toBeFalsy();
+      }
+    }
+  });
 });
 
 function checkKingAndMoveToOnlyPossibleSquare(board: Board) {
