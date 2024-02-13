@@ -104,21 +104,9 @@ export class Board {
         return false;
       }
 
-      if (!this.inCheck) {
-        return conditionsWithoutCheck;
-      }
-
-      return (
-        conditionsWithoutCheck &&
-        (!this.isKingInCheck(
-          this.currentSquareElement?.squareElementType,
-          position,
-        ) ||
-          (this.piecesGivinCheck.size === 1 &&
-            (
-              this.piecesGivinCheck.values().next().value as MoveablePiece
-            ).position.same(position)))
-      );
+      return !this.inCheck
+        ? conditionsWithoutCheck
+        : this.isMoveableToWith(conditionsWithoutCheck, position);
     }
 
     const elementOnSquareToMove = this.getAtPosition(position);
@@ -143,6 +131,13 @@ export class Board {
       return conditionsWithoutCheck;
     }
 
+    return this.isMoveableToWith(conditionsWithoutCheck, position);
+  }
+
+  private isMoveableToWith(
+    conditionsWithoutCheck: boolean,
+    position: Position,
+  ): boolean {
     return (
       conditionsWithoutCheck &&
       (!this.isKingInCheck(
