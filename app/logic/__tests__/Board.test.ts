@@ -6,11 +6,11 @@ import SquareElement from '../SquareElement';
 import Bishop from '../squareelements/Bishop';
 import Empty from '../squareelements/Empty';
 import King from '../squareelements/King';
+import Knight from '../squareelements/Knight';
 import Pawn from '../squareelements/Pawn';
 import Queen from '../squareelements/Queen';
 import Rook from '../squareelements/Rook';
 import SquareElementType from '../SquareElementType';
-import Knight from '../squareelements/Knight';
 
 describe('Board', () => {
   let board: Board;
