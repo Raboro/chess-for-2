@@ -316,6 +316,12 @@ export class Board {
   }
 
   private pawnNotMoveableTo(squareElement: SquareElement): boolean {
+    if (
+      squareElement.isPiece() &&
+      this.sameElementTypeAsCurrent(squareElement)
+    ) {
+      return true;
+    }
     return squareElement.isPiece()
       ? !this.pawnOneDifferenceOnXTo(squareElement)
       : this.pawnOneDifferenceOnXTo(squareElement);
