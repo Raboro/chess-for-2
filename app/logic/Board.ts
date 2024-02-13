@@ -94,6 +94,16 @@ export class Board {
         this.currentPiece.isMoveableTo(position) &&
         !this.pawnNotMoveableTo(this.getAtPosition(position));
 
+      if (
+        this.isPawnTwoMovesBlockedByPiece(
+          conditionsWithoutCheck,
+          position,
+          this.currentSquareElement,
+        )
+      ) {
+        return false;
+      }
+
       if (!this.inCheck) {
         return conditionsWithoutCheck;
       }
@@ -213,6 +223,23 @@ export class Board {
     return !this.isPieceInTheWay(piece, path, [
       this.currentPiece as MoveablePiece,
     ]);
+  }
+
+  private isPawnTwoMovesBlockedByPiece(
+    conditionsWithoutCheck: boolean,
+    position: Position,
+    currentSquareElement: SquareElement,
+  ): boolean {
+    const twoSteps = currentSquareElement.position.differenceOfTwoY(position);
+    const piece = this.getAtPosition(
+      new Position(
+        position.x,
+        isWhite(currentSquareElement.squareElementType)
+          ? currentSquareElement.position.y - 1
+          : currentSquareElement.position.y + 1,
+      ),
+    );
+    return conditionsWithoutCheck && twoSteps && piece.isPiece();
   }
 
   movePiece(squareElement: SquareElement): boolean {
