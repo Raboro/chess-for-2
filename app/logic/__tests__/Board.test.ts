@@ -391,11 +391,7 @@ describe('Board', () => {
       board.selectSquare(new Queen(new Position(3, 7), 'white'), 'white'),
     ).toBeTruthy();
 
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
-        expect(board.isMoveableTo(new Position(i, j))).toBeFalsy();
-      }
-    }
+    noPossibleMove(board);
   });
 
   test('Pawn should not be moveable two squares if piece is blocking', () => {
@@ -408,13 +404,17 @@ describe('Board', () => {
       board.selectSquare(new Pawn(new Position(7, 6), 'white'), 'white'),
     ).toBeTruthy();
 
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
-        expect(board.isMoveableTo(new Position(i, j))).toBeFalsy();
-      }
-    }
+    noPossibleMove(board);
   });
 });
+
+function noPossibleMove(board: Board) {
+  for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+      expect(board.isMoveableTo(new Position(i, j))).toBeFalsy();
+    }
+  }
+}
 
 function checkKingAndMoveToOnlyPossibleSquare(board: Board) {
   for (let row = 0; row < 8; row++) {
