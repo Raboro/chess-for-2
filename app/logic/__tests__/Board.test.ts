@@ -10,6 +10,7 @@ import Pawn from '../squareelements/Pawn';
 import Queen from '../squareelements/Queen';
 import Rook from '../squareelements/Rook';
 import SquareElementType from '../SquareElementType';
+import Knight from '../squareelements/Knight';
 
 describe('Board', () => {
   let board: Board;
@@ -388,6 +389,23 @@ describe('Board', () => {
     // Queen could not move
     expect(
       board.selectSquare(new Queen(new Position(3, 7), 'white'), 'white'),
+    ).toBeTruthy();
+
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        expect(board.isMoveableTo(new Position(i, j))).toBeFalsy();
+      }
+    }
+  });
+
+  test('Pawn should not be moveable two squares if piece is blocking', () => {
+    expect(
+      board.selectSquare(new Knight(new Position(6, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 5)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(7, 6), 'white'), 'white'),
     ).toBeTruthy();
 
     for (let i = 0; i < 8; i++) {
