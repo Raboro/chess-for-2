@@ -409,6 +409,32 @@ describe('Board', () => {
 
     noPossibleMove(board);
   });
+
+  test('Pawn in front of king should not trigger check', () => {
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 4)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(5, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 4)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 3), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Pawn(new Position(5, 4), 'white'))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 4), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 2)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 1)))).toBeTruthy();
+    expect(board.isKingInCheck('black')).toBeFalsy();
+  });
 });
 
 function noPossibleMove(board: Board) {
