@@ -148,6 +148,9 @@ describe('Board', () => {
     expect(board.selectSquare(pawn, 'black')).toBeTruthy();
     expect(board.movePiece(bQueen)).toBeFalsy(); // on own color it´s not working
 
+    expect(board.selectSquare(bQueen, 'black')).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(2, 3)))).toBeTruthy();
+
     const wPawn = new Pawn(new Position(4, 6), 'white');
     expect(board.selectSquare(wPawn, 'white')).toBeTruthy();
     expect(board.movePiece(new Empty(new Position(4, 5)))).toBeTruthy();
@@ -155,7 +158,7 @@ describe('Board', () => {
     const wQueen = new Queen(new Position(3, 7), 'white');
     expect(board.selectSquare(wQueen, 'white')).toBeTruthy();
     expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
-    expect(board.movePiece(bQueen)).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(2, 2)))).toBeTruthy();
 
     pawn = new Pawn(new Position(1, 1), 'black');
     expect(board.selectSquare(pawn, 'black')).toBeTruthy();
