@@ -89,6 +89,10 @@ export class Board {
       return this.isKingMoveableTo(position);
     }
 
+    if (this.isPieceBlockingCheckGivingPiece()) {
+      return false;
+    }
+
     if (this.currentSquareElement instanceof Pawn) {
       const conditionsWithoutCheck =
         this.currentPiece.isMoveableTo(position) &&
@@ -149,6 +153,36 @@ export class Board {
             this.piecesGivinCheck.values().next().value as MoveablePiece
           ).position.same(position)))
     );
+  }
+
+  private isPieceBlockingCheckGivingPiece(): boolean {
+    const ownKing = this.getKingOfType(
+      this.currentSquareElement?.squareElementType,
+    );
+
+    if (!ownKing) {
+      return false;
+    }
+
+    for (const piece of this.pieces) {
+      if (
+        this.sameElementTypeAsCurrent(piece) ||
+        !piece.isMoveableTo(ownKing.position)
+      ) {
+        continue;
+      }
+      if (
+        this.isPieceInTheWay(piece, this.constructPath(piece, ownKing)) &&
+        piece.isMoveableTo(ownKing.position) !==
+          this.isPieceInTheWay(piece, this.constructPath(piece, ownKing), [
+            this.currentSquareElement as MoveablePiece,
+          ])
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private isKingMoveableTo(position: Position): boolean {
@@ -335,7 +369,6 @@ export class Board {
     pawn?: MoveablePiece,
   ): boolean {
     if (pawn) {
-      console.log(squareElement, this.currentSquareElement);
       return pawn.position.differenceOfOneX(squareElement.position);
     }
     return (
