@@ -89,7 +89,7 @@ export class Board {
       return this.isKingMoveableTo(position);
     }
 
-    if (this.isPieceBlockingCheckGivingPiece()) {
+    if (this.isCurrentPiecePinned()) {
       return false;
     }
 
@@ -155,7 +155,7 @@ export class Board {
     );
   }
 
-  private isPieceBlockingCheckGivingPiece(): boolean {
+  private isCurrentPiecePinned(): boolean {
     const ownKing = this.getKingOfType(
       this.currentSquareElement?.squareElementType,
     );
