@@ -315,7 +315,10 @@ export class Board {
     return this.currentSquareElement instanceof Pawn;
   }
 
-  private pawnNotMoveableTo(squareElement: SquareElement): boolean {
+  private pawnNotMoveableTo(
+    squareElement: SquareElement,
+    pawn?: MoveablePiece,
+  ): boolean {
     if (
       squareElement.isPiece() &&
       this.sameElementTypeAsCurrent(squareElement)
@@ -323,11 +326,18 @@ export class Board {
       return true;
     }
     return squareElement.isPiece()
-      ? !this.pawnOneDifferenceOnXTo(squareElement)
+      ? !this.pawnOneDifferenceOnXTo(squareElement, pawn)
       : this.pawnOneDifferenceOnXTo(squareElement);
   }
 
-  private pawnOneDifferenceOnXTo(squareElement: SquareElement): boolean {
+  private pawnOneDifferenceOnXTo(
+    squareElement: SquareElement,
+    pawn?: MoveablePiece,
+  ): boolean {
+    if (pawn) {
+      console.log(squareElement, this.currentSquareElement);
+      return pawn.position.differenceOfOneX(squareElement.position);
+    }
     return (
       this.currentSquareElement as SquareElement
     ).position.differenceOfOneX(squareElement.position);
@@ -384,7 +394,7 @@ export class Board {
 
     this.inCheck = this.pieces.some((piece) => {
       if (this.isPieceGivingCheck(piece, currentType, king, positionBlocked)) {
-        if (piece instanceof Pawn && this.pawnNotMoveableTo(king)) {
+        if (piece instanceof Pawn && this.pawnNotMoveableTo(king, piece)) {
           return false;
         }
 
