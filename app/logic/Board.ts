@@ -357,19 +357,7 @@ export class Board {
         return true;
       }
       for (const piece of this.pieces) {
-        let continueLoop = true;
-        if (piecesToIgnore) {
-          for (const p of piecesToIgnore) {
-            if (
-              p.position.same(piece.position) &&
-              p.squareElementType === piece.squareElementType
-            ) {
-              continueLoop = false;
-              break;
-            }
-          }
-        }
-        if (!continueLoop) {
+        if (piecesToIgnore && this.isPieceIgnorable(piecesToIgnore, piece)) {
           continue;
         }
         if (piece.position.same(position)) {
@@ -378,6 +366,21 @@ export class Board {
       }
     }
 
+    return false;
+  }
+
+  private isPieceIgnorable(
+    piecesToIgnore: MoveablePiece[],
+    piece: MoveablePiece,
+  ): boolean {
+    for (const p of piecesToIgnore) {
+      if (
+        p.position.same(piece.position) &&
+        p.squareElementType === piece.squareElementType
+      ) {
+        return true;
+      }
+    }
     return false;
   }
 
