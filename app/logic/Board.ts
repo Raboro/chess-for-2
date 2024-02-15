@@ -90,7 +90,7 @@ export class Board {
     }
 
     if (this.isCurrentPiecePinned()) {
-      return false;
+      return this.canPinnedPieceTakePinningPiece(position);
     }
 
     if (this.currentSquareElement instanceof Pawn) {
@@ -177,6 +177,35 @@ export class Board {
           this.isPieceInTheWay(piece, this.constructPath(piece, ownKing), [
             this.currentSquareElement as MoveablePiece,
           ])
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private canPinnedPieceTakePinningPiece(position: Position): boolean {
+    const ownKing = this.getKingOfType(
+      this.currentSquareElement?.squareElementType,
+    );
+
+    if (!ownKing) {
+      return false;
+    }
+
+    for (const piece of this.pieces) {
+      if (
+        this.sameElementTypeAsCurrent(piece) ||
+        !piece.isMoveableTo(ownKing.position)
+      ) {
+        continue;
+      }
+      if (
+        this.isPieceInTheWay(piece, this.constructPath(piece, ownKing)) &&
+        piece.isMoveableTo(ownKing.position) &&
+        this.currentPiece?.isMoveableTo(piece.position) &&
+        piece.position.same(position)
       ) {
         return true;
       }
