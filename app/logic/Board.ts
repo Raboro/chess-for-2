@@ -357,7 +357,22 @@ export class Board {
         return true;
       }
       for (const piece of this.pieces) {
-        if (!piecesToIgnore?.includes(piece) && piece.position.same(position)) {
+        let continueLoop = true;
+        if (piecesToIgnore) {
+          for (const p of piecesToIgnore) {
+            if (
+              p.position.same(piece.position) &&
+              p.squareElementType === piece.squareElementType
+            ) {
+              continueLoop = false;
+              break;
+            }
+          }
+        }
+        if (!continueLoop) {
+          continue;
+        }
+        if (piece.position.same(position)) {
           return true;
         }
       }
