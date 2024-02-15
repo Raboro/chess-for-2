@@ -469,6 +469,34 @@ describe('Board', () => {
     expect(board.isKingInCheck('white')).toBeFalsy();
     expect(board.isMoveableTo(new Position(7, 4))).toBeTruthy();
   });
+
+  test('Pawn is pinned but cannot take pinning piece', () => {
+    // move pawns
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 4)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 6)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Queen(new Position(3, 0), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 4)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 3)))).toBeTruthy();
+    expect(board.isKingInCheck('white')).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(5, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
+    expect(board.isKingInCheck('white')).toBeFalsy();
+    noPossibleMove(board);
+  });
 });
 
 function noPossibleMove(board: Board) {
