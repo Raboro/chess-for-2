@@ -56,6 +56,11 @@ const Board = (props: Props) => {
     props.boardLogic.handlePromotion(props.promotionType);
     setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
     setIsPromotion(false);
+    setInCheck(
+      props.boardLogic.isKingInCheck(
+        currentType === 'white' ? 'black' : 'white',
+      ),
+    );
   }
 
   const renderRow = (row: number) => {
