@@ -160,10 +160,6 @@ export class Board {
       this.currentSquareElement?.squareElementType,
     );
 
-    if (!ownKing) {
-      return false;
-    }
-
     for (const piece of this.pieces) {
       if (
         this.sameElementTypeAsCurrent(piece) ||
@@ -189,10 +185,6 @@ export class Board {
     const ownKing = this.getKingOfType(
       this.currentSquareElement?.squareElementType,
     );
-
-    if (!ownKing) {
-      return false;
-    }
 
     for (const piece of this.pieces) {
       if (
@@ -456,10 +448,6 @@ export class Board {
   ): boolean {
     const king = this.getKingOfType(currentType);
 
-    if (!king) {
-      return false;
-    }
-
     if (positionBlocked) {
       return this.pieces.some((piece) => {
         if (
@@ -509,15 +497,16 @@ export class Board {
     );
   }
 
-  private getKingOfType(
-    currentType: SquareElementType,
-  ): MoveablePiece | undefined {
+  private getKingOfType(currentType: SquareElementType): MoveablePiece {
     for (const piece of this.pieces) {
       if (this.isKingOfType(piece, currentType)) {
         return piece;
       }
     }
-    return undefined; // should never be the case, because king of other type always exists
+    return new King(
+      currentType === 'white' ? new Position(4, 7) : new Position(4, 0),
+      currentType,
+    ); // should never be the case, because king of other type always exists
   }
 
   isKingOfType(piece: MoveablePiece, currentType: SquareElementType): boolean {
