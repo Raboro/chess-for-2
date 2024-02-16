@@ -9,6 +9,7 @@ import PromotionType from '../../logic/promotion/PromotionType';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
 import Square from '../Square/Square';
+import GameOverModal from '../GameOverModal/GameOverModal';
 
 interface Props {
   size: number;
@@ -22,6 +23,7 @@ const Board = (props: Props) => {
   const [currentType, setCurrentType] = useState<SquareElementType>('white');
   const [isPromotion, setIsPromotion] = useState(false);
   const [inCheck, setInCheck] = useState(false);
+  const [checkmate, setCheckmate] = useState(false);
   const squareSize: number = props.size / SIZE.LINE_SIZE;
 
   const selectSquare = (squareElement: SquareElement) => {
@@ -39,12 +41,7 @@ const Board = (props: Props) => {
         props.setPromotion(currentType);
         setIsPromotion(true);
       } else {
-        setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
-        setInCheck(
-          props.boardLogic.isKingInCheck(
-            currentType === 'white' ? 'black' : 'white',
-          ),
-        );
+        update();
       }
     }
 
@@ -52,15 +49,24 @@ const Board = (props: Props) => {
     setSelectTriggered(!selectTriggered);
   };
 
+  const update = () => {
+    setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
+    const check = props.boardLogic.isKingInCheck(
+      currentType === 'white' ? 'black' : 'white',
+    );
+    setInCheck(check);
+    if (
+      check &&
+      props.boardLogic.isCheckmate(currentType === 'white' ? 'black' : 'white')
+    ) {
+      setCheckmate(true);
+    }
+  };
+
   if (props.promotionType !== undefined && isPromotion) {
     props.boardLogic.handlePromotion(props.promotionType);
-    setCurrentType(() => (currentType === 'white' ? 'black' : 'white'));
     setIsPromotion(false);
-    setInCheck(
-      props.boardLogic.isKingInCheck(
-        currentType === 'white' ? 'black' : 'white',
-      ),
-    );
+    update();
   }
 
   const renderRow = (row: number) => {
@@ -95,6 +101,10 @@ const Board = (props: Props) => {
       </View>
     );
   };
+
+  if (checkmate) {
+    return <GameOverModal gameRestart={() => {}} />;
+  }
 
   return (
     <View style={{ width: props.size, height: props.size }}>
