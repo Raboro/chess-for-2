@@ -512,4 +512,27 @@ export class Board {
   isKingOfType(piece: MoveablePiece, currentType: SquareElementType): boolean {
     return piece instanceof King && piece.squareElementType === currentType;
   }
+
+  isCheckmate(squareElementType: SquareElementType): boolean {
+    if (!this.isKingInCheck(squareElementType)) {
+      return false;
+    }
+
+    for (const piece of this.pieces) {
+      if (piece.squareElementType !== squareElementType) {
+        continue;
+      }
+      this.selectSquare(piece, squareElementType);
+      for (let i = 0; i < SIZE.LINE_SIZE; i++) {
+        for (let j = 0; j < SIZE.LINE_SIZE; j++) {
+          if (this.isMoveableTo(new Position(i, j))) {
+            this.removeSelection();
+            return false;
+          }
+        }
+      }
+    }
+    this.removeSelection();
+    return true;
+  }
 }
