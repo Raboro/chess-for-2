@@ -13,7 +13,7 @@ import { styles } from './MainScreenStyle';
 const MainScreen = () => {
   const size = Dimensions.get('screen').width;
   const [promotion, setPromotion] = useState<SquareElementType>();
-  const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic()); 
+  const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic());
   const [promotionType, setPromotionType] = useState<PromotionType | undefined>(
     undefined,
   );
@@ -32,16 +32,20 @@ const MainScreen = () => {
     setBoardLogic(() => new BoardLogic());
   };
 
+  const renderPromotion = (color: SquareElementType) => {
+    return (
+      <Promotion
+        size={size}
+        squareColor={color === 'black' ? SquareColor.BLACK : SquareColor.WHITE}
+        squareElementType={color}
+        setPromotion={usePromotion}
+      />
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {promotion === 'black' && (
-        <Promotion
-          size={size}
-          squareColor={SquareColor.BLACK}
-          squareElementType="black"
-          setPromotion={usePromotion}
-        />
-      )}
+      {promotion === 'black' && renderPromotion(promotion)}
       <Board
         size={size}
         boardLogic={boardLogic}
@@ -49,14 +53,7 @@ const MainScreen = () => {
         promotionType={promotionType}
         gameRestart={updateBoardLogic}
       />
-      {promotion === 'white' && (
-        <Promotion
-          size={size}
-          squareColor={SquareColor.WHITE}
-          squareElementType="white"
-          setPromotion={usePromotion}
-        />
-      )}
+      {promotion === 'white' && renderPromotion(promotion)}
     </SafeAreaView>
   );
 };
