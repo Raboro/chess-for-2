@@ -19,7 +19,6 @@ All images of chess pieces used are from: https://commons.wikimedia.org/wiki/Cat
 ## Improvements
 - Castling
 - En passant
-- Check
 - Checkmate
 - Timer
 - Points
