@@ -28,6 +28,10 @@ const MainScreen = () => {
     setPromotionType(type);
   };
 
+  const updateBoardLogic = () => {
+    setBoardLogic(() => new BoardLogic);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {promotion === 'black' && (
@@ -43,6 +47,7 @@ const MainScreen = () => {
         boardLogic={boardLogic}
         setPromotion={triggerPromotion}
         promotionType={promotionType}
+        gameRestart={updateBoardLogic}
       />
       {promotion === 'white' && (
         <Promotion

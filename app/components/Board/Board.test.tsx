@@ -12,6 +12,7 @@ describe('Board UI', () => {
         boardLogic={new BoardLogic()}
         setPromotion={() => {}}
         promotionType={undefined}
+        gameRestart={() => {}}
       />,
     );
     const squares = rend.getAllByTestId('Square');
@@ -25,6 +26,7 @@ describe('Board UI', () => {
         boardLogic={new BoardLogic()}
         setPromotion={() => {}}
         promotionType={undefined}
+        gameRestart={() => {}}
       />,
     );
     const whiteRightKnight = rend.getAllByTestId('Square')[62];
@@ -46,6 +48,7 @@ describe('Board UI', () => {
         boardLogic={new BoardLogic()}
         setPromotion={() => {}}
         promotionType={undefined}
+        gameRestart={() => {}}
       />,
     );
     const firstPawn = rend.getAllByTestId('SquareImage')[55];
@@ -64,6 +67,7 @@ describe('Board UI', () => {
         boardLogic={new BoardLogic()}
         setPromotion={() => {}}
         promotionType={undefined}
+        gameRestart={() => {}}
       />,
     );
 
@@ -92,6 +96,7 @@ describe('Board UI', () => {
         boardLogic={new BoardLogic()}
         setPromotion={() => {}}
         promotionType={undefined}
+        gameRestart={() => {}}
       />,
     );
     const blackPawn = rend.getAllByTestId('Square')[8];
@@ -112,6 +117,7 @@ describe('Board UI', () => {
         boardLogic={new BoardLogic()}
         setPromotion={() => {}}
         promotionType={undefined}
+        gameRestart={() => {}}
       />,
     );
     const firstPawn = rend.getAllByTestId('SquareImage')[55];
@@ -132,6 +138,7 @@ describe('Board UI', () => {
         boardLogic={new BoardLogic()}
         setPromotion={() => mockSetPromotion}
         promotionType={PromotionType.QUEEN}
+        gameRestart={() => {}}
       />,
     );
 

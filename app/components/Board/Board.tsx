@@ -16,6 +16,7 @@ interface Props {
   boardLogic: BoardLogic;
   setPromotion: (type: SquareElementType) => void;
   promotionType: PromotionType | undefined;
+  gameRestart: () => void
 }
 
 const Board = (props: Props) => {
@@ -69,6 +70,12 @@ const Board = (props: Props) => {
     update();
   }
 
+  const restart = () => {
+    setCheckmate(false);
+    setInCheck(false);
+    props.gameRestart();
+  }
+
   const renderRow = (row: number) => {
     return (
       <View key={`row-${row}`} style={{ flexDirection: 'row' }}>
@@ -103,7 +110,7 @@ const Board = (props: Props) => {
   };
 
   if (checkmate) {
-    return <GameOverModal gameRestart={() => {}} />;
+    return <GameOverModal gameRestart={restart} />;
   }
 
   return (
