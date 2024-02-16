@@ -8,15 +8,15 @@ import Position from '../../logic/Position';
 import PromotionType from '../../logic/promotion/PromotionType';
 import SquareElement from '../../logic/SquareElement';
 import SquareElementType from '../../logic/SquareElementType';
-import Square from '../Square/Square';
 import GameOverModal from '../GameOverModal/GameOverModal';
+import Square from '../Square/Square';
 
 interface Props {
   size: number;
   boardLogic: BoardLogic;
   setPromotion: (type: SquareElementType) => void;
   promotionType: PromotionType | undefined;
-  gameRestart: () => void
+  gameRestart: () => void;
 }
 
 const Board = (props: Props) => {
@@ -74,7 +74,7 @@ const Board = (props: Props) => {
     setCheckmate(false);
     setInCheck(false);
     props.gameRestart();
-  }
+  };
 
   const renderRow = (row: number) => {
     return (

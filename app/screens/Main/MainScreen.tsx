@@ -29,8 +29,8 @@ const MainScreen = () => {
   };
 
   const updateBoardLogic = () => {
-    setBoardLogic(() => new BoardLogic);
-  }
+    setBoardLogic(() => new BoardLogic());
+  };
 
   return (
     <SafeAreaView style={styles.container}>

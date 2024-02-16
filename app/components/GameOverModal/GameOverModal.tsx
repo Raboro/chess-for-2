@@ -1,20 +1,20 @@
-import { Modal, View, BackHandler } from 'react-native';
-import { styles } from './GameOverModalStyle';
+import { BackHandler, Modal, View } from 'react-native';
 import PressableButton from '../primitives/PressableButton/PressableButton';
+import { styles } from './GameOverModalStyle';
 
 interface Props {
-    gameRestart: () => void;
+  gameRestart: () => void;
 }
 
 const GameOverModal = (props: Props) => {
-    return (
-        <Modal>
-            <View style={styles.container}>
-                <PressableButton text='Quit' onPress={() => BackHandler.exitApp()}/>
-                <PressableButton text='Again' onPress={props.gameRestart}/>
-            </View>
-        </Modal>
-    );
-}
+  return (
+    <Modal>
+      <View style={styles.container}>
+        <PressableButton text="Quit" onPress={() => BackHandler.exitApp()} />
+        <PressableButton text="Again" onPress={props.gameRestart} />
+      </View>
+    </Modal>
+  );
+};
 
 export default GameOverModal;
