@@ -13,7 +13,7 @@ import { styles } from './MainScreenStyle';
 const MainScreen = () => {
   const size = Dimensions.get('screen').width;
   const [promotion, setPromotion] = useState<SquareElementType>();
-  const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic()); // eslint-disable-line
+  const [boardLogic, setBoardLogic] = useState<BoardLogic>(new BoardLogic()); 
   const [promotionType, setPromotionType] = useState<PromotionType | undefined>(
     undefined,
   );
