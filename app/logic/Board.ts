@@ -242,20 +242,17 @@ export class Board {
   }
 
   private canPinnedPieceTakePinningPiece(position: Position): boolean {
-    const ownKing = this.getKingOfType(
+    const king = this.getKingOfType(
       this.currentSquareElement?.squareElementType,
     );
 
     for (const piece of this.pieces) {
-      if (
-        this.sameElementTypeAsCurrent(piece) ||
-        !piece.isMoveableTo(ownKing.position)
-      ) {
+      if (this.isPieceIgnorableForPinnedCheck(piece, king)) {
         continue;
       }
       if (
-        this.isPieceInTheWay(piece, this.constructPath(piece, ownKing)) &&
-        piece.isMoveableTo(ownKing.position) &&
+        this.isPieceInTheWay(piece, this.constructPath(piece, king)) &&
+        piece.isMoveableTo(king.position) &&
         this.currentPiece?.isMoveableTo(piece.position) &&
         piece.position.same(position)
       ) {
