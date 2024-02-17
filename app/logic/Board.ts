@@ -527,20 +527,19 @@ export class Board {
 
   private isPieceGivingCheck(
     piece: MoveablePiece,
-    currentType: string | undefined,
+    currentType: SquareElementType,
     king: MoveablePiece,
     positionBlocked?: Position,
   ): boolean {
-    return (
-      piece.squareElementType !== currentType &&
-      piece.isMoveableTo(king.position) &&
-      !this.isPieceInTheWay(
-        king,
-        this.constructPath(piece, king),
-        [],
-        positionBlocked,
-      )
+    const notSameType = piece.squareElementType !== currentType;
+    const isMoveableToKing = piece.isMoveableTo(king.position);
+    const noPieceBlocking = !this.isPieceInTheWay(
+      king,
+      this.constructPath(piece, king),
+      [],
+      positionBlocked,
     );
+    return notSameType && isMoveableToKing && noPieceBlocking;
   }
 
   private getKingOfType(currentType: SquareElementType): MoveablePiece {
