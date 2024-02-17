@@ -580,17 +580,24 @@ export class Board {
       if (!piece.isSameType(squareElementType)) {
         continue;
       }
-      this.selectSquare(piece, squareElementType);
-      for (let i = 0; i < SIZE.LINE_SIZE; i++) {
-        for (let j = 0; j < SIZE.LINE_SIZE; j++) {
-          if (this.isMoveableTo(new Position(i, j))) {
-            this.removeSelection();
-            return false;
-          }
-        }
+      if (this.isMoveableToAnyPosition(piece)) {
+        return false;
       }
     }
     this.removeSelection();
     return true;
+  }
+
+  private isMoveableToAnyPosition(piece: MoveablePiece): boolean {
+    this.selectSquare(piece, piece.squareElementType);
+    for (let i = 0; i < SIZE.LINE_SIZE; i++) {
+      for (let j = 0; j < SIZE.LINE_SIZE; j++) {
+        if (this.isMoveableTo(new Position(i, j))) {
+          this.removeSelection();
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
