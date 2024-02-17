@@ -183,16 +183,22 @@ export class Board {
     conditionsWithoutCheck: boolean,
     position: Position,
   ): boolean {
+    const isMoveBlockingCheck = !this.isKingInCheck(
+      this.currentSquareElement?.squareElementType,
+      position,
+    );
     return (
       conditionsWithoutCheck &&
-      (!this.isKingInCheck(
-        this.currentSquareElement?.squareElementType,
-        position,
-      ) ||
-        (this.piecesGivinCheck.size === 1 &&
-          (
-            this.piecesGivinCheck.values().next().value as MoveablePiece
-          ).position.same(position)))
+      (isMoveBlockingCheck || this.isMoveTakingCheckGivingPiece(position))
+    );
+  }
+
+  private isMoveTakingCheckGivingPiece(position: Position): boolean {
+    return (
+      this.piecesGivinCheck.size === 1 &&
+      (
+        this.piecesGivinCheck.values().next().value as MoveablePiece
+      ).position.same(position)
     );
   }
 
