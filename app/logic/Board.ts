@@ -123,30 +123,7 @@ export class Board {
         this.currentSquareElement,
       );
     }
-
-    const elementOnSquareToMove = this.getAtPosition(position);
-    const isSquareNotOfSameType =
-      elementOnSquareToMove instanceof Empty ||
-      !this.sameElementTypeAsCurrent(elementOnSquareToMove);
-
-    const noPieceShouldBlocking = !this.isPieceInTheWay(
-      this.currentSquareElement as SquareElement,
-      this.constructPath(
-        this.currentSquareElement as SquareElement,
-        new Empty(position),
-      ),
-    );
-
-    const conditionsWithoutCheck =
-      this.currentPiece.isMoveableTo(position) &&
-      isSquareNotOfSameType &&
-      noPieceShouldBlocking;
-
-    if (!this.inCheck) {
-      return conditionsWithoutCheck;
-    }
-
-    return this.isMoveableToWith(conditionsWithoutCheck, position);
+    return this.isPieceNoPawnNoKingMoveableTo(this.currentPiece, position);
   }
 
   private isPawnMoveableTo(
@@ -171,6 +148,35 @@ export class Board {
     return !this.inCheck
       ? conditionsWithoutCheck
       : this.isMoveableToWith(conditionsWithoutCheck, position);
+  }
+
+  private isPieceNoPawnNoKingMoveableTo(
+    currentPiece: Moveable,
+    position: Position,
+  ): boolean {
+    const elementOnSquareToMove = this.getAtPosition(position);
+    const isSquareNotOfSameType =
+      elementOnSquareToMove instanceof Empty ||
+      !this.sameElementTypeAsCurrent(elementOnSquareToMove);
+
+    const noPieceShouldBlocking = !this.isPieceInTheWay(
+      this.currentSquareElement as SquareElement,
+      this.constructPath(
+        this.currentSquareElement as SquareElement,
+        new Empty(position),
+      ),
+    );
+
+    const conditionsWithoutCheck =
+      currentPiece.isMoveableTo(position) &&
+      isSquareNotOfSameType &&
+      noPieceShouldBlocking;
+
+    if (!this.inCheck) {
+      return conditionsWithoutCheck;
+    }
+
+    return this.isMoveableToWith(conditionsWithoutCheck, position);
   }
 
   private isMoveableToWith(
