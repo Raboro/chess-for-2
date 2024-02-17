@@ -79,14 +79,12 @@ export class Board {
     squareElement: SquareElement,
     currentType: SquareElementType,
   ): boolean {
-    if (this.notSelectable(squareElement, currentType)) {
-      this.currentPiece = undefined;
-      this.currentSquareElement = undefined;
-      return false;
-    }
-    this.currentPiece = squareElement as any as Moveable; // eslint-disable-line
-    this.currentSquareElement = squareElement;
-    return true;
+    const notSelectable = this.notSelectable(squareElement, currentType);
+    this.currentPiece = notSelectable
+      ? undefined
+      : (squareElement as unknown as Moveable);
+    this.currentSquareElement = notSelectable ? undefined : squareElement;
+    return !notSelectable;
   }
 
   private notSelectable(
