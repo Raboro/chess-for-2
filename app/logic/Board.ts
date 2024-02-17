@@ -203,29 +203,42 @@ export class Board {
   }
 
   private isCurrentPiecePinned(): boolean {
-    const ownKing = this.getKingOfType(
+    const king = this.getKingOfType(
       this.currentSquareElement?.squareElementType,
     );
 
     for (const piece of this.pieces) {
-      if (
-        this.sameElementTypeAsCurrent(piece) ||
-        !piece.isMoveableTo(ownKing.position)
-      ) {
+      if (this.isPieceIgnorableForPinnedCheck(piece, king)) {
         continue;
       }
-      if (
-        this.isPieceInTheWay(piece, this.constructPath(piece, ownKing)) &&
-        piece.isMoveableTo(ownKing.position) !==
-          this.isPieceInTheWay(piece, this.constructPath(piece, ownKing), [
-            this.currentSquareElement as MoveablePiece,
-          ])
-      ) {
+      if (this.isCurrentPinnedBy(piece, king)) {
         return true;
       }
     }
 
     return false;
+  }
+
+  private isPieceIgnorableForPinnedCheck(
+    piece: MoveablePiece,
+    king: King,
+  ): boolean {
+    return (
+      this.sameElementTypeAsCurrent(piece) || !piece.isMoveableTo(king.position)
+    );
+  }
+
+  private isCurrentPinnedBy(piece: MoveablePiece, king: King): boolean {
+    const withPieceInTheWay = this.isPieceInTheWay(
+      piece,
+      this.constructPath(piece, king),
+    );
+    const withoutPieceCheck =
+      piece.isMoveableTo(king.position) !==
+      this.isPieceInTheWay(piece, this.constructPath(piece, king), [
+        this.currentSquareElement as MoveablePiece,
+      ]);
+    return withPieceInTheWay && withoutPieceCheck;
   }
 
   private canPinnedPieceTakePinningPiece(position: Position): boolean {
