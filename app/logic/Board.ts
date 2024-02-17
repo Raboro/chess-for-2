@@ -507,7 +507,7 @@ export class Board {
     }
 
     this.inCheck = this.pieces.some((piece) => {
-      if (this.isPieceGivingCheck(piece, currentType, king, positionBlocked)) {
+      if (this.isPieceGivingCheck(piece, currentType, king)) {
         if (piece instanceof Pawn && this.pawnNotMoveableTo(king, piece)) {
           return false;
         }
