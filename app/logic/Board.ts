@@ -117,23 +117,11 @@ export class Board {
     }
 
     if (this.currentSquareElement instanceof Pawn) {
-      const conditionsWithoutCheck =
-        this.currentPiece.isMoveableTo(position) &&
-        !this.pawnNotMoveableTo(this.getAtPosition(position));
-
-      if (
-        this.isPawnTwoMovesBlockedByPiece(
-          conditionsWithoutCheck,
-          position,
-          this.currentSquareElement,
-        )
-      ) {
-        return false;
-      }
-
-      return !this.inCheck
-        ? conditionsWithoutCheck
-        : this.isMoveableToWith(conditionsWithoutCheck, position);
+      return this.isPawnMoveableTo(
+        this.currentPiece,
+        position,
+        this.currentSquareElement,
+      );
     }
 
     const elementOnSquareToMove = this.getAtPosition(position);
@@ -159,6 +147,30 @@ export class Board {
     }
 
     return this.isMoveableToWith(conditionsWithoutCheck, position);
+  }
+
+  private isPawnMoveableTo(
+    currentPiece: Moveable,
+    position: Position,
+    currentSquareElement: SquareElement,
+  ): boolean {
+    const conditionsWithoutCheck =
+      currentPiece.isMoveableTo(position) &&
+      !this.pawnNotMoveableTo(this.getAtPosition(position));
+
+    if (
+      this.isPawnTwoMovesBlockedByPiece(
+        conditionsWithoutCheck,
+        position,
+        currentSquareElement,
+      )
+    ) {
+      return false;
+    }
+
+    return !this.inCheck
+      ? conditionsWithoutCheck
+      : this.isMoveableToWith(conditionsWithoutCheck, position);
   }
 
   private isMoveableToWith(
