@@ -79,11 +79,7 @@ export class Board {
     squareElement: SquareElement,
     currentType: SquareElementType,
   ): boolean {
-    if (
-      !squareElement.isPiece() ||
-      this.currentSquareElement === squareElement ||
-      squareElement.squareElementType !== currentType
-    ) {
+    if (this.notSelectable(squareElement, currentType)) {
       this.currentPiece = undefined;
       this.currentSquareElement = undefined;
       return false;
@@ -91,6 +87,16 @@ export class Board {
     this.currentPiece = squareElement as any as Moveable; // eslint-disable-line
     this.currentSquareElement = squareElement;
     return true;
+  }
+
+  private notSelectable(
+    squareElement: SquareElement,
+    currentType: SquareElementType,
+  ): boolean {
+    const noPiece = !squareElement.isPiece();
+    const samePieceAsCurrent = this.currentSquareElement === squareElement;
+    const notSameType = squareElement.squareElementType !== currentType;
+    return noPiece || samePieceAsCurrent || notSameType;
   }
 
   /**
