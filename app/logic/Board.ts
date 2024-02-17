@@ -126,143 +126,6 @@ export class Board {
     return this.isPieceNoPawnNoKingMoveableTo(this.currentPiece, position);
   }
 
-  private isPawnMoveableTo(
-    currentPiece: Moveable,
-    position: Position,
-    currentSquareElement: SquareElement,
-  ): boolean {
-    const conditionsWithoutCheck =
-      currentPiece.isMoveableTo(position) &&
-      !this.pawnNotMoveableTo(this.getAtPosition(position));
-
-    if (
-      this.isPawnTwoMovesBlockedByPiece(
-        conditionsWithoutCheck,
-        position,
-        currentSquareElement,
-      )
-    ) {
-      return false;
-    }
-
-    return !this.inCheck
-      ? conditionsWithoutCheck
-      : this.isMoveableToWith(conditionsWithoutCheck, position);
-  }
-
-  private isPieceNoPawnNoKingMoveableTo(
-    currentPiece: Moveable,
-    position: Position,
-  ): boolean {
-    const elementOnSquareToMove = this.getAtPosition(position);
-    const isSquareNotOfSameType =
-      elementOnSquareToMove instanceof Empty ||
-      !this.sameElementTypeAsCurrent(elementOnSquareToMove);
-
-    const noPieceShouldBlocking = !this.isPieceInTheWay(
-      this.currentSquareElement as SquareElement,
-      this.constructPath(
-        this.currentSquareElement as SquareElement,
-        new Empty(position),
-      ),
-    );
-
-    const conditionsWithoutCheck =
-      currentPiece.isMoveableTo(position) &&
-      isSquareNotOfSameType &&
-      noPieceShouldBlocking;
-
-    if (!this.inCheck) {
-      return conditionsWithoutCheck;
-    }
-
-    return this.isMoveableToWith(conditionsWithoutCheck, position);
-  }
-
-  private isMoveableToWith(
-    conditionsWithoutCheck: boolean,
-    position: Position,
-  ): boolean {
-    const isMoveBlockingCheck = !this.isKingInCheck(
-      this.currentSquareElement?.squareElementType,
-      position,
-    );
-    return (
-      conditionsWithoutCheck &&
-      (isMoveBlockingCheck || this.isMoveTakingCheckGivingPiece(position))
-    );
-  }
-
-  private isMoveTakingCheckGivingPiece(position: Position): boolean {
-    return (
-      this.piecesGivinCheck.size === 1 &&
-      (
-        this.piecesGivinCheck.values().next().value as MoveablePiece
-      ).position.same(position)
-    );
-  }
-
-  private isCurrentPiecePinned(): boolean {
-    const king = this.getKingOfType(
-      this.currentSquareElement?.squareElementType,
-    );
-
-    for (const piece of this.pieces) {
-      if (this.isPieceIgnorableForPinnedCheck(piece, king)) {
-        continue;
-      }
-      if (this.isCurrentPinnedBy(piece, king)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private isPieceIgnorableForPinnedCheck(
-    piece: MoveablePiece,
-    king: King,
-  ): boolean {
-    return (
-      this.sameElementTypeAsCurrent(piece) || !piece.isMoveableTo(king.position)
-    );
-  }
-
-  private isCurrentPinnedBy(piece: MoveablePiece, king: King): boolean {
-    const withPieceInTheWay = this.isPieceInTheWay(
-      piece,
-      this.constructPath(piece, king),
-    );
-    const withoutPieceCheck =
-      piece.isMoveableTo(king.position) !==
-      this.isPieceInTheWay(piece, this.constructPath(piece, king), [
-        this.currentSquareElement as MoveablePiece,
-      ]);
-    return withPieceInTheWay && withoutPieceCheck;
-  }
-
-  private canPinnedPieceTakePinningPiece(position: Position): boolean {
-    const king = this.getKingOfType(
-      this.currentSquareElement?.squareElementType,
-    );
-
-    for (const piece of this.pieces) {
-      if (this.isPieceIgnorableForPinnedCheck(piece, king)) {
-        continue;
-      }
-      if (
-        this.isPieceInTheWay(piece, this.constructPath(piece, king)) &&
-        piece.isMoveableTo(king.position) &&
-        this.currentPiece?.isMoveableTo(piece.position) &&
-        piece.position.same(position)
-      ) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   private isKingMoveableTo(position: Position): boolean {
     if (!this.currentPiece?.isMoveableTo(position)) {
       return false;
@@ -332,69 +195,12 @@ export class Board {
     ]);
   }
 
-  private isPawnTwoMovesBlockedByPiece(
-    conditionsWithoutCheck: boolean,
-    position: Position,
-    currentSquareElement: SquareElement,
-  ): boolean {
-    const twoSteps = currentSquareElement.position.differenceOfTwoY(position);
-    const piece = this.getAtPosition(
-      new Position(
-        position.x,
-        isWhite(currentSquareElement.squareElementType)
-          ? currentSquareElement.position.y - 1
-          : currentSquareElement.position.y + 1,
-      ),
-    );
-    return conditionsWithoutCheck && twoSteps && piece.isPiece();
-  }
-
-  /**
-   * Move current to parsed
-   * @param squareElement
-   * @returns boolean - if moved or not
-   */
-  movePiece(squareElement: SquareElement): boolean {
-    if (this.isNotMoveable(squareElement)) {
-      return false;
-    }
-
-    const newPosition: Position = squareElement.position;
-    this.pieces = this.pieces
-      .filter((piece) => piece !== squareElement)
-      .map((piece) => {
-        if (this.isPieceSameAsCurrent(piece)) {
-          piece.moveTo(newPosition);
-        }
-        return piece;
-      });
-
-    this.currentPiece?.moveTo(newPosition);
-    return true;
-  }
-
-  private isNotMoveable(squareElement: SquareElement): boolean {
-    return (
-      !this.currentPiece ||
-      !this.isMoveableTo(squareElement.position) ||
-      this.sameElementTypeAsCurrent(squareElement) ||
-      this.isPieceInTheWay(squareElement)
-    );
-  }
-
-  private isPieceSameAsCurrent(piece: MoveablePiece) {
-    return (
-      piece.position.same(
-        this.currentSquareElement?.position ?? new Position(0, 0),
-      ) && this.sameElementTypeAsCurrent(piece)
-    );
-  }
-
-  private sameElementTypeAsCurrent(squareElement: SquareElement): boolean {
-    return (
-      squareElement.squareElementType ===
-      this.currentSquareElement?.squareElementType
-    );
+  private constructPath(
+    current: SquareElement,
+    destination: SquareElement,
+  ): Path {
+    const pathConstructor = PathConstructorFactory.create(current);
+    return pathConstructor.construct(current.position, destination.position);
   }
 
   private isPieceInTheWay(
@@ -452,16 +258,118 @@ export class Board {
     return false;
   }
 
-  private constructPath(
-    current: SquareElement,
-    destination: SquareElement,
-  ): Path {
-    const pathConstructor = PathConstructorFactory.create(current);
-    return pathConstructor.construct(current.position, destination.position);
+  private isCurrentPiecePinned(): boolean {
+    const king = this.getKingOfType(
+      this.currentSquareElement?.squareElementType,
+    );
+
+    for (const piece of this.pieces) {
+      if (this.isPieceIgnorableForPinnedCheck(piece, king)) {
+        continue;
+      }
+      if (this.isCurrentPinnedBy(piece, king)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  private isCurrentlyPawn(): boolean {
-    return this.currentSquareElement instanceof Pawn;
+  private getKingOfType(currentType: SquareElementType): MoveablePiece {
+    for (const piece of this.pieces) {
+      if (this.isKingOfType(piece, currentType)) {
+        return piece;
+      }
+    }
+    return new King(
+      currentType === 'white' ? new Position(4, 7) : new Position(4, 0),
+      currentType,
+    ); // should never be the case, because king of other type always exists
+  }
+
+  /**
+   * Is parsed piece a king of parsed type
+   * @param piece
+   * @param currentType
+   * @returns boolean
+   */
+  isKingOfType(piece: MoveablePiece, currentType: SquareElementType): boolean {
+    return piece instanceof King && piece.squareElementType === currentType;
+  }
+
+  private isPieceIgnorableForPinnedCheck(
+    piece: MoveablePiece,
+    king: King,
+  ): boolean {
+    return (
+      this.sameElementTypeAsCurrent(piece) || !piece.isMoveableTo(king.position)
+    );
+  }
+
+  private sameElementTypeAsCurrent(squareElement: SquareElement): boolean {
+    return (
+      squareElement.squareElementType ===
+      this.currentSquareElement?.squareElementType
+    );
+  }
+
+  private isCurrentPinnedBy(piece: MoveablePiece, king: King): boolean {
+    const withPieceInTheWay = this.isPieceInTheWay(
+      piece,
+      this.constructPath(piece, king),
+    );
+    const withoutPieceCheck =
+      piece.isMoveableTo(king.position) !==
+      this.isPieceInTheWay(piece, this.constructPath(piece, king), [
+        this.currentSquareElement as MoveablePiece,
+      ]);
+    return withPieceInTheWay && withoutPieceCheck;
+  }
+
+  private canPinnedPieceTakePinningPiece(position: Position): boolean {
+    const king = this.getKingOfType(
+      this.currentSquareElement?.squareElementType,
+    );
+
+    for (const piece of this.pieces) {
+      if (this.isPieceIgnorableForPinnedCheck(piece, king)) {
+        continue;
+      }
+      if (
+        this.isPieceInTheWay(piece, this.constructPath(piece, king)) &&
+        piece.isMoveableTo(king.position) &&
+        this.currentPiece?.isMoveableTo(piece.position) &&
+        piece.position.same(position)
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private isPawnMoveableTo(
+    currentPiece: Moveable,
+    position: Position,
+    currentSquareElement: SquareElement,
+  ): boolean {
+    const conditionsWithoutCheck =
+      currentPiece.isMoveableTo(position) &&
+      !this.pawnNotMoveableTo(this.getAtPosition(position));
+
+    if (
+      this.isPawnTwoMovesBlockedByPiece(
+        conditionsWithoutCheck,
+        position,
+        currentSquareElement,
+      )
+    ) {
+      return false;
+    }
+
+    return !this.inCheck
+      ? conditionsWithoutCheck
+      : this.isMoveableToWith(conditionsWithoutCheck, position);
   }
 
   private pawnNotMoveableTo(
@@ -491,6 +399,116 @@ export class Board {
     ).position.differenceOfOneX(squareElement.position);
   }
 
+  private isPawnTwoMovesBlockedByPiece(
+    conditionsWithoutCheck: boolean,
+    position: Position,
+    currentSquareElement: SquareElement,
+  ): boolean {
+    const twoSteps = currentSquareElement.position.differenceOfTwoY(position);
+    const piece = this.getAtPosition(
+      new Position(
+        position.x,
+        isWhite(currentSquareElement.squareElementType)
+          ? currentSquareElement.position.y - 1
+          : currentSquareElement.position.y + 1,
+      ),
+    );
+    return conditionsWithoutCheck && twoSteps && piece.isPiece();
+  }
+
+  private isMoveableToWith(
+    conditionsWithoutCheck: boolean,
+    position: Position,
+  ): boolean {
+    const isMoveBlockingCheck = !this.isKingInCheck(
+      this.currentSquareElement?.squareElementType,
+      position,
+    );
+    return (
+      conditionsWithoutCheck &&
+      (isMoveBlockingCheck || this.isMoveTakingCheckGivingPiece(position))
+    );
+  }
+
+  private isMoveTakingCheckGivingPiece(position: Position): boolean {
+    return (
+      this.piecesGivinCheck.size === 1 &&
+      (
+        this.piecesGivinCheck.values().next().value as MoveablePiece
+      ).position.same(position)
+    );
+  }
+
+  private isPieceNoPawnNoKingMoveableTo(
+    currentPiece: Moveable,
+    position: Position,
+  ): boolean {
+    const elementOnSquareToMove = this.getAtPosition(position);
+    const isSquareNotOfSameType =
+      elementOnSquareToMove instanceof Empty ||
+      !this.sameElementTypeAsCurrent(elementOnSquareToMove);
+
+    const noPieceShouldBlocking = !this.isPieceInTheWay(
+      this.currentSquareElement as SquareElement,
+      this.constructPath(
+        this.currentSquareElement as SquareElement,
+        new Empty(position),
+      ),
+    );
+
+    const conditionsWithoutCheck =
+      currentPiece.isMoveableTo(position) &&
+      isSquareNotOfSameType &&
+      noPieceShouldBlocking;
+
+    if (!this.inCheck) {
+      return conditionsWithoutCheck;
+    }
+
+    return this.isMoveableToWith(conditionsWithoutCheck, position);
+  }
+
+  /**
+   * Move current to parsed
+   * @param squareElement
+   * @returns boolean - if moved or not
+   */
+  movePiece(squareElement: SquareElement): boolean {
+    if (this.isNotMoveable(squareElement)) {
+      return false;
+    }
+
+    const newPosition: Position = squareElement.position;
+    this.pieces = this.pieces
+      .filter((piece) => piece !== squareElement)
+      .map((piece) => {
+        if (this.isPieceSameAsCurrent(piece)) {
+          piece.moveTo(newPosition);
+        }
+        return piece;
+      });
+
+    this.currentPiece?.moveTo(newPosition);
+    return true;
+  }
+
+  private isNotMoveable(squareElement: SquareElement): boolean {
+    return (
+      !this.currentPiece ||
+      !this.isMoveableTo(squareElement.position) ||
+      this.sameElementTypeAsCurrent(squareElement) ||
+      this.isPieceInTheWay(squareElement)
+    );
+  }
+
+  private isPieceSameAsCurrent(piece: MoveablePiece) {
+    return (
+      piece.position.same(
+        this.currentSquareElement?.position ?? new Position(0, 0),
+      ) && this.sameElementTypeAsCurrent(piece)
+    );
+  }
+
   /**
    * Is Pawn promotable
    * @returns boolean
@@ -500,6 +518,10 @@ export class Board {
       return (this.currentSquareElement as Pawn).isPromotable();
     }
     return false;
+  }
+
+  private isCurrentlyPawn(): boolean {
+    return this.currentSquareElement instanceof Pawn;
   }
 
   /**
@@ -589,28 +611,6 @@ export class Board {
       positionBlocked,
     );
     return notSameType && isMoveableToKing && noPieceBlocking;
-  }
-
-  private getKingOfType(currentType: SquareElementType): MoveablePiece {
-    for (const piece of this.pieces) {
-      if (this.isKingOfType(piece, currentType)) {
-        return piece;
-      }
-    }
-    return new King(
-      currentType === 'white' ? new Position(4, 7) : new Position(4, 0),
-      currentType,
-    ); // should never be the case, because king of other type always exists
-  }
-
-  /**
-   * Is parsed piece a king of parsed type
-   * @param piece
-   * @param currentType
-   * @returns boolean
-   */
-  isKingOfType(piece: MoveablePiece, currentType: SquareElementType): boolean {
-    return piece instanceof King && piece.squareElementType === currentType;
   }
 
   /**
