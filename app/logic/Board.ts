@@ -493,22 +493,29 @@ export class Board {
     positionBlocked?: Position,
   ): boolean {
     const king = this.getKingOfType(currentType);
-
     if (positionBlocked) {
-      return this.pieces.some((piece) => {
-        if (
-          this.isPieceGivingCheck(piece, currentType, king, positionBlocked)
-        ) {
-          this.piecesGivinCheck.add(piece);
-          return true;
-        }
-        return false;
-      });
+      return this.isInCheck(king, currentType, positionBlocked);
     }
 
-    this.inCheck = this.pieces.some((piece) => {
-      if (this.isPieceGivingCheck(piece, currentType, king)) {
-        if (piece instanceof Pawn && this.pawnNotMoveableTo(king, piece)) {
+    this.inCheck = this.isInCheck(king, currentType);
+    if (!this.inCheck) {
+      this.piecesGivinCheck.clear();
+    }
+    return this.inCheck;
+  }
+
+  private isInCheck(
+    king: King,
+    currentType: SquareElementType,
+    positionBlocked?: Position,
+  ): boolean {
+    return this.pieces.some((piece) => {
+      if (this.isPieceGivingCheck(piece, currentType, king, positionBlocked)) {
+        if (
+          !positionBlocked &&
+          piece instanceof Pawn &&
+          this.pawnNotMoveableTo(king, piece)
+        ) {
           return false;
         }
 
@@ -517,12 +524,6 @@ export class Board {
       }
       return false;
     });
-
-    if (!this.inCheck) {
-      this.piecesGivinCheck.clear();
-    }
-
-    return this.inCheck;
   }
 
   private isPieceGivingCheck(
