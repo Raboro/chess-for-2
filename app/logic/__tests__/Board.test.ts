@@ -497,6 +497,61 @@ describe('Board', () => {
     expect(board.isKingInCheck('white')).toBeFalsy();
     noPossibleMove(board);
   });
+
+  test('King not in check should not be a checkmate', () => {
+    expect(board.isCheckmate('white')).toBeFalsy();
+    expect(board.isCheckmate('black')).toBeFalsy();
+  });
+
+  test('King in check, but should not be in checkmate', () => {
+    // move pawns
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 4)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(5, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 4)))).toBeTruthy();
+
+    // move Queen
+    expect(
+      board.selectSquare(new Queen(new Position(3, 0), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 4)))).toBeTruthy();
+
+    expect(board.isKingInCheck('white')).toBeTruthy();
+    expect(board.isCheckmate('white')).toBeFalsy();
+  });
+
+  test('King should be in checkmate', () => {
+    // move pawns
+    expect(
+      board.selectSquare(new Pawn(new Position(5, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 4)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(6, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(6, 4)))).toBeTruthy();
+
+    // move Queen
+    expect(
+      board.selectSquare(new Queen(new Position(3, 0), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 4)))).toBeTruthy();
+
+    expect(board.isKingInCheck('white')).toBeTruthy();
+    expect(board.isCheckmate('white')).toBeTruthy();
+  });
 });
 
 function noPossibleMove(board: Board) {
