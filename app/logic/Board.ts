@@ -414,16 +414,26 @@ export class Board {
       if (positionBlocked && position.same(positionBlocked)) {
         return true;
       }
-      for (const piece of this.pieces) {
-        if (piecesToIgnore && this.isPieceIgnorable(piecesToIgnore, piece)) {
-          continue;
-        }
-        if (piece.position.same(position)) {
-          return true;
-        }
+      if (this.isPieceOnPosition(position, piecesToIgnore)) {
+        return true;
       }
     }
 
+    return false;
+  }
+
+  private isPieceOnPosition(
+    position: Position,
+    piecesToIgnore?: MoveablePiece[],
+  ): boolean {
+    for (const piece of this.pieces) {
+      if (piecesToIgnore && this.isPieceIgnorable(piecesToIgnore, piece)) {
+        continue;
+      }
+      if (piece.position.same(position)) {
+        return true;
+      }
+    }
     return false;
   }
 
