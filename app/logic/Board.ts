@@ -355,12 +355,7 @@ export class Board {
    * @returns boolean - if moved or not
    */
   movePiece(squareElement: SquareElement): boolean {
-    if (
-      !this.currentPiece ||
-      !this.isMoveableTo(squareElement.position) ||
-      this.sameElementTypeAsCurrent(squareElement) ||
-      this.isPieceInTheWay(squareElement)
-    ) {
+    if (this.isNotMoveable(squareElement)) {
       return false;
     }
 
@@ -374,8 +369,17 @@ export class Board {
         return piece;
       });
 
-    this.currentPiece.moveTo(newPosition);
+    this.currentPiece?.moveTo(newPosition);
     return true;
+  }
+
+  private isNotMoveable(squareElement: SquareElement): boolean {
+    return (
+      !this.currentPiece ||
+      !this.isMoveableTo(squareElement.position) ||
+      this.sameElementTypeAsCurrent(squareElement) ||
+      this.isPieceInTheWay(squareElement)
+    );
   }
 
   private isPieceSameAsCurrent(piece: MoveablePiece) {
