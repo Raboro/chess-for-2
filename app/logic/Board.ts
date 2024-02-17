@@ -53,6 +53,12 @@ export class Board {
     }
   }
 
+  /**
+   * Get SquareElement at parsed Position.
+   * Returns Empty if no SquareElement at parsed position
+   * @param position
+   * @returns
+   */
   getAtPosition(position: Position): SquareElement {
     for (const piece of this.pieces) {
       if (piece.position.same(position)) {
@@ -62,6 +68,13 @@ export class Board {
     return new Empty(position);
   }
 
+  /**
+   * Select parsed SquareElement to use
+   * this as current for further actions
+   * @param squareElement
+   * @param currentType
+   * @returns boolean - if SquareElement was selected or not
+   */
   selectSquare(
     squareElement: SquareElement,
     currentType: SquareElementType,
@@ -80,6 +93,12 @@ export class Board {
     return true;
   }
 
+  /**
+   * Is current before selected SquareElement (with selectSquare())
+   * moveable to parsed position
+   * @param position
+   * @returns boolean
+   */
   isMoveableTo(position: Position): boolean {
     if (!this.currentPiece) {
       return false;
@@ -292,6 +311,11 @@ export class Board {
     return conditionsWithoutCheck && twoSteps && piece.isPiece();
   }
 
+  /**
+   * Move current to parsed
+   * @param squareElement
+   * @returns boolean - if moved or not
+   */
   movePiece(squareElement: SquareElement): boolean {
     if (
       !this.currentPiece ||
@@ -415,6 +439,10 @@ export class Board {
     ).position.differenceOfOneX(squareElement.position);
   }
 
+  /**
+   * Is Pawn promotable
+   * @returns boolean
+   */
   isPromotable(): boolean {
     if (this.isCurrentlyPawn()) {
       return (this.currentSquareElement as Pawn).isPromotable();
@@ -422,10 +450,18 @@ export class Board {
     return false;
   }
 
+  /**
+   * removed selection to current SquareElement
+   */
   removeSelection(): void {
     this.currentPiece = undefined;
   }
 
+  /**
+   * Handel promotion of current to parsed type
+   * @param promotionType
+   * @returns new promoted Piece
+   */
   handlePromotion(promotionType: PromotionType): SquareElement {
     const position = this.currentSquareElement?.position ?? new Position(0, 0);
     const elementType = this.currentSquareElement?.squareElementType ?? 'white';
@@ -442,6 +478,12 @@ export class Board {
     return piece;
   }
 
+  /**
+   * Is King of parsed type in check
+   * @param currentType
+   * @param positionBlocked
+   * @returns boolean
+   */
   isKingInCheck(
     currentType: SquareElementType,
     positionBlocked?: Position,
@@ -509,10 +551,23 @@ export class Board {
     ); // should never be the case, because king of other type always exists
   }
 
+  /**
+   * Is parsed piece a king of parsed type
+   * @param piece
+   * @param currentType
+   * @returns boolean
+   */
   isKingOfType(piece: MoveablePiece, currentType: SquareElementType): boolean {
     return piece instanceof King && piece.squareElementType === currentType;
   }
 
+  /**
+   * Is King of parsed type in check and
+   * no further moves to prevent it are possible.
+   * If so game is over and other type wins
+   * @param squareElementType
+   * @returns boolean
+   */
   isCheckmate(squareElementType: SquareElementType): boolean {
     if (!this.isKingInCheck(squareElementType)) {
       return false;
