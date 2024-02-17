@@ -113,7 +113,10 @@ export class Board {
     }
 
     if (this.isCurrentPiecePinned()) {
-      return this.canPinnedPieceTakePinningPiece(position);
+      return (
+        this.canPinnedPieceTakePinningPiece(position) ||
+        this.canPinnedPieceMoveAndKeepPin(position)
+      );
     }
 
     if (this.currentSquareElement instanceof Pawn) {
@@ -335,6 +338,11 @@ export class Board {
       if (this.isPieceIgnorableForPinnedCheck(piece, king)) {
         continue;
       }
+
+      if (this.currentlyPawnWouldTakeInFront(position, piece)) {
+        return false;
+      }
+
       if (
         this.isPieceInTheWay(piece, this.constructPath(piece, king)) &&
         piece.isMoveableTo(king.position) &&
@@ -346,6 +354,53 @@ export class Board {
     }
 
     return false;
+  }
+
+  private currentlyPawnWouldTakeInFront(
+    position: Position,
+    piece?: MoveablePiece,
+  ): boolean {
+    return (
+      this.isCurrentlyPawn() &&
+      (!this.isPawnMoveableTo(
+        this.currentPiece as Moveable,
+        position,
+        this.currentSquareElement as SquareElement,
+      ) ||
+        position.differenceOfOneY(piece?.position ?? position))
+    );
+  }
+
+  private canPinnedPieceMoveAndKeepPin(position: Position): boolean {
+    const king = this.getKingOfType(
+      this.currentSquareElement?.squareElementType,
+    );
+    let pinningPiece: MoveablePiece | undefined;
+    for (const piece of this.pieces) {
+      if (this.isPieceIgnorableForPinnedCheck(piece, king)) {
+        continue;
+      }
+      if (this.isCurrentPinnedBy(piece, king)) {
+        pinningPiece = piece;
+        break;
+      }
+    }
+
+    const moveableTo = this.currentPiece?.isMoveableTo(position) ?? false;
+
+    if (this.currentlyPawnWouldTakeInFront(position, pinningPiece)) {
+      return false;
+    }
+
+    return (
+      moveableTo &&
+      this.isPieceInTheWay(
+        pinningPiece ?? king,
+        this.constructPath(pinningPiece ?? king, king),
+        [this.currentPiece as MoveablePiece],
+        position,
+      )
+    );
   }
 
   private isPawnMoveableTo(
