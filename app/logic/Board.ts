@@ -577,7 +577,7 @@ export class Board {
     }
 
     for (const piece of this.pieces) {
-      if (piece.squareElementType !== squareElementType) {
+      if (!piece.isSameType(squareElementType)) {
         continue;
       }
       this.selectSquare(piece, squareElementType);

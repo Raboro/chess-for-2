@@ -22,4 +22,18 @@ describe('Piece', () => {
     const piece: Piece = new Piece(new Position(1, 2), 'white', 'Piece');
     expect(piece.display()).toBe(SquareElementImagePaths.EMPTY_IMAGE_PATH);
   });
+
+  test('Piece should have same type', () => {
+    let piece: Piece = new Piece(new Position(0, 0), 'white', 'Piece');
+    expect(piece.isSameType('white')).toBeTruthy();
+    piece = new Piece(new Position(0, 0), 'black', 'Piece');
+    expect(piece.isSameType('black')).toBeTruthy();
+  });
+
+  test('Piece should not have same type', () => {
+    let piece: Piece = new Piece(new Position(0, 0), 'white', 'Piece');
+    expect(piece.isSameType('black')).toBeFalsy();
+    piece = new Piece(new Position(0, 0), 'black', 'Piece');
+    expect(piece.isSameType('white')).toBeFalsy();
+  });
 });

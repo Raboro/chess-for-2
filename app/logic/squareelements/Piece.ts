@@ -28,4 +28,8 @@ export default class Piece implements SquareElement {
   isPiece(): boolean {
     return true;
   }
+
+  isSameType(other: SquareElementType): boolean {
+    return this.squareElementType === other;
+  }
 }
