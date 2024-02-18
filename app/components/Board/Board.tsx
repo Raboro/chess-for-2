@@ -35,15 +35,12 @@ const Board = (props: Props) => {
   };
 
   const movePiece = (squareElement: SquareElement) => {
-    const moved: boolean = props.boardLogic.movePiece(squareElement);
-
-    if (moved) {
-      if (props.boardLogic.isPromotable()) {
-        props.setPromotion(currentType);
-        setIsPromotion(true);
-      } else {
-        update();
-      }
+    props.boardLogic.movePiece(squareElement);
+    if (props.boardLogic.isPromotable()) {
+      props.setPromotion(currentType);
+      setIsPromotion(true);
+    } else {
+      update();
     }
 
     props.boardLogic.removeSelection();
