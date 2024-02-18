@@ -265,10 +265,16 @@ export class Board {
   }
 
   private isCastlingPossible(position: Position, king: King): boolean {
-    if (!king.isCastlingPossible() || position.x < 2 || position.x > 6) {
+    if (
+      !king.isCastlingPossible() ||
+      !(
+        position.same(new Position(2, king.position.y)) ||
+        position.same(new Position(6, king.position.y))
+      )
+    ) {
       return false;
     }
-    if (position.x - 2 === king.position.x) {
+    if (position.same(new Position(6, king.position.y))) {
       const rook = this.getAtPosition(new Position(position.x + 1, position.y));
 
       if (
@@ -286,29 +292,27 @@ export class Board {
           new Position(king.position.x + 2, position.y),
         ) instanceof Empty
       );
-    } else if (position.x + 2 === king.position.x) {
-      const rook = this.getAtPosition(new Position(position.x - 2, position.y));
-
-      if (
-        !(rook instanceof Rook) ||
-        (rook instanceof Rook && !rook.isCastlingPossible())
-      ) {
-        return false;
-      }
-
-      return (
-        this.getAtPosition(
-          new Position(king.position.x - 1, position.y),
-        ) instanceof Empty &&
-        this.getAtPosition(
-          new Position(king.position.x - 2, position.y),
-        ) instanceof Empty &&
-        this.getAtPosition(
-          new Position(king.position.x - 3, position.y),
-        ) instanceof Empty
-      );
     }
-    return false;
+    const rook = this.getAtPosition(new Position(position.x - 2, position.y));
+
+    if (
+      !(rook instanceof Rook) ||
+      (rook instanceof Rook && !rook.isCastlingPossible())
+    ) {
+      return false;
+    }
+
+    return (
+      this.getAtPosition(
+        new Position(king.position.x - 1, position.y),
+      ) instanceof Empty &&
+      this.getAtPosition(
+        new Position(king.position.x - 2, position.y),
+      ) instanceof Empty &&
+      this.getAtPosition(
+        new Position(king.position.x - 3, position.y),
+      ) instanceof Empty
+    );
   }
 
   private isCurrentPiecePinned(): boolean {
