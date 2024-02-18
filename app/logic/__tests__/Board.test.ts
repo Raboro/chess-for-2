@@ -615,6 +615,76 @@ describe('Board', () => {
     expect(board.isKingInCheck('white')).toBeFalsy();
     expect(board.isMoveableTo(new Position(2, 5)));
   });
+
+  test('Castling should not be possible for position.x out of range to prevent error', () => {
+    cleanUpSpaceForCastling(board);
+
+    expect(
+      board.selectSquare(new King(new Position(3, 7), 'white'), 'white'),
+    ).toBeTruthy();
+
+    const errorXs = [0, 1, 7];
+    for (const errorX of errorXs) {
+      expect(board.isMoveableTo(new Position(errorX, 7))).toBeFalsy();
+    }
+  });
+
+  test('Castling should be possible', () => {
+    cleanUpSpaceForCastling(board);
+
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    const xs = [2, 6];
+
+    for (const x of xs) {
+      expect(board.isMoveableTo(new Position(x, 7))).toBeTruthy();
+    }
+  });
+
+  test('Castling should not be possible if king moved previously', () => {
+    cleanUpSpaceForCastling(board);
+
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    const xs = [2, 6];
+
+    for (const x of xs) {
+      expect(board.isMoveableTo(new Position(x, 7))).toBeTruthy();
+    }
+
+    expect(board.movePiece(new Empty(new Position(5, 7)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 7)))).toBeTruthy();
+
+    for (const x of xs) {
+      expect(board.isMoveableTo(new Position(x, 7))).toBeFalsy();
+    }
+  });
+
+  test('Castling should not be possible if rooks moved previously', () => {
+    cleanUpSpaceForCastling(board);
+
+    expect(
+      board.selectSquare(new Rook(new Position(0, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(1, 7)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(0, 7)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Rook(new Position(7, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(6, 7)))).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 7)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    const xs = [2, 6];
+    for (const x of xs) {
+      expect(board.isMoveableTo(new Position(x, 7))).toBeFalsy();
+    }
+  });
 });
 
 function noPossibleMove(board: Board) {
@@ -636,4 +706,46 @@ function checkKingAndMoveToOnlyPossibleSquare(board: Board) {
     }
   }
   expect(board.movePiece(new Empty(new Position(4, 6)))).toBeTruthy();
+}
+
+function cleanUpSpaceForCastling(board: Board) {
+  expect(
+    board.selectSquare(new Knight(new Position(1, 7), 'white'), 'white'),
+  ).toBeTruthy();
+  expect(board.movePiece(new Empty(new Position(0, 5)))).toBeTruthy();
+
+  expect(
+    board.selectSquare(new Pawn(new Position(1, 6), 'white'), 'white'),
+  ).toBeTruthy();
+  expect(board.movePiece(new Empty(new Position(1, 5)))).toBeTruthy();
+
+  expect(
+    board.selectSquare(new Bishop(new Position(2, 7), 'white'), 'white'),
+  ).toBeTruthy();
+  expect(board.movePiece(new Empty(new Position(1, 6)))).toBeTruthy();
+
+  expect(
+    board.selectSquare(new Pawn(new Position(3, 6), 'white'), 'white'),
+  ).toBeTruthy();
+  expect(board.movePiece(new Empty(new Position(3, 4)))).toBeTruthy();
+
+  expect(
+    board.selectSquare(new Queen(new Position(3, 7), 'white'), 'white'),
+  ).toBeTruthy();
+  expect(board.movePiece(new Empty(new Position(3, 6)))).toBeTruthy();
+
+  expect(
+    board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+  ).toBeTruthy();
+  expect(board.movePiece(new Empty(new Position(4, 5)))).toBeTruthy();
+
+  expect(
+    board.selectSquare(new Bishop(new Position(5, 7), 'white'), 'white'),
+  ).toBeTruthy();
+  expect(board.movePiece(new Empty(new Position(4, 6)))).toBeTruthy();
+
+  expect(
+    board.selectSquare(new Knight(new Position(6, 7), 'white'), 'white'),
+  ).toBeTruthy();
+  expect(board.movePiece(new Empty(new Position(7, 5)))).toBeTruthy();
 }
