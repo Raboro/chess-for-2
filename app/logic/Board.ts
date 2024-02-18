@@ -273,30 +273,24 @@ export class Board {
         return false;
       }
 
-      return (
-        this.getAtPosition(
-          new Position(king.position.x + 1, position.y),
-        ) instanceof Empty &&
-        this.getAtPosition(
-          new Position(king.position.x + 2, position.y),
-        ) instanceof Empty
-      );
+      return this.onlyEmptyInRange([1, 2], king.position.x, position.y);
     }
     if (this.noRookOrMovedRook(new Position(position.x - 2, position.y))) {
       return false;
     }
 
-    return (
-      this.getAtPosition(
-        new Position(king.position.x - 1, position.y),
-      ) instanceof Empty &&
-      this.getAtPosition(
-        new Position(king.position.x - 2, position.y),
-      ) instanceof Empty &&
-      this.getAtPosition(
-        new Position(king.position.x - 3, position.y),
-      ) instanceof Empty
-    );
+    return this.onlyEmptyInRange([-1, -2, -3], king.position.x, position.y);
+  }
+
+  private onlyEmptyInRange(range: number[], x: number, y: number): boolean {
+    for (const xChange of range) {
+      if (
+        !(this.getAtPosition(new Position(x + xChange, y)) instanceof Empty)
+      ) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private hasKingMovedOrPositionInvalid(
