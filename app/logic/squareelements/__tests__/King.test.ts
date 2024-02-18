@@ -79,4 +79,24 @@ describe('King', () => {
     expect(blackKing.display()).toEqual(SquareElementImagePaths.BLACK_KING);
     expect(whiteKing.display()).toEqual(SquareElementImagePaths.WHITE_KING);
   });
+
+  test('King without move should be castling', () => {
+    const king: King = new King(new Position(3, 0), 'black');
+    const newPosition = new Position(1, 0);
+    expect(king.isCastlingPossible()).toBeTruthy();
+    expect(king.moveTo(newPosition)).toBeFalsy();
+    expect(king.castleTo(newPosition));
+    expect(king.position).toEqual(newPosition);
+  });
+
+  test('King with move should not be castling', () => {
+    const king: King = new King(new Position(3, 0), 'black');
+    king.moveTo(new Position(3, 1));
+    const newPosition = new Position(1, 0);
+    expect(king.isCastlingPossible()).toBeFalsy();
+    expect(king.moveTo(newPosition)).toBeFalsy();
+    expect(king.castleTo(newPosition));
+    expect(king.position).not.toEqual(newPosition);
+    expect(king.position).toEqual(new Position(3, 1));
+  });
 });

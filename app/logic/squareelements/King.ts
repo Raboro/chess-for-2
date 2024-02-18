@@ -7,8 +7,11 @@ import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
 
 export default class King extends Piece implements Moveable, Displayable {
+  private castlingPossible: boolean;
+
   constructor(position: Position, squareElementType: SquareElementType) {
     super(position, squareElementType, 'King');
+    this.castlingPossible = true;
   }
 
   isMoveableTo(position: Position): boolean {
@@ -16,7 +19,6 @@ export default class King extends Piece implements Moveable, Displayable {
       return false;
     }
 
-    // need to implement Castling
     const oneUpOrDown =
       this.position.differenceOfOneX(position) && this.position.y == position.y;
     const oneLeftOrRight =
@@ -30,6 +32,7 @@ export default class King extends Piece implements Moveable, Displayable {
 
   moveTo(position: Position): void {
     if (this.isMoveableTo(position)) {
+      this.castlingPossible = false;
       this.position = position;
     }
   }
@@ -38,5 +41,15 @@ export default class King extends Piece implements Moveable, Displayable {
     return isWhite(this.squareElementType)
       ? SquareElementImagePaths.WHITE_KING
       : SquareElementImagePaths.BLACK_KING;
+  }
+
+  castleTo(position: Position): void {
+    if (this.castlingPossible) {
+      this.position = position;
+    }
+  }
+
+  isCastlingPossible(): boolean {
+    return this.castlingPossible;
   }
 }
