@@ -102,8 +102,14 @@ describe('MainScreen', () => {
         <MainScreen />
       </NavigationContainer>,
     );
-    const whitePositions = [[53, 45], [54, 38]];
-    const blackPositions = [[12, 20], [3, 39]];
+    const whitePositions = [
+      [53, 45],
+      [54, 38],
+    ];
+    const blackPositions = [
+      [12, 20],
+      [3, 39],
+    ];
     const moves = 2;
 
     let whitePawn;
@@ -125,6 +131,6 @@ describe('MainScreen', () => {
     }
 
     // restart and play again
-    fireEvent(rend.getAllByTestId("PressableButton")[1], 'press');
+    fireEvent(rend.getAllByTestId('PressableButton')[1], 'press');
   });
 });
