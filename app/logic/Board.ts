@@ -109,7 +109,10 @@ export class Board {
     }
 
     if (this.currentSquareElement instanceof King) {
-      return this.isKingMoveableTo(position);
+      return (
+        this.isKingMoveableTo(position) ||
+        this.isCastlingPossible(position, this.currentSquareElement)
+      );
     }
 
     if (this.isCurrentPiecePinned()) {
@@ -257,6 +260,53 @@ export class Board {
       ) {
         return true;
       }
+    }
+    return false;
+  }
+
+  private isCastlingPossible(position: Position, king: King): boolean {
+    if (!king.isCastlingPossible() || position.x < 2 || position.x > 5) {
+      return false;
+    }
+    if (position.x - 2 === king.position.x) {
+      const rook = this.getAtPosition(new Position(position.x + 1, position.y));
+
+      if (
+        !(rook instanceof Rook) ||
+        (rook instanceof Rook && !rook.isCastlingPossible())
+      ) {
+        return false;
+      }
+
+      return (
+        this.getAtPosition(
+          new Position(king.position.x + 1, position.y),
+        ) instanceof Empty &&
+        this.getAtPosition(
+          new Position(king.position.x + 2, position.y),
+        ) instanceof Empty
+      );
+    } else if (position.x + 2 === king.position.x) {
+      const rook = this.getAtPosition(new Position(position.x - 2, position.y));
+
+      if (
+        !(rook instanceof Rook) ||
+        (rook instanceof Rook && !rook.isCastlingPossible())
+      ) {
+        return false;
+      }
+
+      return (
+        this.getAtPosition(
+          new Position(king.position.x - 1, position.y),
+        ) instanceof Empty &&
+        this.getAtPosition(
+          new Position(king.position.x - 2, position.y),
+        ) instanceof Empty &&
+        this.getAtPosition(
+          new Position(king.position.x - 3, position.y),
+        ) instanceof Empty
+      );
     }
     return false;
   }
