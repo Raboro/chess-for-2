@@ -265,13 +265,7 @@ export class Board {
   }
 
   private isCastlingPossible(position: Position, king: King): boolean {
-    if (
-      !king.isCastlingPossible() ||
-      !(
-        this.isCastlingLeft(position, king.position.y) ||
-        this.isCastlingRight(position, king.position.y)
-      )
-    ) {
+    if (this.hasKingMovedOrPositionInvalid(position, king)) {
       return false;
     }
     if (this.isCastlingRight(position, king.position.y)) {
@@ -312,6 +306,19 @@ export class Board {
       this.getAtPosition(
         new Position(king.position.x - 3, position.y),
       ) instanceof Empty
+    );
+  }
+
+  private hasKingMovedOrPositionInvalid(
+    position: Position,
+    king: King,
+  ): boolean {
+    return (
+      !king.isCastlingPossible() ||
+      !(
+        this.isCastlingLeft(position, king.position.y) ||
+        this.isCastlingRight(position, king.position.y)
+      )
     );
   }
 
