@@ -278,10 +278,10 @@ export class Board {
     return false;
   }
 
-  private getKingOfType(currentType: SquareElementType): MoveablePiece {
+  private getKingOfType(currentType: SquareElementType): King {
     for (const piece of this.pieces) {
       if (this.isKingOfType(piece, currentType)) {
-        return piece;
+        return piece as King;
       }
     }
     return new King(
