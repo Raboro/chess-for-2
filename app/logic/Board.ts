@@ -265,7 +265,7 @@ export class Board {
   }
 
   private isCastlingPossible(position: Position, king: King): boolean {
-    if (!king.isCastlingPossible() || position.x < 2 || position.x > 5) {
+    if (!king.isCastlingPossible() || position.x < 2 || position.x > 6) {
       return false;
     }
     if (position.x - 2 === king.position.x) {
