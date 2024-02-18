@@ -95,4 +95,36 @@ describe('MainScreen', () => {
       fireEvent(rend.getAllByTestId('Square')[67], 'press');
     },
   );
+
+  test('Moves should trigger checkmate and then restart', () => {
+    const rend = render(
+      <NavigationContainer>
+        <MainScreen />
+      </NavigationContainer>,
+    );
+    const whitePositions = [[53, 45], [54, 38]];
+    const blackPositions = [[12, 20], [3, 39]];
+    const moves = 2;
+
+    let whitePawn;
+    let whiteMoveSquare;
+    let blackPawn;
+    let blackMoveSquare;
+    for (let i = 0; i < moves; i++) {
+      whitePawn = rend.getAllByTestId('SquareImage')[whitePositions[i][0]];
+      fireEvent(whitePawn, 'press');
+      whiteMoveSquare =
+        rend.getAllByTestId('SquareImage')[whitePositions[i][1]];
+      fireEvent(whiteMoveSquare, 'press');
+
+      blackPawn = rend.getAllByTestId('SquareImage')[blackPositions[i][0]];
+      fireEvent(blackPawn, 'press');
+      blackMoveSquare =
+        rend.getAllByTestId('SquareImage')[blackPositions[i][1]];
+      fireEvent(blackMoveSquare, 'press');
+    }
+
+    // restart and play again
+    fireEvent(rend.getAllByTestId("PressableButton")[1], 'press');
+  });
 });
