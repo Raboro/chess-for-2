@@ -112,6 +112,26 @@ describe('Rook', () => {
     expect(blackRook.display()).toEqual(SquareElementImagePaths.BLACK_ROOK);
     expect(whiteRook.display()).toEqual(SquareElementImagePaths.WHITE_ROOK);
   });
+
+  test('Rook without move should be castling', () => {
+    const rook: Rook = new Rook(new Position(3, 0), 'black');
+    const newPosition = new Position(1, 0);
+    expect(rook.isCastlingPossible()).toBeTruthy();
+    expect(rook.moveTo(newPosition)).toBeFalsy();
+    expect(rook.castleTo(newPosition));
+    expect(rook.position).toEqual(newPosition);
+  });
+
+  test('Rook with move should not be castling', () => {
+    const rook: Rook = new Rook(new Position(3, 0), 'black');
+    rook.moveTo(new Position(3, 1));
+    const newPosition = new Position(1, 0);
+    expect(rook.isCastlingPossible()).toBeFalsy();
+    expect(rook.moveTo(newPosition)).toBeFalsy();
+    expect(rook.castleTo(newPosition));
+    expect(rook.position).not.toEqual(newPosition);
+    expect(rook.position).toEqual(new Position(3, 1));
+  });
 });
 
 const randomIntFromInterval = (min: number, max: number) => {

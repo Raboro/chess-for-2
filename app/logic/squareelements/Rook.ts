@@ -8,8 +8,11 @@ import SquareElementType, { isWhite } from '../SquareElementType';
 import Piece from './Piece';
 
 export default class Rook extends Piece implements Moveable, Displayable {
+  private castlingPossible: boolean;
+
   constructor(position: Position, squareElementType: SquareElementType) {
     super(position, squareElementType, 'Rook');
+    this.castlingPossible = true;
   }
 
   isMoveableTo(position: Position): boolean {
@@ -18,6 +21,7 @@ export default class Rook extends Piece implements Moveable, Displayable {
 
   moveTo(position: Position): void {
     if (this.isMoveableTo(position)) {
+      this.castlingPossible = false;
       this.position = position;
     }
   }
@@ -26,5 +30,15 @@ export default class Rook extends Piece implements Moveable, Displayable {
     return isWhite(this.squareElementType)
       ? SquareElementImagePaths.WHITE_ROOK
       : SquareElementImagePaths.BLACK_ROOK;
+  }
+
+  castleTo(position: Position): void {
+    if (this.castlingPossible) {
+      this.position = position;
+    }
+  }
+
+  isCastlingPossible(): boolean {
+    return this.castlingPossible;
   }
 }
