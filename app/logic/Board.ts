@@ -268,13 +268,13 @@ export class Board {
     if (
       !king.isCastlingPossible() ||
       !(
-        position.same(new Position(2, king.position.y)) ||
-        position.same(new Position(6, king.position.y))
+        this.isCastlingLeft(position, king.position.y) ||
+        this.isCastlingRight(position, king.position.y)
       )
     ) {
       return false;
     }
-    if (position.same(new Position(6, king.position.y))) {
+    if (this.isCastlingRight(position, king.position.y)) {
       const rook = this.getAtPosition(new Position(position.x + 1, position.y));
 
       if (
@@ -313,6 +313,14 @@ export class Board {
         new Position(king.position.x - 3, position.y),
       ) instanceof Empty
     );
+  }
+
+  private isCastlingLeft(position: Position, kingY: number): boolean {
+    return position.same(new Position(2, kingY));
+  }
+
+  private isCastlingRight(position: Position, kingY: number): boolean {
+    return position.same(new Position(6, kingY));
   }
 
   private isCurrentPiecePinned(): boolean {
