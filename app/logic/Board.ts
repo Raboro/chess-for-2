@@ -268,18 +268,14 @@ export class Board {
     if (this.hasKingMovedOrPositionInvalid(position, king)) {
       return false;
     }
-    if (this.isCastlingRight(position, king.position.y)) {
-      if (this.noRookOrMovedRook(new Position(position.x + 1, position.y))) {
-        return false;
-      }
 
-      return this.onlyEmptyInRange([1, 2], king.position.x, position.y);
-    }
-    if (this.noRookOrMovedRook(new Position(position.x - 2, position.y))) {
-      return false;
-    }
+    const castlingRight = this.isCastlingRight(position, king.position.y);
+    const range = castlingRight ? [1, 2] : [-1, -2, -3];
+    const bias = castlingRight ? 1 : -2;
 
-    return this.onlyEmptyInRange([-1, -2, -3], king.position.x, position.y);
+    return this.noRookOrMovedRook(new Position(position.x + bias, position.y))
+      ? false
+      : this.onlyEmptyInRange(range, king.position.x, position.y);
   }
 
   private onlyEmptyInRange(range: number[], x: number, y: number): boolean {
