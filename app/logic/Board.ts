@@ -269,12 +269,7 @@ export class Board {
       return false;
     }
     if (this.isCastlingRight(position, king.position.y)) {
-      const rook = this.getAtPosition(new Position(position.x + 1, position.y));
-
-      if (
-        !(rook instanceof Rook) ||
-        (rook instanceof Rook && !rook.isCastlingPossible())
-      ) {
+      if (this.noRookOrMovedRook(new Position(position.x + 1, position.y))) {
         return false;
       }
 
@@ -287,12 +282,7 @@ export class Board {
         ) instanceof Empty
       );
     }
-    const rook = this.getAtPosition(new Position(position.x - 2, position.y));
-
-    if (
-      !(rook instanceof Rook) ||
-      (rook instanceof Rook && !rook.isCastlingPossible())
-    ) {
+    if (this.noRookOrMovedRook(new Position(position.x - 2, position.y))) {
       return false;
     }
 
@@ -328,6 +318,14 @@ export class Board {
 
   private isCastlingRight(position: Position, kingY: number): boolean {
     return position.same(new Position(6, kingY));
+  }
+
+  private noRookOrMovedRook(rookPosition: Position): boolean {
+    const rook = this.getAtPosition(rookPosition);
+    return (
+      !(rook instanceof Rook) ||
+      (rook instanceof Rook && !rook.isCastlingPossible())
+    );
   }
 
   private isCurrentPiecePinned(): boolean {
