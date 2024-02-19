@@ -595,6 +595,9 @@ export class Board {
       .filter((piece) => piece !== squareElement)
       .map((piece) => {
         if (this.isPieceSameAsCurrent(piece)) {
+          if (this.isMoveCastling(piece, newPosition)) {
+            return this.moveCastling(piece as King, newPosition);
+          }
           piece.moveTo(newPosition);
         }
         return piece;
@@ -619,6 +622,24 @@ export class Board {
         this.currentSquareElement?.position ?? new Position(0, 0),
       ) && this.sameElementTypeAsCurrent(piece)
     );
+  }
+
+  private isMoveCastling(piece: MoveablePiece, newPosition: Position): boolean {
+    return piece instanceof King && !piece.isMoveableTo(newPosition);
+  }
+
+  private moveCastling(king: King, newPosition: Position): MoveablePiece {
+    king.castleTo(newPosition);
+
+    const castlingRight = this.isCastlingRight(newPosition, king.position.y);
+    const rookPosition = new Position(castlingRight ? 7 : 0, king.position.y);
+    const castleTo = new Position(
+      newPosition.x + (castlingRight ? -1 : 1),
+      newPosition.y,
+    );
+    (this.getAtPosition(rookPosition) as Rook).castleTo(castleTo);
+
+    return king;
   }
 
   /**
