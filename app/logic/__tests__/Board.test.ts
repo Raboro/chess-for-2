@@ -685,6 +685,17 @@ describe('Board', () => {
       expect(board.isMoveableTo(new Position(x, 7))).toBeFalsy();
     }
   });
+
+  test.each([
+    ['right', new Position(2, 7)],
+    ['left', new Position(6, 7)],
+  ])('Castling %s', (move: string, newPosition: Position) => {
+    cleanUpSpaceForCastling(board);
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(newPosition))).toBeTruthy();
+  });
 });
 
 function noPossibleMove(board: Board) {
