@@ -17,7 +17,6 @@
 All images of chess pieces used are from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces
 
 ## Improvements
-- Castling
 - En passant
 - Timer
 - Points
