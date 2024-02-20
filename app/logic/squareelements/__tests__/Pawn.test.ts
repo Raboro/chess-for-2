@@ -186,6 +186,42 @@ describe('Pawn', () => {
     );
     expect(pawn.isPromotable()).toBeTruthy();
   });
+
+  test.each([
+    ['Black', 1, 3],
+    ['White', 6, 4],
+  ])(
+    '%s Pawn should have moved two squares true',
+    (color: string, y: number, newY: number) => {
+      const pawn: Pawn = new Pawn(
+        new Position(4, y),
+        color === 'White' ? 'white' : 'black',
+      );
+      const newPosition = new Position(4, newY);
+      expect(pawn.hasMovedTwoSquares()).toBeFalsy();
+      expect(pawn.isMoveableTo(newPosition)).toBeTruthy();
+      pawn.moveTo(newPosition);
+      expect(pawn.hasMovedTwoSquares()).toBeTruthy();
+    },
+  );
+
+  test.each([
+    ['Black', 1, 2],
+    ['White', 6, 5],
+  ])(
+    '%s Pawn should have moved two squares false, if only one square move',
+    (color: string, y: number, newY: number) => {
+      const pawn: Pawn = new Pawn(
+        new Position(4, y),
+        color === 'White' ? 'white' : 'black',
+      );
+      const newPosition = new Position(4, newY);
+      expect(pawn.hasMovedTwoSquares()).toBeFalsy();
+      expect(pawn.isMoveableTo(newPosition)).toBeTruthy();
+      pawn.moveTo(newPosition);
+      expect(pawn.hasMovedTwoSquares()).toBeFalsy();
+    },
+  );
 });
 
 const randomIntFromInterval = (min: number, max: number) => {
