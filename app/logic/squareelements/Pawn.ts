@@ -8,8 +8,11 @@ import { SIZE } from './../../constants/Size';
 import Piece from './Piece';
 
 export default class Pawn extends Piece implements Moveable, Displayable {
+  private movedTwoSquares: boolean;
+
   constructor(position: Position, squareElementType: SquareElementType) {
     super(position, squareElementType, 'Pawn');
+    this.movedTwoSquares = false;
   }
 
   isMoveableTo(position: Position): boolean {
@@ -61,6 +64,7 @@ export default class Pawn extends Piece implements Moveable, Displayable {
 
   moveTo(position: Position): void {
     if (this.isMoveableTo(position)) {
+      this.movedTwoSquares = this.position.differenceOfTwoY(position);
       this.position = position;
     }
   }
@@ -76,5 +80,9 @@ export default class Pawn extends Piece implements Moveable, Displayable {
       return this.position.y === SIZE.POSITION_MIN;
     }
     return this.position.y === SIZE.POSITION_MAX;
+  }
+
+  hasMovedTwoSquares(): boolean {
+    return this.movedTwoSquares;
   }
 }
