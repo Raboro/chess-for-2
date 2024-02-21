@@ -745,6 +745,50 @@ describe('Board', () => {
     ).toBeTruthy();
     expect(board.isMoveableTo(new Position(6, 7))).toBeFalsy();
   });
+
+  test('King should not be castling if new position would be in check', () => {
+    expect(
+      board.selectSquare(new Knight(new Position(6, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 4)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Queen(new Position(3, 0), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(7, 4)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Bishop(new Position(5, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(1, 3)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(6, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(6, 4)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Queen(new Position(7, 4), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(6, 5)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+
+    expect(board.isKingInCheck('white')).toBeFalsy();
+    expect(board.isMoveableTo(new Position(6, 7))).toBeFalsy();
+  });
 });
 
 function noPossibleMove(board: Board) {
