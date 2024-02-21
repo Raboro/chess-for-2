@@ -789,6 +789,20 @@ describe('Board', () => {
     expect(board.isKingInCheck('white')).toBeFalsy();
     expect(board.isMoveableTo(new Position(6, 7))).toBeFalsy();
   });
+
+  test('King should not be castling if way is not empty', () => {
+    expect(
+      board.selectSquare(new Knight(new Position(6, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+
+    expect(board.isKingInCheck('white')).toBeFalsy();
+    expect(board.isMoveableTo(new Position(6, 7))).toBeFalsy();
+  });
 });
 
 function noPossibleMove(board: Board) {
