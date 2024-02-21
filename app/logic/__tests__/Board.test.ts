@@ -696,6 +696,55 @@ describe('Board', () => {
     ).toBeTruthy();
     expect(board.movePiece(new Empty(newPosition))).toBeTruthy();
   });
+
+  test('King should not be possible to castle if in check', () => {
+    expect(
+      board.selectSquare(new Knight(new Position(6, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 5)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 3)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Knight(new Position(5, 5), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Pawn(new Position(4, 3), 'black'))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Queen(new Position(3, 0), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 1)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 4)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Queen(new Position(4, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 2)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Bishop(new Position(5, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(1, 3)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Queen(new Position(4, 2), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(5, 2)))).toBeTruthy();
+    expect(board.movePiece(new Pawn(new Position(5, 6), 'white'))).toBeTruthy();
+    expect(board.isKingInCheck('white')).toBeTruthy();
+
+    expect(
+      board.selectSquare(new King(new Position(4, 7), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.isMoveableTo(new Position(6, 7))).toBeFalsy();
+  });
 });
 
 function noPossibleMove(board: Board) {
