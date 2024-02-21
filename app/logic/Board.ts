@@ -272,6 +272,14 @@ export class Board {
       return false;
     }
 
+    if (
+      this.pieces.some((piece) => {
+        return this.isPositionKingToMoveBlocked(piece, position);
+      })
+    ) {
+      return false;
+    }
+
     const castlingRight = this.isCastlingRight(position, king.position.y);
     const range = castlingRight ? [1, 2] : [-1, -2, -3];
     const bias = castlingRight ? 1 : -2;
