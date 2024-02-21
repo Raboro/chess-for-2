@@ -265,7 +265,10 @@ export class Board {
   }
 
   private isCastlingPossible(position: Position, king: King): boolean {
-    if (this.hasKingMovedOrPositionInvalid(position, king)) {
+    if (
+      this.hasKingMovedOrPositionInvalid(position, king) ||
+      this.isKingInCheck(king.squareElementType)
+    ) {
       return false;
     }
 
