@@ -803,6 +803,70 @@ describe('Board', () => {
     expect(board.isKingInCheck('white')).toBeFalsy();
     expect(board.isMoveableTo(new Position(6, 7))).toBeFalsy();
   });
+
+  test('Should make en passant move', () => {
+    expect(
+      board.selectSquare(new Pawn(new Position(3, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(3, 4)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(6, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(6, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(3, 4), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(3, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(2, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(2, 3)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(3, 3), 'white'), 'white'),
+    ).toBeTruthy();
+
+    // en passant move
+    expect(board.isMoveableTo(new Position(2, 2))).toBeTruthy();
+    expect(board.getAtPosition(new Position(2, 3))).toBeInstanceOf(Pawn);
+    expect(board.movePiece(new Empty(new Position(2, 2)))).toBeTruthy();
+    expect(board.getAtPosition(new Position(2, 3))).toBeInstanceOf(Empty);
+  });
+
+  test('Should not make en passant move, because it was one move later', () => {
+    expect(
+      board.selectSquare(new Pawn(new Position(3, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(3, 4)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(6, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(6, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(3, 4), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(3, 3)))).toBeTruthy();
+    expect(
+      board.selectSquare(new Pawn(new Position(2, 1), 'black'), 'black'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(2, 3)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(3, 3), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.isMoveableTo(new Position(2, 2))).toBeTruthy();
+    expect(board.getAtPosition(new Position(2, 3))).toBeInstanceOf(Pawn);
+
+    expect(
+      board.selectSquare(new Pawn(new Position(4, 6), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.movePiece(new Empty(new Position(4, 4)))).toBeTruthy();
+
+    expect(
+      board.selectSquare(new Pawn(new Position(3, 3), 'white'), 'white'),
+    ).toBeTruthy();
+    expect(board.isMoveableTo(new Position(2, 2))).toBeFalsy();
+  });
 });
 
 function noPossibleMove(board: Board) {
