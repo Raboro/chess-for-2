@@ -22,14 +22,15 @@ export class Board {
   private currentSquareElement: SquareElement | undefined;
   private inCheck: boolean;
   private piecesGivinCheck: Set<MoveablePiece>;
-  private pawnMovedTwoSquares: boolean;
+  private hasPawnMovedTwoSquares: boolean;
   private positionOfTwoSquaresMove: Position | undefined;
+  private twoSquaresMovePawn: Pawn | undefined;
 
   constructor() {
     this.initBoard();
     this.inCheck = false;
     this.piecesGivinCheck = new Set();
-    this.pawnMovedTwoSquares = false;
+    this.hasPawnMovedTwoSquares = false;
   }
 
   private initBoard(): void {
@@ -126,7 +127,7 @@ export class Board {
     }
 
     if (this.currentSquareElement instanceof Pawn) {
-      if (this.pawnMovedTwoSquares) {
+      if (this.hasPawnMovedTwoSquares) {
         if (position.differenceOfOneX(this.currentSquareElement.position)) {
           const bias = isWhite(this.currentSquareElement.squareElementType)
             ? 1
@@ -626,7 +627,9 @@ export class Board {
       return false;
     }
 
-    const pawnMovementBefore = this.pawnMovedTwoSquares;
+    const pawnMovementBefore = this.hasPawnMovedTwoSquares;
+
+    let pawnToRemove: Pawn | undefined;
 
     const newPosition: Position = squareElement.position;
     this.pieces = this.pieces
@@ -639,16 +642,39 @@ export class Board {
           piece.moveTo(newPosition);
 
           if (piece instanceof Pawn) {
-            this.pawnMovedTwoSquares = piece.hasMovedTwoSquares();
+            const bias = isWhite(this.currentSquareElement?.squareElementType)
+              ? 1
+              : -1;
+            if (
+              this.positionOfTwoSquaresMove &&
+              this.positionOfTwoSquaresMove.same(
+                new Position(newPosition.x, newPosition.y + bias),
+              )
+            ) {
+              pawnToRemove = this.twoSquaresMovePawn;
+            }
+
+            this.hasPawnMovedTwoSquares = piece.hasMovedTwoSquares();
             this.positionOfTwoSquaresMove = piece.position;
+            this.twoSquaresMovePawn = piece;
           }
         }
         return piece;
       });
 
+    if (
+      pawnToRemove &&
+      pawnToRemove.squareElementType !== squareElement.squareElementType &&
+      pawnToRemove.hasMovedTwoSquares()
+    ) {
+      console.log(pawnToRemove, squareElement.position);
+      this.pieces = this.pieces.filter((p) => p !== pawnToRemove);
+    }
+
     if (pawnMovementBefore) {
-      this.pawnMovedTwoSquares = false;
+      this.hasPawnMovedTwoSquares = false;
       this.positionOfTwoSquaresMove = undefined;
+      this.twoSquaresMovePawn = undefined;
     }
 
     this.currentPiece?.moveTo(newPosition);
