@@ -22,11 +22,14 @@ export class Board {
   private currentSquareElement: SquareElement | undefined;
   private inCheck: boolean;
   private piecesGivinCheck: Set<MoveablePiece>;
+  private pawnMovedTwoSquares: boolean;
+  private positionOfTwoSquaresMove: Position | undefined;
 
   constructor() {
     this.initBoard();
     this.inCheck = false;
     this.piecesGivinCheck = new Set();
+    this.pawnMovedTwoSquares = false;
   }
 
   private initBoard(): void {
@@ -123,6 +126,28 @@ export class Board {
     }
 
     if (this.currentSquareElement instanceof Pawn) {
+      if (this.pawnMovedTwoSquares) {
+        if (position.differenceOfOneX(this.currentSquareElement.position)) {
+          const bias = isWhite(this.currentSquareElement.squareElementType)
+            ? 1
+            : -1;
+          if (bias + position.y >= 0 && bias + position.y <= 7) {
+            if (position.differenceOfOneY(this.currentSquareElement.position)) {
+              if (
+                this.positionOfTwoSquaresMove &&
+                this.positionOfTwoSquaresMove.same(
+                  new Position(position.x, position.y + bias),
+                )
+              ) {
+                return (
+                  this.currentSquareElement.position.y === position.y + bias
+                );
+              }
+            }
+          }
+        }
+      }
+
       return this.isPawnMoveableTo(
         this.currentPiece,
         position,
@@ -601,6 +626,8 @@ export class Board {
       return false;
     }
 
+    const pawnMovementBefore = this.pawnMovedTwoSquares;
+
     const newPosition: Position = squareElement.position;
     this.pieces = this.pieces
       .filter((piece) => piece !== squareElement)
@@ -610,9 +637,19 @@ export class Board {
             return this.moveCastling(piece as King, newPosition);
           }
           piece.moveTo(newPosition);
+
+          if (piece instanceof Pawn) {
+            this.pawnMovedTwoSquares = piece.hasMovedTwoSquares();
+            this.positionOfTwoSquaresMove = piece.position;
+          }
         }
         return piece;
       });
+
+    if (pawnMovementBefore) {
+      this.pawnMovedTwoSquares = false;
+      this.positionOfTwoSquaresMove = undefined;
+    }
 
     this.currentPiece?.moveTo(newPosition);
     return true;
