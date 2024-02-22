@@ -667,7 +667,6 @@ export class Board {
       pawnToRemove.squareElementType !== squareElement.squareElementType &&
       pawnToRemove.hasMovedTwoSquares()
     ) {
-      console.log(pawnToRemove, squareElement.position);
       this.pieces = this.pieces.filter((p) => p !== pawnToRemove);
     }
 
