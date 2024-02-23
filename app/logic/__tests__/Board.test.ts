@@ -828,6 +828,7 @@ describe('Board', () => {
 
     // en passant move
     expect(board.isMoveableTo(new Position(2, 2))).toBeTruthy();
+    expect(board.isMoveableTo(new Position(2, 7))).toBeFalsy();
     expect(board.getAtPosition(new Position(2, 3))).toBeInstanceOf(Pawn);
     expect(board.movePiece(new Empty(new Position(2, 2)))).toBeTruthy();
     expect(board.getAtPosition(new Position(2, 3))).toBeInstanceOf(Empty);
