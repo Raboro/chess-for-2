@@ -127,26 +127,8 @@ export class Board {
     }
 
     if (this.currentSquareElement instanceof Pawn) {
-      if (this.hasPawnMovedTwoSquares) {
-        if (position.differenceOfOneX(this.currentSquareElement.position)) {
-          const bias = isWhite(this.currentSquareElement.squareElementType)
-            ? 1
-            : -1;
-          if (bias + position.y >= 0 && bias + position.y <= 7) {
-            if (position.differenceOfOneY(this.currentSquareElement.position)) {
-              if (
-                this.positionOfTwoSquaresMove &&
-                this.positionOfTwoSquaresMove.same(
-                  new Position(position.x, position.y + bias),
-                )
-              ) {
-                return (
-                  this.currentSquareElement.position.y === position.y + bias
-                );
-              }
-            }
-          }
-        }
+      if (this.isEnPassantPossible(position, this.currentSquareElement)) {
+        return true;
       }
 
       return this.isPawnMoveableTo(
@@ -156,6 +138,42 @@ export class Board {
       );
     }
     return this.isPieceNoPawnNoKingMoveableTo(this.currentPiece, position);
+  }
+
+  private isEnPassantPossible(
+    position: Position,
+    currentSquareElement: SquareElement,
+  ): boolean {
+    if (
+      !this.hasPawnMovedTwoSquares ||
+      !position.differenceOfOneX(currentSquareElement.position)
+    ) {
+      return false;
+    }
+    const bias = this.determineBias();
+
+    const positionOutOfRange = !(
+      bias + position.y >= 0 && bias + position.y <= 7
+    );
+
+    if (positionOutOfRange) {
+      return false;
+    }
+
+    if (
+      position.differenceOfOneY(currentSquareElement.position) &&
+      this.positionOfTwoSquaresMove &&
+      this.positionOfTwoSquaresMove.same(
+        new Position(position.x, position.y + bias),
+      )
+    ) {
+      return this.currentSquareElement?.position.y === position.y + bias;
+    }
+    return false;
+  }
+
+  private determineBias(): 1 | -1 {
+    return isWhite(this.currentSquareElement?.squareElementType) ? 1 : -1;
   }
 
   private isKingMoveableTo(position: Position): boolean {
@@ -642,13 +660,13 @@ export class Board {
           piece.moveTo(newPosition);
 
           if (piece instanceof Pawn) {
-            const bias = isWhite(this.currentSquareElement?.squareElementType)
-              ? 1
-              : -1;
             if (
               this.positionOfTwoSquaresMove &&
               this.positionOfTwoSquaresMove.same(
-                new Position(newPosition.x, newPosition.y + bias),
+                new Position(
+                  newPosition.x,
+                  newPosition.y + this.determineBias(),
+                ),
               )
             ) {
               pawnToRemove = this.twoSquaresMovePawn;
