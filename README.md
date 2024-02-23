@@ -13,6 +13,8 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Raboro_chess-for-2&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Raboro_chess-for-2)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Raboro_chess-for-2&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=Raboro_chess-for-2)
 
+Mobile app to play chess against another person using the same mobile phone. Works completely offline. No login required, no data collection.
+
 ## Images Of Chess Pieces
 All images of chess pieces used are from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces
 
