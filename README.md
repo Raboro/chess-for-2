@@ -15,6 +15,13 @@
 
 Mobile app to play chess against another person using the same mobile phone. Works completely offline. No login required, no data collection.
 
+## Installation
+1. Install the [Expo Go](https://expo.dev/client) app to run the app on your phone.
+2. Clone the repo
+3. Install all dependencies: `npm install`
+4. Run `npm start`
+5. Scan QR Code shown in your terminal
+
 ## Images Of Chess Pieces
 All images of chess pieces used are from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces and are under the [Creative Commons CC0 License](https://creativecommons.org/publicdomain/zero/1.0/).
 
