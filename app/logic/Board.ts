@@ -140,42 +140,6 @@ export class Board {
     return this.isPieceNoPawnNoKingMoveableTo(this.currentPiece, position);
   }
 
-  private isEnPassantPossible(
-    position: Position,
-    currentSquareElement: SquareElement,
-  ): boolean {
-    if (
-      !this.hasPawnMovedTwoSquares ||
-      !position.differenceOfOneX(currentSquareElement.position)
-    ) {
-      return false;
-    }
-    const bias = this.determineBias();
-
-    const positionOutOfRange = !(
-      bias + position.y >= 0 && bias + position.y <= 7
-    );
-
-    if (positionOutOfRange) {
-      return false;
-    }
-
-    if (
-      position.differenceOfOneY(currentSquareElement.position) &&
-      this.positionOfTwoSquaresMove &&
-      this.positionOfTwoSquaresMove.same(
-        new Position(position.x, position.y + bias),
-      )
-    ) {
-      return this.currentSquareElement?.position.y === position.y + bias;
-    }
-    return false;
-  }
-
-  private determineBias(): 1 | -1 {
-    return isWhite(this.currentSquareElement?.squareElementType) ? 1 : -1;
-  }
-
   private isKingMoveableTo(position: Position): boolean {
     if (!this.currentPiece?.isMoveableTo(position)) {
       return false;
@@ -515,6 +479,42 @@ export class Board {
     );
   }
 
+  private isEnPassantPossible(
+    position: Position,
+    currentSquareElement: SquareElement,
+  ): boolean {
+    if (
+      !this.hasPawnMovedTwoSquares ||
+      !position.differenceOfOneX(currentSquareElement.position)
+    ) {
+      return false;
+    }
+    const bias = this.determineBias();
+
+    const positionOutOfRange = !(
+      bias + position.y >= 0 && bias + position.y <= 7
+    );
+
+    if (positionOutOfRange) {
+      return false;
+    }
+
+    if (
+      position.differenceOfOneY(currentSquareElement.position) &&
+      this.positionOfTwoSquaresMove &&
+      this.positionOfTwoSquaresMove.same(
+        new Position(position.x, position.y + bias),
+      )
+    ) {
+      return this.currentSquareElement?.position.y === position.y + bias;
+    }
+    return false;
+  }
+
+  private determineBias(): 1 | -1 {
+    return isWhite(this.currentSquareElement?.squareElementType) ? 1 : -1;
+  }
+
   private isPawnMoveableTo(
     currentPiece: Moveable,
     position: Position,
@@ -683,34 +683,6 @@ export class Board {
     return true;
   }
 
-  private switchEnPassantFields(cleanup: boolean, pawn: Pawn) {
-    this.hasPawnMovedTwoSquares = cleanup ? false : pawn.hasMovedTwoSquares();
-    this.positionOfTwoSquaresMove = cleanup ? undefined : pawn.position;
-    this.twoSquaresMovePawn = cleanup ? undefined : pawn;
-  }
-
-  private isEnPassantMoveCurrently(newPosition: Position): boolean {
-    if (!this.positionOfTwoSquaresMove) {
-      return false;
-    }
-    return this.positionOfTwoSquaresMove.same(
-      new Position(newPosition.x, newPosition.y + this.determineBias()),
-    );
-  }
-
-  private enPassantMoveWasPlayed(
-    pawnToRemove: Pawn | undefined,
-    squareElement: SquareElement,
-  ): boolean {
-    if (!pawnToRemove) {
-      return false;
-    }
-    return (
-      pawnToRemove.squareElementType !== squareElement.squareElementType &&
-      pawnToRemove.hasMovedTwoSquares()
-    );
-  }
-
   private isNotMoveable(squareElement: SquareElement): boolean {
     return (
       !this.currentPiece ||
@@ -744,6 +716,34 @@ export class Board {
     (this.getAtPosition(rookPosition) as Rook).castleTo(castleTo);
 
     return king;
+  }
+
+  private isEnPassantMoveCurrently(newPosition: Position): boolean {
+    if (!this.positionOfTwoSquaresMove) {
+      return false;
+    }
+    return this.positionOfTwoSquaresMove.same(
+      new Position(newPosition.x, newPosition.y + this.determineBias()),
+    );
+  }
+
+  private switchEnPassantFields(cleanup: boolean, pawn: Pawn) {
+    this.hasPawnMovedTwoSquares = cleanup ? false : pawn.hasMovedTwoSquares();
+    this.positionOfTwoSquaresMove = cleanup ? undefined : pawn.position;
+    this.twoSquaresMovePawn = cleanup ? undefined : pawn;
+  }
+
+  private enPassantMoveWasPlayed(
+    pawnToRemove: Pawn | undefined,
+    squareElement: SquareElement,
+  ): boolean {
+    if (!pawnToRemove) {
+      return false;
+    }
+    return (
+      pawnToRemove.squareElementType !== squareElement.squareElementType &&
+      pawnToRemove.hasMovedTwoSquares()
+    );
   }
 
   /**
