@@ -659,43 +659,56 @@ export class Board {
           }
           piece.moveTo(newPosition);
 
-          if (piece instanceof Pawn) {
-            if (
-              this.positionOfTwoSquaresMove &&
-              this.positionOfTwoSquaresMove.same(
-                new Position(
-                  newPosition.x,
-                  newPosition.y + this.determineBias(),
-                ),
-              )
-            ) {
-              pawnToRemove = this.twoSquaresMovePawn;
-            }
-
-            this.hasPawnMovedTwoSquares = piece.hasMovedTwoSquares();
-            this.positionOfTwoSquaresMove = piece.position;
-            this.twoSquaresMovePawn = piece;
+          if (!(piece instanceof Pawn)) {
+            return piece;
           }
+
+          if (this.isEnPassantMoveCurrently(newPosition)) {
+            pawnToRemove = this.twoSquaresMovePawn;
+          }
+          this.switchEnPassantFields(false, piece);
         }
         return piece;
       });
 
-    if (
-      pawnToRemove &&
-      pawnToRemove.squareElementType !== squareElement.squareElementType &&
-      pawnToRemove.hasMovedTwoSquares()
-    ) {
+    if (this.enPassantMoveWasPlayed(pawnToRemove, squareElement)) {
       this.pieces = this.pieces.filter((p) => p !== pawnToRemove);
     }
 
     if (pawnMovementBefore) {
-      this.hasPawnMovedTwoSquares = false;
-      this.positionOfTwoSquaresMove = undefined;
-      this.twoSquaresMovePawn = undefined;
+      this.switchEnPassantFields(true, new Pawn(new Position(0, 0), 'black'));
     }
 
     this.currentPiece?.moveTo(newPosition);
     return true;
+  }
+
+  private switchEnPassantFields(cleanup: boolean, pawn: Pawn) {
+    this.hasPawnMovedTwoSquares = cleanup ? false : pawn.hasMovedTwoSquares();
+    this.positionOfTwoSquaresMove = cleanup ? undefined : pawn.position;
+    this.twoSquaresMovePawn = cleanup ? undefined : pawn;
+  }
+
+  private isEnPassantMoveCurrently(newPosition: Position): boolean {
+    if (!this.positionOfTwoSquaresMove) {
+      return false;
+    }
+    return this.positionOfTwoSquaresMove.same(
+      new Position(newPosition.x, newPosition.y + this.determineBias()),
+    );
+  }
+
+  private enPassantMoveWasPlayed(
+    pawnToRemove: Pawn | undefined,
+    squareElement: SquareElement,
+  ): boolean {
+    if (!pawnToRemove) {
+      return false;
+    }
+    return (
+      pawnToRemove.squareElementType !== squareElement.squareElementType &&
+      pawnToRemove.hasMovedTwoSquares()
+    );
   }
 
   private isNotMoveable(squareElement: SquareElement): boolean {
