@@ -545,7 +545,9 @@ export class Board {
   ): boolean {
     if (
       squareElement.isPiece() &&
-      this.sameElementTypeAsCurrent(squareElement)
+      this.sameElementTypeAsCurrent(squareElement) &&
+      pawn &&
+      pawn.squareElementType === squareElement.squareElementType
     ) {
       return true;
     }
