@@ -18,6 +18,9 @@ Mobile app to play chess against another person using the same mobile phone. Wor
 ## Images Of Chess Pieces
 All images of chess pieces used are from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces and are under the [Creative Commons CC0 License](https://creativecommons.org/publicdomain/zero/1.0/).
 
+## License
+[MIT](https://opensource.org/license/mit/)
+
 ## Improvements
 - Timer
 - Points
