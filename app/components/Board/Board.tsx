@@ -24,7 +24,7 @@ const Board = (props: Props) => {
   const [currentType, setCurrentType] = useState<SquareElementType>('white');
   const [isPromotion, setIsPromotion] = useState(false);
   const [inCheck, setInCheck] = useState(false);
-  const [checkmate, setCheckmate] = useState(false);
+  const [isCheckmate, setIsCheckmate] = useState(false);
   const squareSize: number = props.size / SIZE.LINE_SIZE;
 
   const selectSquare = (squareElement: SquareElement) => {
@@ -57,7 +57,7 @@ const Board = (props: Props) => {
       check &&
       props.boardLogic.isCheckmate(currentType === 'white' ? 'black' : 'white')
     ) {
-      setCheckmate(true);
+      setIsCheckmate(true);
     }
   };
 
@@ -68,7 +68,7 @@ const Board = (props: Props) => {
   }
 
   const restart = () => {
-    setCheckmate(false);
+    setIsCheckmate(false);
     setInCheck(false);
     props.gameRestart();
   };
@@ -106,7 +106,7 @@ const Board = (props: Props) => {
     );
   };
 
-  if (checkmate) {
+  if (isCheckmate) {
     return <GameOverModal gameRestart={restart} />;
   }
 
