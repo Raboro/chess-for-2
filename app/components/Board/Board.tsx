@@ -19,7 +19,7 @@ interface Props {
   gameRestart: () => void;
 }
 
-const Board = (props: Props) => {
+const Board = (props: Readonly<Props>) => {
   const [selectTriggered, setSelectTriggered] = useState(false);
   const [currentType, setCurrentType] = useState<SquareElementType>('white');
   const [isPromotion, setIsPromotion] = useState(false);

@@ -6,7 +6,7 @@ interface Props {
   gameRestart: () => void;
 }
 
-const GameOverModal = (props: Props) => {
+const GameOverModal = (props: Readonly<Props>) => {
   return (
     <Modal>
       <View style={styles.container}>

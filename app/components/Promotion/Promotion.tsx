@@ -21,7 +21,7 @@ interface Props {
   setPromotion: (promotionType: PromotionType) => void;
 }
 
-const Promotion = (props: Props) => {
+const Promotion = (props: Readonly<Props>) => {
   const squareSize: number = props.size / SIZE.LINE_SIZE;
   const squareElements: SquareElement[] = [
     new Queen(new Position(0, 0), props.squareElementType),
