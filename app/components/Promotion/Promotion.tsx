@@ -54,6 +54,7 @@ const Promotion = (props: Props) => {
           isMoveableTo={false}
           selectSquare={() => setPromotion(index)}
           movePiece={() => {}}
+          inCheck={false}
         />
       ))}
     </View>
