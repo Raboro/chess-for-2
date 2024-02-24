@@ -202,8 +202,8 @@ export class Board {
   /**
    * Is piece blocking position to move
    * @param piece
-   * @param position 
-   * @returns 
+   * @param position
+   * @returns
    */
   private isPieceBlockingMoveablePosition(
     piece: MoveablePiece,
@@ -224,12 +224,12 @@ export class Board {
   }
 
   /**
-   * Is a Piece in the way of Current to SquareElement  
-   * @param squareElement 
+   * Is a Piece in the way of Current to SquareElement
+   * @param squareElement
    * @param pathAsParam already parsed path instead of letting the creation happen in the method
    * @param piecesToIgnore pieces to ignore if their are in the way
    * @param positionBlocked position, which is blocked if in the way
-   * @returns 
+   * @returns
    */
   private isPieceInTheWay(
     squareElement: SquareElement,
@@ -668,21 +668,23 @@ export class Board {
     this.pieces = this.pieces
       .filter((piece) => piece !== squareElement)
       .map((piece) => {
-        if (this.isPieceSameAsCurrent(piece)) {
-          if (this.isMoveCastling(piece, newPosition)) {
-            return this.moveCastling(piece as King, newPosition);
-          }
-          piece.moveTo(newPosition);
-
-          if (!(piece instanceof Pawn)) {
-            return piece;
-          }
-
-          if (this.isEnPassantMoveCurrently(newPosition)) {
-            pawnToRemove = this.twoSquaresMovePawn;
-          }
-          this.switchEnPassantFields(false, piece);
+        if (!this.isPieceSameAsCurrent(piece)) {
+          return piece;
         }
+        
+        if (this.isMoveCastling(piece, newPosition)) {
+          return this.moveCastling(piece as King, newPosition);
+        }
+        piece.moveTo(newPosition);
+
+        if (!(piece instanceof Pawn)) {
+          return piece;
+        }
+
+        if (this.isEnPassantMoveCurrently(newPosition)) {
+          pawnToRemove = this.twoSquaresMovePawn;
+        }
+        this.switchEnPassantFields(false, piece);
         return piece;
       });
 
