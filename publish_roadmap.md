@@ -1,0 +1,26 @@
+- Create Google Play Console account
+  - With payment of $25
+- Create Google Service account
+- Update `app.json`
+- Configure Project with `eas:build:configure`
+- Build Project with `eas build --platform android` -> generates `.aab` file
+- Create App in Google Play Console
+- Setting up app information
+  - Read Developer Policy Center
+  - Create Privacy policy website
+  - Create new email as store listing contact
+  - Description
+  - Graphics
+    - App Icon - 512px by 512px
+    - Feature Graphic - 1024px by 500px
+    - Phone Screenshots
+      - 2-8 (min 4) min 1080px
+    - Tablet
+      - 7-inch
+      - 10-inch
+- Release (with Testing)
+- Production
+  - App bundles - `.aab` file
+- Add Service Account Keys Path to `eas.json` with path as `.env` variable for new releases
+  - `eas build --platform android`
+  - `eas submit -p android --latest`
