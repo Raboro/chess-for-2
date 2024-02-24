@@ -199,6 +199,12 @@ export class Board {
     );
   }
 
+  /**
+   * Is piece blocking position to move
+   * @param piece
+   * @param position 
+   * @returns 
+   */
   private isPieceBlockingMoveablePosition(
     piece: MoveablePiece,
     position: Position,
@@ -217,6 +223,14 @@ export class Board {
     return pathConstructor.construct(current.position, destination.position);
   }
 
+  /**
+   * Is a Piece in the way of Current to SquareElement  
+   * @param squareElement 
+   * @param pathAsParam already parsed path instead of letting the creation happen in the method
+   * @param piecesToIgnore pieces to ignore if their are in the way
+   * @param positionBlocked position, which is blocked if in the way
+   * @returns 
+   */
   private isPieceInTheWay(
     squareElement: SquareElement,
     pathAsParam?: Path,
