@@ -671,7 +671,7 @@ export class Board {
         if (!this.isPieceSameAsCurrent(piece)) {
           return piece;
         }
-        
+
         if (this.isMoveCastling(piece, newPosition)) {
           return this.moveCastling(piece as King, newPosition);
         }
