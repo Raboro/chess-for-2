@@ -18,13 +18,16 @@
       "supportsTablet": true
     },
     "android": {
+      "supportsTablet": false,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.raboro.checssfor2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["./plugins/android-filter-screens.js"]
   }
 }
