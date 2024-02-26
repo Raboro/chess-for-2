@@ -18,7 +18,7 @@
     "update:check": "sh scripts/update.sh"
   },
   "dependencies": {
-    "@react-navigation/stack": "^6.3.21",
+    "@react-navigation/stack": "^6.3.23",
     "expo": "~50.0.7",
     "jest": "^29.7.0",
     "jest-expo": "^50.0.2",
