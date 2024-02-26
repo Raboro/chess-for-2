@@ -28,7 +28,7 @@
     "@babel/core": "^7.23.9",
     "@jest/globals": "^29.7.0",
     "@testing-library/react-native": "^12.4.3",
-    "@types/react": "~18.2.56",
+    "@types/react": "~18.2.58",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^7.0.1",
     "eslint-config-prettier": "^9.0.0",
