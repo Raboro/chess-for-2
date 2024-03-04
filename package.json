@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@react-navigation/stack": "^6.3.25",
-    "expo": "~50.0.7",
+    "expo": "~50.0.8",
     "jest": "^29.7.0",
     "jest-expo": "^50.0.2",
     "react": "18.2.0"
