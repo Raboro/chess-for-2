@@ -21,6 +21,7 @@ export default class DiagonalPathConstructor implements PathConstructor {
           current.y + moveY * i,
         );
         path.add(position);
+        /* eslint-disable @typescript-eslint/no-unused-vars */
       } catch (error) {
         continue;
       }

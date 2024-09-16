@@ -17,6 +17,7 @@ interface SquareElementImagePaths {
 }
 
 export const SquareElementImagePaths: SquareElementImagePaths = {
+  /* eslint-disable @typescript-eslint/no-require-imports */
   BLACK_BISHOP: require('../assets/Black_Bishop.png'),
   BLACK_KING: require('../assets/Black_King.png'),
   BLACK_KNIGHT: require('../assets/Black_Knight.png'),
