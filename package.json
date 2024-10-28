@@ -27,7 +27,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.8",
     "@jest/globals": "^29.7.0",
-    "@testing-library/react-native": "^12.7.2",
+    "@testing-library/react-native": "^12.8.0",
     "@types/react": "~18.2.79",
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.10.0",
