@@ -30,7 +30,7 @@
     "@testing-library/react-native": "^12.8.1",
     "@types/react": "~18.2.79",
     "@typescript-eslint/eslint-plugin": "^8.12.2",
-    "@typescript-eslint/parser": "^8.12.2",
+    "@typescript-eslint/parser": "^8.13.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.2.1",
     "organize-imports-cli": "^0.10.0",
