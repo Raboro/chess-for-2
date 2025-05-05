@@ -25,7 +25,7 @@
     "react": "18.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
+    "@babel/core": "^7.27.1",
     "@jest/globals": "^29.7.0",
     "@testing-library/react-native": "^13.1.0",
     "@types/react": "~18.3.12",
