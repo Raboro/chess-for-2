@@ -29,7 +29,7 @@
     "@jest/globals": "^29.7.0",
     "@testing-library/react-native": "^13.1.0",
     "@types/react": "~18.3.12",
-    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
     "@typescript-eslint/parser": "^8.32.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
