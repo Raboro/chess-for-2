@@ -31,7 +31,7 @@
     "@types/react": "~18.3.12",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.37.0",
-    "eslint-config-prettier": "^10.1.5",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.1",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.6.2",
